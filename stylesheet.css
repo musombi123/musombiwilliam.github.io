@@ -272,10 +272,12 @@ section h3 {
 }
 
 .contact-list .contact-icon {
-  width: 28px;
-  height: 28px;
-  object-fit: contain;
-  margin-right: 0.5rem; /* spacing from text */
+  width: 24px;          /* set fixed width */
+  height: 24px;         /* set fixed height */
+  object-fit: contain;  /* maintain aspect ratio */
+  display: inline-block; /* inline like icons */
+  vertical-align: middle; /* align with text */
+  margin-right: 0.5rem;  /* spacing from the link */
 }
 
 /* ===========================
