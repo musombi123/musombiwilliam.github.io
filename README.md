@@ -1,99 +1,78 @@
-# **RevelaCode / RevelaAI — README**
+# **Musombi William — Personal Portfolio Website**
 
-## 🚀 **RevelaCode | Where Faith Meets Intelligence**
+## 🌐 About This Site
 
-RevelaCode is a next-generation, AI-powered platform designed to bridge ancient scripture with modern technology. Built for the digital generation, it transforms biblical verses, symbols, and prophecies into structured, interactive, and meaningful insights through intelligent computation.
+This repository hosts the **personal portfolio and professional profile** of **Musombi William**, a Junior Full-Stack Developer and AI Enthusiast. The site showcases my skills, experience, projects, and professional presence, with a clean, business-oriented design and structured layout.
 
-RevelaAI — the intelligent assistant within the ecosystem — serves as a personal companion for curiosity, learning, and growth, engaging users in human-like dialogue across science, philosophy, technology, and spirituality.
-
----
-
-## 🎯 **Vision**
-
-To make wisdom accessible, interactive, and future-proof by fusing AI, faith, and culture into one seamless digital experience.
+The website is deployed via **GitHub Pages** and serves as my digital home — a space where recruiters, collaborators, and the tech community can learn about my work and vision.
 
 ---
 
-## 🧠 **What This Platform Does**
+## 🎯 Purpose
 
-* Decodes scripture using structured logic and AI-assisted reasoning
-* Provides conversational AI through **RevelaAI**
-* Delivers intuitive, professional UI/UX for seamless exploration
-* Supports continuous learning and knowledge expansion
-* Maintains secure and private user interactions
+This site is built to:
 
----
-
-## 🛠 **Tech Stack**
-
-**Frontend**
-
-* HTML, CSS, JavaScript
-* Responsive UI with modern layout principles
-
-**Backend**
-
-* Node.js
-* RESTful APIs
-* Regex-based text processing
-* Caching for performance optimization
-
-**Deployment**
-
-* Cloud-hosted frontend
-* GitHub for version control and collaboration
+* Present my professional brand clearly and confidently
+* Showcase my technical skills and experience
+* Highlight **RevelaCode / RevelaAI** as my flagship project
+* Provide easy access to my contact details and social links
+* Demonstrate real-world frontend development ability
 
 ---
 
-## 🔗 **Live Links**
+## 🛠 Tech Stack
 
-* 🌐 **RevelaAI / RevelaCode Frontend:** [https://revelacode-frontend.onrender.com/](https://revelacode-frontend.onrender.com/)
-* 🧑‍💻 **Backend Repository:** [https://github.com/musombi123/RevelaCode-Backend](https://github.com/musombi123/RevelaCode-Backend)
+* **HTML5** — Semantic, structured, and accessible markup
+* **CSS3** — Modern, responsive, business-style design
+* **GitHub Pages** — Live deployment and hosting
 
 ---
 
-## 📂 **Project Structure (High-Level)**
+## 📂 Repository Structure
 
 ```
-/frontend
-  ├── index.html
-  ├── stylesheet.css
-  ├── assets/
-  └── scripts/
-
-/backend
-  ├── server.js
-  ├── routes/
-  ├── controllers/
-  └── utils/
+/
+├── index.html
+├── stylesheet.css
+├── profile.PNG
+├── aiintro.PNG
+├── dashboard.PNG
+├── revelaAIdashboard.PNG
+├── revelacode-frontend.PNG
+└── README.md
 ```
 
 ---
 
-## 🏗 **Key Features**
+## 🚀 Live Site
 
-### 🔹 RevelaAI Capabilities
-
-* Conversational intelligence
-* Cross-disciplinary knowledge
-* Personalized learning guidance
-* Secure and private interaction
-* Continuously updated knowledge base
-
-### 🔹 RevelaCode Capabilities
-
-* Scripture analysis engine
-* Prophecy decoding dashboard
-* User profile & settings panel
-* AI-powered interpretation tools
+🌐 **Portfolio:**
+[https://musombi123.github.io/musombiwilliam.github.io/](https://musombi123.github.io/musombiwilliam.github.io/)
 
 ---
 
-## 👨‍💻 **Creator**
+## 👨‍💻 Owner
 
 **Musombi William**
-Founder & Lead Engineer — RevelaCode
-Full-Stack Developer | Tech-Faith Innovator
+Junior Full-Stack Developer | AI Enthusiast | Tech-Faith Innovator
 
 📧 [musombiwilliam769@gmail.com](mailto:musombiwilliam769@gmail.com)
-🔗
+🔗 GitHub: [https://github.com/musombi123](https://github.com/musombi123)
+💼 LinkedIn: [https://www.linkedin.com/in/william-musombi-a2a064327](https://www.linkedin.com/in/william-musombi-a2a064327)
+
+---
+
+## 🤝 Contributions
+
+This is a personal portfolio. However, suggestions, improvements, or design feedback are welcome via Issues or Pull Requests.
+
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Open a Pull Request
+
+---
+
+## 📜 License
+
+This project is licensed under the **MIT License** — see `LICENSE` below.
