@@ -72,13 +72,9 @@ ul {
   padding: 2rem;
   position: relative;
   text-align: center;
-
-  background-image: url('background.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
+  background-color: var(--color-bg); /* fallback background color */
 }
+
 
 /* Overlay for readability */
 .hero::before {
