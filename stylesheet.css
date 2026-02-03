@@ -1,40 +1,36 @@
-/* ===== GLOBAL SKY BLUE BACKGROUND + CENTERING ===== */
+/* ===== GLOBAL STYLES ===== */
 html, body {
   margin: 0;
   padding: 0;
-  background: #87CEEB; /* Sky Blue */
-  text-align: center;
+  font-family: 'Arial', sans-serif;
+  background-color: #87CEEB; /* Sky Blue */
+  text-align: center;        /* Center all text by default */
 }
 
-/* Center all main sections */
-section, header, nav, footer {
-  margin: 0 auto;
-  max-width: 1100px;
-}
-
-/* ===== HERO LAYOUT (TEXT LEFT, IMAGE RIGHT — BUT CENTERED CONTAINER) ===== */
+/* ===== HERO SECTION ===== */
 .hero {
   display: flex;
-  justify-content: center;
+  justify-content: center;  /* Center the hero container horizontally */
+  align-items: center;      /* Center vertically */
+  min-height: 100vh;        /* Take full viewport height */
+  padding: 40px 20px;
 }
 
 .hero-container {
   display: flex;
+  flex-direction: row;      /* Text left, image right */
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;  /* Center container itself */
+  gap: 40px;
   max-width: 1100px;
   width: 100%;
-  margin: 0 auto;
-  gap: 40px;
 }
 
-/* Keep text readable but structured */
 .hero-text {
   flex: 1;
-  text-align: left; /* stays professional */
+  text-align: left;         /* Keep professional left-aligned text */
 }
 
-/* Image stays right but within centered layout */
 .hero-image {
   flex: 0.8;
   display: flex;
@@ -46,17 +42,56 @@ section, header, nav, footer {
   height: 260px;
   border-radius: 50%;
   object-fit: cover;
-  border: 3px solid #14532d; /* business green */
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  border: 3px solid #14532d; /* Business green */
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
-/* ===== NAVBAR CENTER ALIGNMENT ===== */
+/* ===== NAVBAR ===== */
 nav ul {
   display: flex;
   justify-content: center;
   list-style: none;
+  padding: 10px 0;
+  gap: 25px;
+}
+
+nav ul li a {
+  text-decoration: none;
+  font-weight: 600;
+  color: #14532d; /* business green */
+}
+
+nav ul li a:hover {
+  color: #b59a2b; /* gold accent */
+}
+
+/* ===== SECTIONS CENTERED ===== */
+section {
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 40px 20px;
+  background-color: rgba(255,255,255,0.95); /* Slight white overlay */
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+  text-align: center;
+}
+
+section ul {
+  list-style: none;
   padding: 0;
+}
+
+.images-section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 20px;
+}
+
+.images-section img {
+  width: 260px;
+  border-radius: 12px;
+  border: 2px solid #14532d;
 }
 
 /* ===== MOBILE FIX ===== */
