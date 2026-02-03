@@ -274,6 +274,59 @@ footer {
     max-width: 300px;
   }
 }
+/* ===========================
+   FORCE CENTER ALIGNMENT
+=========================== */
+
+/* Center all section content */
+section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* Center lists inside sections */
+section ul, .contact-list {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-left: 0;
+  margin-top: 1rem;
+  gap: 0.5rem;
+}
+
+/* Keep bullets but center them */
+section ul li::before {
+  content: "•";
+  color: var(--color-accent);
+  position: relative; /* inline with text */
+  margin-right: 0.5rem;
+  left: 0;
+}
+
+/* Project cards already centered text, keep it */
+.project-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* Images in project cards centered */
+.images-section {
+  justify-items: center;
+}
+
+/* Footer already centered, reinforce */
+footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 
 @media (max-width: 480px) {
   h1 { font-size: 2rem; }
