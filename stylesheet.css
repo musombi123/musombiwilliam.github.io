@@ -69,7 +69,7 @@ ul {
   padding: 2rem;
 
   /* Background image */
-  background-image: url('profile-background.jpg'); /* replace with your image */
+  background-image: url('background.jpg'); /* replace with your image */
   background-size: cover;       /* makes it fill entire hero */
   background-position: center;  /* centers the image */
   background-repeat: no-repeat; /* avoids tiling */
@@ -245,18 +245,16 @@ section h3 {
 /* ===========================
    CONTACT LIST
 =========================== */
-.contact-list {
+.contact-list li {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start; /* <-- KEY CHANGE */
+  align-items: center;
   gap: 0.5rem;
-  text-align: left; /* <-- KEY CHANGE */
-  width: 100%; /* keeps layout clean */
 }
 
-.contact-list a {
-  color: var(--color-accent-light);
-  font-weight: 500;
+.contact-list i {
+  color: var(--color-accent);
+  font-size: 1.2rem;
+  min-width: 24px; /* keeps icons aligned */
 }
 
 /* ===========================
