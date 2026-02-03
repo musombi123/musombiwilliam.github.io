@@ -1,18 +1,40 @@
-/* ===== HERO LAYOUT (TEXT LEFT, IMAGE RIGHT) ===== */
+/* ===== GLOBAL SKY BLUE BACKGROUND + CENTERING ===== */
+html, body {
+  margin: 0;
+  padding: 0;
+  background: #87CEEB; /* Sky Blue */
+  text-align: center;
+}
+
+/* Center all main sections */
+section, header, nav, footer {
+  margin: 0 auto;
+  max-width: 1100px;
+}
+
+/* ===== HERO LAYOUT (TEXT LEFT, IMAGE RIGHT — BUT CENTERED CONTAINER) ===== */
+.hero {
+  display: flex;
+  justify-content: center;
+}
+
 .hero-container {
   display: flex;
   align-items: center;
   justify-content: space-between;
   max-width: 1100px;
+  width: 100%;
   margin: 0 auto;
   gap: 40px;
 }
 
+/* Keep text readable but structured */
 .hero-text {
   flex: 1;
-  text-align: left;
+  text-align: left; /* stays professional */
 }
 
+/* Image stays right but within centered layout */
 .hero-image {
   flex: 0.8;
   display: flex;
@@ -24,14 +46,27 @@
   height: 260px;
   border-radius: 50%;
   object-fit: cover;
-  border: 3px solid #14532d; /* your business green */
+  border: 3px solid #14532d; /* business green */
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* ===== NAVBAR CENTER ALIGNMENT ===== */
+nav ul {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+  gap: 20px;
 }
 
 /* ===== MOBILE FIX ===== */
 @media (max-width: 768px) {
   .hero-container {
     flex-direction: column;
+    text-align: center;
+  }
+
+  .hero-text {
     text-align: center;
   }
 
