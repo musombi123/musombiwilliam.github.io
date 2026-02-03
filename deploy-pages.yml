@@ -1,0 +1,39 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+      contents: read
+
+    steps:
+      # Step 1: Checkout code
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # Step 2: Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'   # You can adjust to your Node version
+
+      # Step 3: Install dependencies safely
+      - name: Install Dependencies
+        run: |
+          npm ci || { echo "npm install failed"; exit 1; }
+
+      # Step 4: Build project safely
+      - name: Build Project
+        run: |
+          npm run build || { echo "Build failed"; exit 1; }
+
+      # Step 5: Deploy to GitHub Pages
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
