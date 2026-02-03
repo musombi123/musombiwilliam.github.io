@@ -24,6 +24,19 @@
   height: 260px;
   border-radius: 50%;
   object-fit: cover;
-  border: 3px solid #14532d;
+  border: 3px solid #14532d; /* your business green */
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* ===== MOBILE FIX ===== */
+@media (max-width: 768px) {
+  .hero-container {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .hero-image {
+    justify-content: center;
+    margin-top: 20px;
+  }
 }
