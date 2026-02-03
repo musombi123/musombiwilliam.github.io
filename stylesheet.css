@@ -262,12 +262,20 @@ section h3 {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  margin-bottom: 0.5rem; /* adds spacing between items */
 }
 
 .contact-list i {
   color: var(--color-accent);
-  font-size: 1.2rem;
-  min-width: 24px;
+  font-size: 1.4rem; /* slightly bigger for visibility */
+  min-width: 28px;   /* ensures all icons are aligned */
+}
+
+.contact-list .contact-icon {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  margin-right: 0.5rem; /* spacing from text */
 }
 
 /* ===========================
