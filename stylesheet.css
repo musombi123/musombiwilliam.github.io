@@ -12,15 +12,18 @@
   --color-btn-hover: #2563EB;
 }
 
-body.light-theme {
-  --color-bg: #F8FAFC;
-  --color-bg-alt: #E2E8F0;
-  --color-text: #0F172A;
-  --color-text-alt: #334155;
-  --color-accent: #3B82F6;
-  --color-accent-light: #2563EB;
-  --color-muted: #64748B;
-  --color-btn-hover: #1E40AF;
+/* Automatic light theme for users who prefer light mode */
+@media (prefers-color-scheme: light) {
+  :root {
+    --color-bg: #F8FAFC;
+    --color-bg-alt: #E2E8F0;
+    --color-text: #0F172A;
+    --color-text-alt: #334155;
+    --color-accent: #3B82F6;
+    --color-accent-light: #2563EB;
+    --color-muted: #64748B;
+    --color-btn-hover: #1E40AF;
+  }
 }
 
 /* ===========================
@@ -59,7 +62,7 @@ ul {
 }
 
 /* ===========================
-   HEADER / HERO
+   HERO SECTION
 =========================== */
 .hero {
   display: flex;
@@ -68,18 +71,16 @@ ul {
   min-height: 100vh;
   padding: 2rem;
   position: relative;
-  color: var(--color-text-alt);
   text-align: center;
 
-  /* Background */
-  background-image: url('background.jpg'); /* replace with your image */
+  background-image: url('background.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
 }
 
-/* Hero overlay */
+/* Overlay for readability */
 .hero::before {
   content: "";
   position: absolute;
@@ -88,7 +89,6 @@ ul {
   z-index: 1;
 }
 
-/* Hero content container */
 .hero-container {
   position: relative;
   z-index: 2;
@@ -110,6 +110,7 @@ ul {
 
 .hero-text p {
   font-size: 1rem;
+  color: var(--color-text-alt);
 }
 
 .hero-buttons {
@@ -180,10 +181,11 @@ nav ul {
 nav a {
   font-weight: 500;
   font-size: 1rem;
+  color: var(--color-text-alt);
 }
 
 /* ===========================
-   SECTIONS
+   SECTIONS & CARDS
 =========================== */
 section {
   padding: 3rem 1rem;
@@ -198,9 +200,6 @@ section h3 {
   color: var(--color-text);
 }
 
-/* ===========================
-   CARD-BASED LAYOUTS
-=========================== */
 .card {
   background-color: var(--color-bg-alt);
   padding: 1.5rem 2rem;
