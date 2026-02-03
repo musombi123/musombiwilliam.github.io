@@ -66,14 +66,34 @@ ul {
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background: linear-gradient(135deg, var(--color-bg-alt) 0%, var(--color-bg) 100%);
   padding: 2rem;
+
+  /* Background image */
+  background-image: url('profile-background.jpg'); /* replace with your image */
+  background-size: cover;       /* makes it fill entire hero */
+  background-position: center;  /* centers the image */
+  background-repeat: no-repeat; /* avoids tiling */
+  background-attachment: fixed; /* optional parallax effect */
+  position: relative;
+
+  color: var(--color-text-alt);
   text-align: center;
 }
 
+/* Overlay to make text readable */
+.hero::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* adjust darkness */
+  z-index: 1;
+}
+
 .hero-container {
+  position: relative;
+  z-index: 2; /* ensures text and buttons sit above overlay */
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: column;
   align-items: center;
   gap: 2rem;
 }
