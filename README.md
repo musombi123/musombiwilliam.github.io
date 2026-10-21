@@ -17,6 +17,7 @@ This site is built to:
 * Highlight **RevelaCode / RevelaAI** as my flagship project
 * Provide easy access to my contact details and social links
 * Demonstrate real-world frontend development ability
+* Publish technical documentation for selected projects, including Jumuiya Shamba Hub
 
 ---
 
@@ -25,39 +26,54 @@ This site is built to:
 * **HTML5** — Semantic, structured, and accessible markup
 * **CSS3** — Modern, responsive, business-style design
 * **GitHub Pages** — Live deployment and hosting
+* **Markdown** — Version-controlled technical documentation
 
 ---
 
 ## 📂 Repository Structure
 
-```
-/
-├── index.html
-├── stylesheet.css
-├── profile.PNG
-├── aiintro.PNG
-├── dashboard.PNG
-├── revelaAIdashboard.PNG
-├── revelacode-frontend.PNG
-└── README.md
-```
+- **index.html** — portfolio homepage
+- **stylesheet.css** — shared portfolio styles
+- **profile.PNG**, **aiintro.PNG**, **dashboard.PNG**, **revelaAIdashboard.PNG**, **revelacode-frontend.PNG** — portfolio images
+- **docs/shamba/** — complete Shamba Hub technical documentation
+  - **index.md** — overview and documentation index
+  - **architecture.md** — system architecture, data model, sections and user journeys
+  - **api-reference.md** — API methods, authentication and request payloads
+  - **trust-and-safety.md** — farmer verification, farm-rights review, soil limitations and moderation
+  - **operations-and-testing.md** — release sequence, test plan, diagnostics and safeguards
+- **README.md** — repository guide
+- **LICENSE** — project license
 
 ---
 
 ## 🚀 Live Site
 
-🌐 **Portfolio:**
+🌐 **Portfolio:**  
 [https://musombi123.github.io/musombiwilliam.github.io/](https://musombi123.github.io/musombiwilliam.github.io/)
+
+---
+
+## 🌱 Shamba Hub Technical Documentation
+
+Shamba is the agriculture and farm-operations hub within Jumuiya. Its documentation covers the frontend/backend architecture, farmer profile lifecycle, farm-rights verification, crop/activity/harvest endpoints, agricultural intelligence, shared-marketplace integration, Trust & Safety, soil-photo limits, security and release/testing procedures.
+
+**Start here:** [Complete Shamba Hub documentation](docs/shamba/index.md)
+
+The documentation distinguishes platform review from official land-title certification and marks features that depend on backend deployment or external providers. It is implementation documentation, not a guarantee that every integration is live in production.
+
+Source repositories:
+- [RevelaCode Frontend](https://github.com/musombi123/RevelaCode-Frontend)
+- [RevelaCode Backend](https://github.com/musombi123/RevelaCode-Backend)
 
 ---
 
 ## 👨‍💻 Owner
 
-**Musombi William**
+**Musombi William**  
 Junior Full-Stack Developer | AI Enthusiast | Tech-Faith Innovator
 
-📧 [musombiwilliam769@gmail.com](mailto:musombiwilliam769@gmail.com)
-🔗 GitHub: [https://github.com/musombi123](https://github.com/musombi123)
+📧 [musombiwilliam769@gmail.com](mailto:musombiwilliam769@gmail.com)  
+🔗 GitHub: [https://github.com/musombi123](https://github.com/musombi123)  
 💼 LinkedIn: [https://www.linkedin.com/in/william-musombi-a2a064327](https://www.linkedin.com/in/william-musombi-a2a064327)
 
 ---
@@ -75,4 +91,4 @@ This is a personal portfolio. However, suggestions, improvements, or design feed
 
 ## 📜 License
 
-This project is licensed under the **MIT License** — see `LICENSE` below.
+This project is licensed under the **MIT License** — see **LICENSE** below.
