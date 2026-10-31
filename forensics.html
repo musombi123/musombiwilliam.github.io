@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Musombi William's digital forensics, data recovery, reverse engineering and defensive security learning centre, toolchain and technical playbooks.">
+  <meta name="description" content="Musombi William’s digital forensics, data recovery, reverse engineering and defensive security centre, including the RevelaAI Portable Field Kit for offline evidence triage and binary inspection.">
   <meta name="theme-color" content="#0F172A">
   <title>Digital Forensics & Security Centre | Musombi William</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
@@ -20,7 +20,7 @@
     </div>
   </header>
   <nav class="forensics-nav" aria-label="Forensics centre navigation">
-    <a href="#tracks">Capability Tracks</a><a href="#languages">Languages</a><a href="#toolkit">Toolchain</a><a href="#courses">Courses & Labs</a><a href="#method">Working Method</a><a href="#scope">Responsible Practice</a>
+    <a href="#tracks">Capability Tracks</a><a href="#portable">USB Field Kit</a><a href="#languages">Languages</a><a href="#toolkit">Toolchain</a><a href="#courses">Courses & Labs</a><a href="#method">Working Method</a><a href="#scope">Responsible Practice</a>
   </nav>
   <main class="forensics-content">
     <section id="tracks">
@@ -53,6 +53,92 @@
         <article class="capability-card"><h4>Defensive application security</h4><p>Semgrep, GitHub CodeQL, Trivy, OSV-Scanner and OWASP ZAP in authorized, controlled environments.</p></article>
       </div>
       <p><a class="btn-primary" href="https://github.com/musombi123/musombiwilliam.github.io/blob/main/docs/forensics/toolchain.md">Open the full tool and library reference</a></p>
+    </section>
+    <section id="portable" aria-labelledby="portable-heading">
+      <div class="fieldkit-heading">
+        <p class="fieldkit-eyebrow">REVELACODE · OFFLINE ENGINEERING</p>
+        <div class="fieldkit-status"><span></span> VERSION 0.2.0 · WINDOWS &amp; LINUX CI VERIFIED</div>
+        <h2 id="portable-heading">RevelaAI Portable Field Kit</h2>
+        <p class="lead">A USB-carried, local-first toolkit for evidence triage, binary metadata inspection, defensive source auditing, and case documentation. Core Field Kit commands run locally without depending on Gemini, Render, MongoDB, or an internet connection.</p>
+        <div class="fieldkit-facts">
+          <span><strong>Windows x64</strong> · embedded Python runtime</span>
+          <span><strong>Linux</strong> · Python 3.10+</span>
+          <span><strong>Offline core</strong> · standard library</span>
+          <span><strong>Optional AI</strong> · localhost Ollama</span>
+        </div>
+      </div>
+
+      <div class="capability-grid fieldkit-grid">
+        <article class="capability-card fieldkit-card">
+          <div class="fieldkit-card-index">01 / EVIDENCE</div>
+          <h4><i class="fa-solid fa-fingerprint"></i> Integrity &amp; case records</h4>
+          <p>Create investigation workspaces, calculate SHA-256 inventories, re-verify source files, maintain hash-linked custody events, and generate Markdown case reports.</p>
+          <div class="capability-tags"><span>SHA-256</span><span>Case JSON</span><span>Custody chain</span></div>
+        </article>
+        <article class="capability-card fieldkit-card">
+          <div class="fieldkit-card-index">02 / BINARY TRIAGE</div>
+          <h4><i class="fa-solid fa-microchip"></i> Executable structure</h4>
+          <p>Read-only PE, ELF, thin Mach-O, and WebAssembly header inspection, plus APK package-layout listing for DEX files and native libraries.</p>
+          <div class="capability-tags"><span>PE / ELF</span><span>Mach-O</span><span>APK / DEX</span></div>
+        </article>
+        <article class="capability-card fieldkit-card">
+          <div class="fieldkit-card-index">03 / DEFENSIVE AUDIT</div>
+          <h4><i class="fa-solid fa-shield-halved"></i> Local source checks</h4>
+          <p>Inspect file signatures and sample entropy, discover installed specialist utilities, and detect selected credential patterns with secret values redacted from output.</p>
+          <div class="capability-tags"><span>Secret patterns</span><span>File signatures</span><span>Tool discovery</span></div>
+        </article>
+        <article class="capability-card fieldkit-card">
+          <div class="fieldkit-card-index">04 / OFFLINE KNOWLEDGE</div>
+          <h4><i class="fa-solid fa-brain"></i> Local AI extension</h4>
+          <p>Search bundled field notes offline and optionally send a question to Ollama on the same computer. Remote Ollama hosts are rejected by the connector.</p>
+          <div class="capability-tags"><span>Offline notes</span><span>Ollama</span><span>Loopback only</span></div>
+        </article>
+      </div>
+
+      <div class="fieldkit-workflow">
+        <div class="fieldkit-workflow-copy">
+          <p class="fieldkit-eyebrow">FIELD WORKFLOW</p>
+          <h3>From source material to a reproducible record.</h3>
+          <ol>
+            <li><strong>Open a case.</strong> Create a scoped workspace and identify the operator.</li>
+            <li><strong>Inventory evidence.</strong> Hash regular files and save a manifest without changing source files.</li>
+            <li><strong>Inspect safely.</strong> Read supported binary headers and APK package metadata without executing or extracting the file.</li>
+            <li><strong>Verify and report.</strong> Re-hash source items, verify the event chain, and produce a report for analyst review.</li>
+          </ol>
+        </div>
+        <div class="fieldkit-terminal" aria-label="Example local Field Kit commands">
+          <div class="fieldkit-terminal-head">
+            <span class="terminal-lights"><i></i><i></i><i></i></span>
+            <span>REVELAAI FIELD KIT / LOCAL SESSION</span>
+            <b>v0.2.0</b>
+          </div>
+          <div class="fieldkit-terminal-body">
+            <p class="terminal-comment"># create a case</p>
+            <p><em>fieldkit $</em> python -m revela_fieldkit case create --root cases --id CASE-001</p>
+            <p class="terminal-result">✓ case workspace created</p>
+            <p class="terminal-comment"># inventory evidence</p>
+            <p><em>fieldkit $</em> python -m revela_fieldkit inventory --case cases/CASE-001 --source ./evidence</p>
+            <p class="terminal-result">✓ SHA-256 manifest written</p>
+            <p class="terminal-comment"># inspect a Windows binary without running it</p>
+            <p><em>fieldkit $</em> python -m revela_fieldkit binary inspect sample.exe --hash</p>
+            <p class="terminal-result">✓ PE header metadata parsed</p>
+            <p class="terminal-comment"># verify the custody event chain</p>
+            <p><em>fieldkit $</em> python -m revela_fieldkit custody verify --case cases/CASE-001</p>
+            <p class="terminal-result">✓ custody chain verified</p>
+            <div class="terminal-foot"><span><i></i> LOCAL COMMANDS</span><span>NO CLOUD REQUIRED</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fieldkit-links">
+        <a class="btn-primary" href="https://github.com/musombi123/RevelaAI/tree/main/portable" target="_blank" rel="noopener noreferrer">Explore Field Kit source <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+        <a class="btn-secondary" href="https://github.com/musombi123/RevelaAI/blob/main/portable/README.md" target="_blank" rel="noopener noreferrer">Read USB setup guide</a>
+        <a class="btn-secondary" href="https://github.com/musombi123/RevelaAI/actions/runs/41220318509" target="_blank" rel="noopener noreferrer">View verified CI build</a>
+      </div>
+
+      <div class="forensics-callout fieldkit-limitations">
+        <strong>Scope and limitations:</strong> the Field Kit is a portable triage utility layer, not a certified forensic acquisition suite or a full offline copy of cloud RevelaAI. Inventory hashing is not a disk image; header inspection is not full decompilation; secret-pattern scanning is not comprehensive; and the local AI model is an optional dependency. It does not execute inspected binaries, acquire physical media, or run arbitrary-target network scans. Specialist tools must be separately installed and verified. Use only on systems and data you own or are explicitly authorized to assess.
+      </div>
     </section>
     <section id="courses">
       <h2>Courses, labs & milestones</h2>
