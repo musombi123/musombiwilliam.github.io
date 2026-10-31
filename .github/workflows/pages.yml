@@ -49,9 +49,13 @@ jobs:
           $site = Join-Path $env:RUNNER_TEMP "portfolio-site"
           New-Item -ItemType Directory -Force -Path $site | Out-Null
           robocopy $env:GITHUB_WORKSPACE $site /E /XD .git .github
-          if ($LASTEXITCODE -gt 7) {
-            throw "Failed to stage portfolio files (robocopy exit $LASTEXITCODE)."
+          $copyExitCode = $LASTEXITCODE
+          if ($copyExitCode -gt 7) {
+            throw "Failed to stage portfolio files (robocopy exit $copyExitCode)."
           }
+          # Robocopy uses codes 1–7 for successful copies with differences.
+          # Clear the native exit code so pwsh does not report a successful copy as job failure.
+          $global:LASTEXITCODE = 0
           New-Item -ItemType Directory -Force -Path (Join-Path $site "downloads") | Out-Null
           "Portfolio staged at $site"
 
