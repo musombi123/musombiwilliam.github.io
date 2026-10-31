@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Use the RevelaAI Field Workbench in your browser for local SHA-256 evidence hashing, file-header triage, entropy sampling and hash-linked case notes. Files stay on your device.">
+  <meta name="theme-color" content="#0b1220">
+  <title>Field Workbench | Musombi William</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link rel="stylesheet" href="stylesheet.css">
+</head>
+<body class="fieldkit-page">
+  <header class="fieldkit-hero">
+    <nav class="fieldkit-topnav" aria-label="Main navigation">
+      <a href="index.html" class="brand-mark">MW<span>.</span></a>
+      <div><a href="forensics.html">Forensics Centre</a><a href="guides.html">Field Guides</a><a href="index.html#contact">Contact</a></div>
+    </nav>
+    <div class="fieldkit-hero-copy">
+      <p class="fieldkit-eyebrow">REVELACODE · LOCAL-FIRST ENGINEERING</p>
+      <div class="fieldkit-status"><span></span> BROWSER WORKBENCH · NO FILE UPLOADS</div>
+      <h1>Field Workbench</h1>
+      <p>Run a small, practical evidence-triage workflow in this page. Hash files with SHA-256, inspect common file signatures, estimate sample entropy, verify an expected digest, and export a case manifest with a hash-linked activity log.</p>
+      <div class="fieldkit-facts"><span><strong>Local processing</strong></span><span><strong>SHA-256</strong></span><span><strong>Read-only</strong></span><span><strong>Exportable case notes</strong></span></div>
+      <div class="fieldkit-links">
+        <a class="btn-primary" href="#workbench"><i class="fa-solid fa-terminal"></i> Open the Workbench</a>
+        <a class="btn-secondary" href="downloads/RevelaAI-Portable-Field-Kit-v0.2.0-Windows-x64.zip" download><i class="fa-solid fa-download"></i> Download Windows USB Edition</a>
+      </div>
+      <p class="fieldkit-small-note">The Windows download is built from the v0.2.0 source and published with this website. Large-media acquisition and advanced analysis remain tasks for the full USB edition and specialist tools.</p>
+    </div>
+  </header>
+
+  <main class="fieldkit-main">
+    <section class="fieldkit-section" id="workbench">
+      <div class="fieldkit-section-heading">
+        <p class="fieldkit-eyebrow">01 / CASE SETUP</p>
+        <h2>Start a local evidence session</h2>
+        <p>Choose a case reference and analyst label. These details stay in this browser session unless you export the report.</p>
+      </div>
+      <div class="fieldkit-form-grid">
+        <label>Case ID
+          <input id="caseId" type="text" maxlength="64" value="FIELD-CASE-001" autocomplete="off">
+        </label>
+        <label>Analyst / operator
+          <input id="analyst" type="text" maxlength="80" placeholder="Enter your name or initials" autocomplete="off">
+        </label>
+      </div>
+      <div class="fieldkit-dropzone" id="dropZone" tabindex="0" role="button" aria-label="Choose evidence files">
+        <input id="evidenceFiles" type="file" multiple hidden>
+        <div class="drop-icon"><i class="fa-solid fa-file-circle-plus"></i></div>
+        <h3>Choose files for local triage</h3>
+        <p>Drag files here or select them from this device. No file content is sent to a server.</p>
+        <button type="button" class="btn-secondary" id="chooseFiles">Browse files</button>
+        <p class="fieldkit-hint">Up to 20 files · 128 MiB maximum per file · SHA-256 requires a modern secure browser</p>
+      </div>
+      <div class="fieldkit-actions">
+        <button type="button" class="btn-primary" id="runInventory"><i class="fa-solid fa-fingerprint"></i> Hash and inspect files</button>
+        <button type="button" class="btn-secondary" id="resetSession"><i class="fa-solid fa-rotate-left"></i> Reset session</button>
+      </div>
+      <p id="workbenchStatus" class="fieldkit-status-line" role="status" aria-live="polite">Ready. Create a case and select files to begin.</p>
+      <div class="fieldkit-privacy"><i class="fa-solid fa-lock"></i><div><strong>Privacy boundary</strong><p>Files are read by JavaScript in your browser and are not uploaded. The manifest stores filenames, sizes, timestamps, signatures and hashes—not file contents. Do not use a shared or public computer for sensitive evidence.</p></div></div>
+    </section>
+
+    <section class="fieldkit-section">
+      <div class="fieldkit-section-heading fieldkit-row-heading">
+        <div><p class="fieldkit-eyebrow">02 / EVIDENCE INVENTORY</p><h2>File observations</h2><p>Signature and entropy are triage hints only. They do not prove that a file is safe, authentic or malicious.</p></div>
+        <span class="fieldkit-count" id="evidenceCount">0 ITEMS</span>
+      </div>
+      <div class="fieldkit-table-wrap">
+        <table class="fieldkit-table">
+          <thead><tr><th>Evidence item</th><th>Size</th><th>Type hint</th><th>Sample entropy</th><th>SHA-256</th><th>Verify</th></tr></thead>
+          <tbody id="manifestRows"><tr><td colspan="6" class="fieldkit-empty">No evidence has been inventoried in this session.</td></tr></tbody>
+        </table>
+      </div>
+      <div class="fieldkit-actions fieldkit-export-actions">
+        <button type="button" class="btn-secondary" id="exportJson" disabled><i class="fa-solid fa-file-code"></i> Export case JSON</button>
+        <button type="button" class="btn-secondary" id="exportReport" disabled><i class="fa-solid fa-file-lines"></i> Export Markdown report</button>
+      </div>
+    </section>
+
+    <section class="fieldkit-section">
+      <div class="fieldkit-section-heading fieldkit-row-heading">
+        <div><p class="fieldkit-eyebrow">03 / ACTIVITY INTEGRITY</p><h2>Hash-linked case events</h2><p>Each event includes the previous event hash. This helps reveal accidental edits; it is not a digital signature or an immutable external audit log.</p></div>
+        <span class="fieldkit-count" id="eventCount">0 EVENTS</span>
+      </div>
+      <div class="fieldkit-event-list" id="eventList"><p class="fieldkit-empty">Case events will appear here as you work.</p></div>
+    </section>
+
+    <section class="fieldkit-section fieldkit-download-panel" id="usb-edition">
+      <p class="fieldkit-eyebrow">04 / PORTABLE EDITION</p>
+      <h2>Take the full Field Kit with you</h2>
+      <p>The browser workbench is a lightweight demonstration. The USB edition provides the Python command-line workflow for case folders, directory inventories, repeatable verification, binary-format headers, redacted source-secret checks, tool discovery and offline reference notes.</p>
+      <div class="fieldkit-download-card">
+        <div><span class="fieldkit-download-label">WINDOWS X64 · VERSION 0.2.0</span><h3>RevelaAI Portable Field Kit</h3><p>Embedded Python 3.14.10 · no pip install · standard-library core</p></div>
+        <a class="btn-primary" href="downloads/RevelaAI-Portable-Field-Kit-v0.2.0-Windows-x64.zip" download><i class="fa-solid fa-download"></i> Download ZIP</a>
+      </div>
+      <div class="fieldkit-download-links"><a href="guides.html#usb-edition">Windows and Linux setup instructions</a><a href="guides.html#verification">Build and integrity notes</a><a href="forensics.html">Return to the Forensics Centre</a></div>
+      <p class="fieldkit-disclaimer">The USB edition is not a disk-imaging product or a full offline copy of cloud RevelaAI. It does not execute inspected binaries, acquire physical media, bypass encryption, or scan arbitrary networks. Use it only within written authorization.</p>
+    </section>
+  </main>
+  <footer>© 2026 Musombi William · RevelaCode · Local processing, evidence first.</footer>
+  <script src="fieldkit.js" defer></script>
+</body>
+</html>
