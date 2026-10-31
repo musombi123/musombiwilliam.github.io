@@ -1,4 +1,4 @@
-name: Deploy portfolio to GitHub Pages
+name: Build and deploy portfolio with USB Field Kit
 
 on:
   push:
@@ -6,33 +6,164 @@ on:
       - main
   workflow_dispatch:
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
 concurrency:
   group: github-pages
   cancel-in-progress: true
 
 jobs:
+  build-site:
+    name: Build website and Windows USB download
+    runs-on: windows-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout portfolio
+        uses: actions/checkout@v4
+
+      - name: Prepare static website directory
+        shell: pwsh
+        run: |
+          $site = Join-Path $env:RUNNER_TEMP "portfolio-site"
+          New-Item -ItemType Directory -Force -Path $site | Out-Null
+          robocopy $env:GITHUB_WORKSPACE $site /E /XD .git .github
+          if ($LASTEXITCODE -gt 7) {
+            throw "Failed to stage portfolio files (robocopy exit $LASTEXITCODE)."
+          }
+          New-Item -ItemType Directory -Force -Path (Join-Path $site "downloads") | Out-Null
+          "Portfolio staged at $site"
+
+      - name: Fetch pinned RevelaAI Field Kit source
+        shell: pwsh
+        run: |
+          $source = Join-Path $env:RUNNER_TEMP "RevelaAI-source"
+          New-Item -ItemType Directory -Force -Path $source | Out-Null
+          git -C $source init
+          git -C $source remote add origin https://github.com/musombi123/RevelaAI.git
+          git -C $source fetch --depth 1 origin 9c1e2f472e04b89bbdfe49480039547df640ddc1
+          git -C $source checkout --detach FETCH_HEAD
+          $actual = (git -C $source rev-parse HEAD).Trim()
+          if ($actual -ne "9c1e2f472e04b89bbdfe49480039547df640ddc1") {
+            throw "Unexpected Field Kit source revision: $actual"
+          }
+          "Pinned Field Kit revision: $actual"
+
+      - name: Prepare and verify embedded Windows runtime
+        shell: pwsh
+        run: |
+          $source = Join-Path $env:RUNNER_TEMP "RevelaAI-source"
+          & (Join-Path $source "portable/prepare-windows-runtime.ps1")
+          if ($LASTEXITCODE -ne 0) {
+            throw "Embedded Python runtime preparation failed."
+          }
+
+      - name: Run Field Kit tests on embedded Python
+        shell: pwsh
+        run: |
+          $source = Join-Path $env:RUNNER_TEMP "RevelaAI-source"
+          $python = Join-Path $source "portable/runtimes/python-win-x64/python.exe"
+          $env:PYTHONPATH = Join-Path $source "portable/src"
+          Push-Location $source
+          try {
+            & $python -m unittest discover -s portable/tests -v
+            if ($LASTEXITCODE -ne 0) {
+              throw "Field Kit Windows test suite failed."
+            }
+          } finally {
+            Pop-Location
+          }
+
+      - name: Package and checksum USB Edition
+        shell: pwsh
+        run: |
+          $source = Join-Path $env:RUNNER_TEMP "RevelaAI-source"
+          $site = Join-Path $env:RUNNER_TEMP "portfolio-site"
+          $stage = Join-Path $env:RUNNER_TEMP "fieldkit-package"
+          $portable = Join-Path $source "portable"
+          $filename = "RevelaAI-Portable-Field-Kit-v0.2.0-Windows-x64.zip"
+          $downloads = Join-Path $site "downloads"
+          $stagePortable = Join-Path $stage "portable"
+
+          New-Item -ItemType Directory -Force -Path $stagePortable | Out-Null
+          Copy-Item -Path (Join-Path $portable "*") -Destination $stagePortable -Recurse -Force
+
+          $tests = Join-Path $stagePortable "tests"
+          if (Test-Path $tests) { Remove-Item $tests -Recurse -Force }
+          Get-ChildItem -Path $stagePortable -Directory -Filter "__pycache__" -Recurse |
+            Remove-Item -Recurse -Force
+          Get-ChildItem -Path $stagePortable -File -Filter "*.pyc" -Recurse |
+            Remove-Item -Force
+
+          $zipPath = Join-Path $downloads $filename
+          if (Test-Path $zipPath) { Remove-Item $zipPath -Force }
+          Compress-Archive -Path (Join-Path $stagePortable "*") -DestinationPath $zipPath -CompressionLevel Optimal
+
+          $digest = (Get-FileHash -Path $zipPath -Algorithm SHA256).Hash.ToLowerInvariant()
+          $size = (Get-Item $zipPath).Length
+          $shaLine = "$digest  $filename"
+          [System.IO.File]::WriteAllText(
+            (Join-Path $downloads "SHA256SUMS.txt"),
+            $shaLine + [Environment]::NewLine,
+            [System.Text.UTF8Encoding]::new($false)
+          )
+
+          $manifest = [ordered]@{
+            product = "RevelaAI Portable Field Kit"
+            version = "0.2.0"
+            platform = "Windows x64"
+            source_repository = "musombi123/RevelaAI"
+            source_commit = "9c1e2f472e04b89bbdfe49480039547df640ddc1"
+            package_file = $filename
+            package_size_bytes = $size
+            sha256 = $digest
+            runtime = "Embedded Python 3.14.10"
+            tested = $true
+            generated_at_utc = (Get-Date).ToUniversalTime().ToString("o")
+          }
+          $json = $manifest | ConvertTo-Json -Depth 5
+          [System.IO.File]::WriteAllText(
+            (Join-Path $downloads "fieldkit-release.json"),
+            $json,
+            [System.Text.UTF8Encoding]::new($false)
+          )
+
+          "Published package: $zipPath"
+          "Size bytes: $size"
+          "SHA-256: $digest"
+
+      - name: Upload complete portfolio site
+        uses: actions/upload-artifact@v4
+        with:
+          name: portfolio-pages-site
+          path: ${{ runner.temp }}\portfolio-site
+          if-no-files-found: error
+          retention-days: 1
+
   deploy:
+    name: Deploy portfolio to GitHub Pages
+    needs: build-site
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
 
-      - name: Upload static site
+      - name: Download built portfolio site
+        uses: actions/download-artifact@v4
+        with:
+          name: portfolio-pages-site
+          path: site
+
+      - name: Upload static Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: site
 
-      - name: Deploy to GitHub Pages
+      - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
