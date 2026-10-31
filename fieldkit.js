@@ -112,17 +112,22 @@
       }
     }
     const maxTotalBytes = 256 * 1024 * 1024;
+    let trimmedForCount = false;
+    let trimmedForSize = false;
     if (selectedFiles.length > MAX_FILES) {
       selectedFiles = selectedFiles.slice(0, MAX_FILES);
-      setStatus("The session limit is 20 files. Extra selections were not added.", "warning");
+      trimmedForCount = true;
     }
-    const totalBytes = selectedFiles.reduce((sum, file) => sum + file.size, 0);
+    let totalBytes = selectedFiles.reduce((sum, file) => sum + file.size, 0);
     while (selectedFiles.length && totalBytes > maxTotalBytes) {
-      selectedFiles.pop();
-      const keptBytes = selectedFiles.reduce((sum, file) => sum + file.size, 0);
-      if (keptBytes <= maxTotalBytes) break;
+      totalBytes -= selectedFiles.pop().size;
+      trimmedForSize = true;
     }
-    if (totalBytes > maxTotalBytes) {
+    if (trimmedForCount && trimmedForSize) {
+      setStatus("The selection was limited to 20 files and 256 MiB total.", "warning");
+    } else if (trimmedForCount) {
+      setStatus("The session limit is 20 files. Extra selections were not added.", "warning");
+    } else if (trimmedForSize) {
       setStatus("The total browser-session limit is 256 MiB. The last selections were removed.", "warning");
     } else {
       setStatus(selectedFiles.length + " file(s) selected. Run the inventory when ready.");
@@ -241,6 +246,7 @@
     const list = $("eventList");
     list.replaceChildren();
     $("eventCount").textContent = events.length + " EVENT" + (events.length === 1 ? "" : "S");
+    $("verifyChain").disabled = events.length === 0;
     if (!events.length) {
       const p = document.createElement("p");
       p.className = "fieldkit-empty";
