@@ -88,26 +88,42 @@
 
   function ensureCase() {
     const proposed = $("caseId").value.trim();
+    const proposedAnalyst = cleanText($("analyst").value) || "Unspecified operator";
     if (!safeCaseId(proposed)) {
       throw new Error("Use a Case ID of 3–64 characters: letters, numbers, dot, underscore or hyphen.");
     }
+    if (events.length && caseId && proposed !== caseId) {
+      throw new Error("This Case ID is locked after the first event. Reset the session to start a different case.");
+    }
+    if (events.length && analyst && proposedAnalyst !== analyst) {
+      throw new Error("The analyst is locked after the first event. Reset the session to change the operator.");
+    }
     caseId = proposed;
-    analyst = cleanText($("analyst").value) || "Unspecified operator";
+    analyst = proposedAnalyst;
   }
 
   function addSelected(list) {
     const incoming = Array.from(list || []);
-    const known = new Set(selectedFiles.map((f) => [f.name, f.size, f.lastModified].join("|")));
+    const known = new Set(selectedFiles);
     for (const file of incoming) {
-      const key = [file.name, file.size, file.lastModified].join("|");
-      if (!known.has(key)) {
+      if (!known.has(file)) {
         selectedFiles.push(file);
-        known.add(key);
+        known.add(file);
       }
     }
+    const maxTotalBytes = 256 * 1024 * 1024;
     if (selectedFiles.length > MAX_FILES) {
       selectedFiles = selectedFiles.slice(0, MAX_FILES);
       setStatus("The session limit is 20 files. Extra selections were not added.", "warning");
+    }
+    const totalBytes = selectedFiles.reduce((sum, file) => sum + file.size, 0);
+    while (selectedFiles.length && totalBytes > maxTotalBytes) {
+      selectedFiles.pop();
+      const keptBytes = selectedFiles.reduce((sum, file) => sum + file.size, 0);
+      if (keptBytes <= maxTotalBytes) break;
+    }
+    if (totalBytes > maxTotalBytes) {
+      setStatus("The total browser-session limit is 256 MiB. The last selections were removed.", "warning");
     } else {
       setStatus(selectedFiles.length + " file(s) selected. Run the inventory when ready.");
     }
@@ -197,6 +213,30 @@
     }
   }
 
+  async function verifyEventChain() {
+    const button = $("verifyChain");
+    button.disabled = true;
+    try {
+      let previous = "0".repeat(64);
+      for (const event of events) {
+        if (event.previous_event_sha256 !== previous) {
+          throw new Error("Broken previous-hash link at event " + event.sequence + ".");
+        }
+        const { event_sha256, ...payload } = event;
+        const calculated = await sha256(new TextEncoder().encode(JSON.stringify(payload)));
+        if (calculated !== event_sha256) {
+          throw new Error("Event hash mismatch at event " + event.sequence + ".");
+        }
+        previous = event_sha256;
+      }
+      setStatus(events.length ? "Event chain verified. " + events.length + " event(s) are linked and unchanged." : "No events exist to verify.", "success");
+    } catch (error) {
+      setStatus(error.message, "error");
+    } finally {
+      button.disabled = false;
+    }
+  }
+
   function renderEvents() {
     const list = $("eventList");
     list.replaceChildren();
@@ -261,7 +301,7 @@
     let completed = 0;
     try {
       for (const file of selectedFiles) {
-        if (evidence.some((item) => item.name === file.name && item.size === file.size && item.last_modified_ms === file.lastModified)) {
+        if (evidence.some((item) => item.file === file)) {
           continue;
         }
         setStatus("Reading and hashing " + file.name + " (" + (completed + 1) + "/" + selectedFiles.length + ")…");
@@ -335,7 +375,7 @@
     document.body.append(link);
     link.click();
     link.remove();
-    URL.revokeObjectURL(url);
+    window.setTimeout(() => URL.revokeObjectURL(url), 1000);
   }
 
   function exportJson() {
@@ -392,6 +432,7 @@
   dropZone.addEventListener("drop", (event) => addSelected(event.dataTransfer.files));
   $("runInventory").addEventListener("click", runInventory);
   $("exportJson").addEventListener("click", exportJson);
+  $("verifyChain").addEventListener("click", verifyEventChain);
   $("exportReport").addEventListener("click", exportReport);
   $("resetSession").addEventListener("click", () => {
     selectedFiles = [];
