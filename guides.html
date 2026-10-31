@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="On-site technical guides for Musombi William's digital forensics, software reverse engineering, defensive security, RevelaAI Field Kit and Jumuiya Shamba engineering.">
+  <meta name="theme-color" content="#0F172A">
+  <title>Technical Field Guides | Musombi William</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link rel="stylesheet" href="stylesheet.css">
+</head>
+<body>
+  <header class="forensics-hero">
+    <p class="eyebrow">MUSOMBI WILLIAM · ENGINEERING KNOWLEDGE BASE</p>
+    <h1>Technical Field Guides</h1>
+    <p>Practical reference material for evidence handling, data recovery, reverse engineering, application security, portable tooling and the Jumuiya Shamba Hub. These guides are published as pages on this website—no repository viewer is required.</p>
+    <div class="hero-buttons"><a class="btn-primary" href="fieldkit.html">Launch Field Workbench</a><a class="btn-secondary" href="forensics.html">Back to Forensics Centre</a></div>
+  </header>
+  <nav class="forensics-nav" aria-label="Technical guides">
+    <a href="#library">Guide Library</a><a href="#learning-path">Learning Path</a><a href="#data-recovery">Data Recovery</a><a href="#reverse-engineering">Reverse Engineering</a><a href="#defensive-security">Defensive Security</a><a href="#toolchain">Toolchain</a><a href="#lab-safety">Lab Safety</a><a href="#usb-edition">USB Field Kit</a><a href="#shamba">Shamba Hub</a>
+  </nav>
+  <main class="forensics-content guide-content">
+    <section id="library">
+      <h2>Guide library</h2>
+      <div class="capability-grid">
+        <a class="capability-card guide-card" href="#learning-path"><h4>01 · Six-month learning path</h4><p>Build a foundation in operating systems, networks, Python, storage forensics, reverse engineering and defensive validation.</p><span>Open guide →</span></a>
+        <a class="capability-card guide-card" href="#data-recovery"><h4>02 · Evidence and data recovery</h4><p>Intake, preservation, acquisition, recovery method selection, validation and reporting.</p><span>Open guide →</span></a>
+        <a class="capability-card guide-card" href="#reverse-engineering"><h4>03 · Reverse engineering</h4><p>Static triage, binary formats, disassembly, Android packages and safe dynamic analysis.</p><span>Open guide →</span></a>
+        <a class="capability-card guide-card" href="#defensive-security"><h4>04 · Defensive security</h4><p>Scope, safe testing, finding validation, risk classification and remediation verification.</p><span>Open guide →</span></a>
+        <a class="capability-card guide-card" href="#toolchain"><h4>05 · Toolchain reference</h4><p>Tools and libraries grouped by digital acquisition, binaries, memory, networks and secure code.</p><span>Open guide →</span></a>
+        <a class="capability-card guide-card" href="#lab-safety"><h4>06 · Lab safety and evidence handling</h4><p>Authorization, isolated labs, privacy, chain of custody and stop conditions.</p><span>Open guide →</span></a>
+        <a class="capability-card guide-card" href="#usb-edition"><h4>07 · USB Field Kit manual</h4><p>Windows and Linux setup, local commands, optional AI and operational boundaries.</p><span>Open guide →</span></a>
+        <a class="capability-card guide-card" href="#shamba"><h4>08 · Jumuiya Shamba Hub</h4><p>Product architecture, lifecycle, role controls, core API areas and release safeguards.</p><span>Open guide →</span></a>
+      </div>
+    </section>
+
+    <section id="learning-path">
+      <h2>Six-month learning path: Digital Forensics & Reverse Engineering</h2>
+      <p class="lead">This is a self-study programme, not an accredited qualification. A realistic target is 8–12 focused hours per week; extend the schedule when a topic needs more time.</p>
+      <div class="guide-month-grid">
+        <article class="capability-card"><h4>Month 1 · Foundations</h4><p>Linux and Windows architecture, permissions, processes, IP/DNS/TCP/TLS/HTTP, Python file and binary I/O, Git, C fundamentals and introductory x86-64/ARM64.</p><p><strong>Practical:</strong> build a file inventory with SHA-256, summarize a training PCAP, and compare a self-compiled program's source and disassembly.</p></article>
+        <article class="capability-card"><h4>Month 2 · Storage and acquisition</h4><p>Partitions, volumes, sectors, FAT/exFAT, NTFS, ext4, file metadata, deleted entries, imaging, write blockers, bad sectors and acquisition logs.</p><p><strong>Practical:</strong> use a disposable lab image, hash it, identify partitions and document acquisition limits.</p></article>
+        <article class="capability-card"><h4>Month 3 · Host, memory and network</h4><p>Windows Event Logs, Sysmon concepts, registry artefacts, Linux journal/authentication logs, Volatility 3, Wireshark, Zeek and timeline construction.</p><p><strong>Practical:</strong> analyze self-generated logs or known training data and create a sourced timeline.</p></article>
+        <article class="capability-card"><h4>Month 4 · Reverse engineering</h4><p>PE, ELF, Mach-O, DEX and APK structures; headers, sections, symbols, imports, disassembly, decompilation, control-flow and data-flow reasoning.</p><p><strong>Practical:</strong> analyze a benign program you compiled, compare source to Ghidra output and parse a documented binary format.</p></article>
+        <article class="capability-card"><h4>Month 5 · Mobile and app security</h4><p>Android manifests, permissions, exported components, signing, DEX, JADX/APKTool/Androguard/MobSF, OWASP WSTG/ASVS, secure code review and dependency analysis.</p><p><strong>Practical:</strong> inventory an app you own, scan a repository you control, fix a lab weakness and retest.</p></article>
+        <article class="capability-card"><h4>Month 6 · Capstone and reporting</h4><p>Complete one data-recovery lab, one reverse-engineering case and one defensive-security assessment using only authorized test material.</p><p><strong>Deliver:</strong> hashes, tool versions, repeatable methods, findings, limitations, evidence references, remediation and a sanitized report.</p></article>
+      </div>
+      <div class="forensics-callout">A portfolio case is complete only when another analyst can understand the scope, reproduce the observations, identify the source evidence and see the limits of the conclusion.</div>
+    </section>
+
+    <section id="data-recovery">
+      <h2>Digital evidence and data-recovery playbook</h2>
+      <p class="lead">Recovery is a preservation and analysis process—not a promise that deleted or damaged data can always be restored. Results depend on media condition, encryption, overwritten blocks, SSD TRIM, controller behaviour and acquisition quality.</p>
+      <div class="card"><h4>1. Intake and authority</h4><ul><li>Confirm ownership or lawful authority to request the work.</li><li>Write down device, volume, account, data type, date range and exclusions.</li><li>Record make/model, serial number, capacity, physical condition and handover details.</li><li>Ask what happened and record previous repairs, recovery attempts or power-on attempts.</li><li>Agree handling, confidentiality, retention, return/disposal and cost before work begins.</li></ul></div>
+      <div class="card"><h4>2. Preserve the source</h4><ul><li>Stop unnecessary writes and do not install recovery software onto the source device.</li><li>For physical media, use appropriate write-blocking and a controlled acquisition workstation.</li><li>For unstable drives, use a qualified imaging workflow with a resumable map file; do not repeatedly power-cycle failing hardware.</li><li>Record tool version, settings, errors, start/end times and time zone.</li><li>Calculate SHA-256 hashes and preserve the original acquisition record.</li></ul></div>
+      <div class="card"><h4>3. Analyze a working copy</h4><ul><li>Identify partition and file-system structures before attempting recovery.</li><li>Prefer file-system-aware recovery where metadata remains available.</li><li>Use file carving only when necessary; it may lose names, folders and timestamps.</li><li>Validate recovered files by type, size, opening behaviour and hash; classify as complete, partial, fragment, corrupt or not verified.</li><li>Document what was not recoverable and any alternative explanation.</li></ul></div>
+      <div class="forensics-callout">Never run repair tools on the original evidence source. Hash equality confirms bytes match between observations; it does not prove authenticity, ownership or chain-of-custody completeness.</div>
+    </section>
+
+    <section id="reverse-engineering">
+      <h2>Software reverse-engineering playbook</h2>
+      <div class="guide-step-list">
+        <article><span>01</span><div><h4>Establish provenance</h4><p>Record authorization, source location, acquisition time, file size and SHA-256. Work on a copy and retain the original unchanged.</p></div></article>
+        <article><span>02</span><div><h4>Identify the format and architecture</h4><p>Start with magic bytes and metadata. Distinguish PE, ELF, Mach-O, DEX, APK and WebAssembly; extension alone is not proof of format.</p></div></article>
+        <article><span>03</span><div><h4>Review structural metadata</h4><p>Inspect headers, sections/segments, imports/exports, symbols, permissions, signing information and relevant manifest data.</p></div></article>
+        <article><span>04</span><div><h4>Reason about code</h4><p>Use disassembly, decompilation, cross-references and control-flow graphs. Treat decompiler output as an interpretation, not original source code.</p></div></article>
+        <article><span>05</span><div><h4>Use dynamic analysis only in a lab</h4><p>Run only known benign or authorized samples in isolated, snapshotted environments with controlled networking and no personal credentials.</p></div></article>
+        <article><span>06</span><div><h4>Report evidence and uncertainty</h4><p>Separate observed facts from hypotheses; cite offsets, functions, strings, hashes, tool versions and limitations. Do not infer maliciousness from entropy alone.</p></div></article>
+      </div>
+      <p>Android APK review can inventory the manifest, permissions, DEX files and native libraries. This is static app analysis; it is not acquisition of the phone owner's private data and does not bypass device encryption or operating-system controls.</p>
+    </section>
+
+    <section id="defensive-security">
+      <h2>Defensive application-security validation</h2>
+      <div class="capability-grid">
+        <article class="capability-card"><h4>Scope first</h4><p>Identify assets, test accounts, permitted methods, time window, exclusions, emergency contact and change controls. Written authorization must cover each system and provider.</p></article>
+        <article class="capability-card"><h4>Review code and dependencies</h4><p>Use static analysis, dependency checks and configuration review against repositories you control. Pin versions and preserve tool output.</p></article>
+        <article class="capability-card"><h4>Test safely</h4><p>Prefer local labs or approved staging. Start with passive checks; avoid destructive tests, denial of service, data extraction, persistence or control bypass.</p></article>
+        <article class="capability-card"><h4>Validate every finding</h4><p>Reproduce the observation, confirm affected component and impact, distinguish false positives, and use CWE/CVSS where appropriate.</p></article>
+        <article class="capability-card"><h4>Remediate and retest</h4><p>Provide a specific fix, owner, priority and verification criteria. Record the retest evidence rather than relying on an assertion that the issue is fixed.</p></article>
+        <article class="capability-card"><h4>Protect client data</h4><p>Redact credentials, tokens, keys and personal data. Do not put client data in public repositories or unapproved AI services.</p></article>
+      </div>
+      <div class="forensics-callout">A scanner result is a lead, not automatically a confirmed exploitable vulnerability. Validate it safely before describing it as a finding.</div>
+    </section>
+
+    <section id="toolchain">
+      <h2>Toolchain and library reference</h2>
+      <div class="fieldkit-table-wrap"><table class="fieldkit-table guide-table"><thead><tr><th>Discipline</th><th>Tools and libraries</th><th>Use</th></tr></thead><tbody>
+        <tr><td>Acquisition and recovery</td><td>GNU ddrescue, Guymager, The Sleuth Kit, Autopsy, TestDisk, PhotoRec</td><td>Imaging, file-system analysis and recovery from controlled copies.</td></tr>
+        <tr><td>Reverse engineering</td><td>Ghidra, radare2/Cutter, Capstone, LIEF, Frida</td><td>Binary structure, disassembly, decompilation and authorized instrumentation.</td></tr>
+        <tr><td>Android analysis</td><td>JADX, APKTool, Androguard, MobSF, Android Platform Tools</td><td>Manifest, DEX, resources, permissions and native-library inspection.</td></tr>
+        <tr><td>Memory and endpoint</td><td>Volatility 3, Windows Sysinternals, Sysmon</td><td>Memory artefacts, process context, operating-system and event analysis.</td></tr>
+        <tr><td>Network</td><td>Wireshark, Zeek, Wazuh</td><td>Packet review, protocol analysis, structured telemetry and alert triage.</td></tr>
+        <tr><td>Defensive code security</td><td>Semgrep, CodeQL, Trivy, OSV-Scanner, OWASP ZAP</td><td>Static analysis, dependency/misconfiguration review and controlled web testing.</td></tr>
+        <tr><td>Python foundations</td><td>hashlib, pathlib, struct, mmap, argparse, logging, sqlite3, datetime</td><td>Repeatable evidence processing and safe binary parsing.</td></tr>
+      </tbody></table></div>
+      <p>Install specialist tools from their official distribution channels, verify the download and hash, record versions and licenses, and keep them isolated from the case evidence. A smaller toolchain that is understood and tested is preferable to an unmaintained collection.</p>
+    </section>
+
+    <section id="lab-safety">
+      <h2>Lab safety, privacy and engagement rules</h2>
+      <div class="card"><h4>Authorization</h4><p>Analyze only devices, applications, accounts, networks and data that you own or are explicitly authorized to assess. Written scope should identify the target, permitted actions, timing, exclusions, emergency contact and data-handling requirements.</p></div>
+      <div class="card"><h4>Safe lab setup</h4><ul><li>Use separate virtual machines for analysis, testing and everyday work.</li><li>Keep unknown binaries offline by default; disable shared folders and host credential access in malware-analysis VMs.</li><li>Use synthetic data, dedicated accounts, snapshots and network egress restrictions.</li><li>Record tools and versions; verify downloads; do not disable endpoint protection on a normal workstation to run a sample.</li></ul></div>
+      <div class="card"><h4>Evidence and privacy</h4><ul><li>Record source identity, condition, timestamps and time zone, collector, transfers, hashes, tool settings and evidence storage location.</li><li>Preserve originals and work from copies; retain an access log and retention deadline.</li><li>Collect only what the authorized scope requires; encrypt data and limit access to named personnel.</li><li>Redact personal information, credentials, tokens, private keys and confidential content from reports.</li></ul></div>
+      <div class="card"><h4>Stop conditions</h4><p>Stop if ownership or authority is unclear, activity moves outside scope, a device may be damaged, testing causes an outage or privacy exposure, evidence integrity cannot be maintained, or a legal hold/criminal matter requires specialist handling.</p></div>
+    </section>
+
+    <section id="usb-edition">
+      <h2>RevelaAI Portable Field Kit · Windows and Linux</h2>
+      <p class="lead">Version 0.2.0 is the local command-line companion to the browser workbench. The Windows x64 edition bundles an embedded Python 3.14.10 runtime; Linux currently uses a host Python 3.10+ installation. Core utilities use the Python standard library.</p>
+      <div class="card"><h4>Prepare Windows</h4><ol><li>Download the Windows x64 ZIP from the Field Workbench page.</li><li>Extract it to a dedicated USB drive, preferably exFAT or NTFS.</li><li>Open PowerShell in the extracted folder and run <code>.\Start-RevelaAI.cmd</code> or double-click the launcher.</li><li>Keep sensitive case folders on an encrypted, access-controlled volume.</li></ol><p>The packaged Windows runtime is embedded and does not include pip. The preparation workflow validates the official Python archive against its published SHA-256 before packaging.</p></div>
+      <div class="card"><h4>Prepare Linux</h4><ol><li>Extract the package on a Linux host with Python 3.10 or newer.</li><li>Run <code>chmod +x start-linux.sh</code>.</li><li>Start the kit with <code>./start-linux.sh</code>.</li></ol><p>The Linux source package is not a self-contained OS runtime; the compatible Python interpreter must already be installed.</p></div>
+      <div class="card"><h4>Core commands</h4><pre><code>python -m revela_fieldkit case create --root cases --id CASE-001 --title "Training evidence triage"
+python -m revela_fieldkit inventory --case cases/CASE-001 --source ./sample-data
+python -m revela_fieldkit verify --case cases/CASE-001
+python -m revela_fieldkit binary inspect ./sample-data/program.exe --hash
+python -m revela_fieldkit custody verify --case cases/CASE-001
+python -m revela_fieldkit secrets scan ./my-repository
+python -m revela_fieldkit doctor
+python -m revela_fieldkit knowledge search "deleted files timeline"
+python -m revela_fieldkit report --case cases/CASE-001</code></pre></div>
+      <div class="card"><h4>Optional local AI</h4><p>The optional <code>ask</code> command can connect only to a loopback Ollama service. Ollama and the model must be installed or downloaded separately; neither is bundled with the USB kit. Local AI output can be wrong and must never be treated as forensic evidence or an authoritative conclusion.</p></div>
+      <div class="forensics-callout">The Field Kit is not a complete offline copy of cloud RevelaAI. It does not execute inspected binaries, acquire physical disks, repair source media, run arbitrary-target network scans or bypass encryption. Inventory hashing is not forensic imaging. Entropy and signatures are triage hints, not a malware verdict.</div>
+    </section>
+
+    <section id="verification">
+      <h2>Build and integrity notes</h2>
+      <p>The Windows USB edition was packaged from the RevelaAI portable source snapshot <code>9c1e2f472e04b89bbdfe49480039547df640ddc1</code> (Field Kit v0.2.0). The corresponding automated build ran 17 unit tests against the embedded Windows runtime; all passed, including PE64/ELF64/APK parsing, custody-chain verification, tamper detection, evidence inventory/verification, secret redaction and loopback-only Ollama checks.</p>
+      <p>The portfolio deployment pipeline rebuilds the pinned Windows package and publishes the ZIP under this website's <code>/downloads/</code> path. A SHA-256 checksum file is published beside the download. Verify the checksum after downloading, before copying the kit to a USB drive.</p>
+      <p><a class="btn-primary" href="fieldkit.html#usb-edition">Open the Field Workbench and download</a></p>
+    </section>
+
+    <section id="shamba">
+      <h2>Jumuiya Shamba Hub · Engineering overview</h2>
+      <p class="lead">Shamba is the agriculture and farm-operations hub within Jumuiya. It brings farmer onboarding, registered farms, crops, activities, harvest tracking, agricultural intelligence, weather and market snapshots, recommendations, alerts, farm-rights review and marketplace safety into one workspace.</p>
+      <div class="card"><h4>System boundaries</h4><ul><li><strong>Frontend:</strong> React/JSX and Tailwind CSS, with the Shamba dashboard shell and shared Jumuiya API client.</li><li><strong>Backend:</strong> existing RevelaCode backend and Jumuiya Flask blueprints; the API root is <code>/api/jumuiya</code> and the Shamba base is <code>/api/jumuiya/shamba</code>.</li><li><strong>Storage:</strong> MongoDB through the shared Jumuiya database/collection gateway. Browser and AI services do not connect directly to MongoDB.</li><li><strong>Authentication:</strong> user identity is derived from the authenticated server session; administrator queues and decisions require backend-recognized admin roles.</li></ul></div>
+      <div class="card"><h4>Farmer and farm lifecycle</h4><ol><li>A signed-in farmer submits a Shamba farmer profile.</li><li>An authorized Shamba administrator approves, rejects with a note, or requests more information.</li><li>Only a profile explicitly marked approved may create a farm under the repaired backend contract.</li><li>Farm-rights review is a separate decision from farmer-profile approval.</li><li>Protected farm operations remain blocked until the farm-rights status is verified.</li><li>Eligible farms use crops, activities, harvests, recommendations, alerts, weather and marketplace features.</li></ol></div>
+      <div class="forensics-callout"><strong>Important safeguards:</strong> platform review is not government land-title certification; location and currency are not proof of land rights; a soil image is not a laboratory measurement of pH, NPK, salinity or contaminants; and a quote request is not a confirmed service booking or payment.</div>
+      <p>The implementation notes distinguish existing API contracts from features dependent on provider configuration or deployment. A draft code change is not a production release; verify backend and frontend deployment status before treating a feature as live.</p>
+    </section>
+  </main>
+  <footer>© 2026 Musombi William · Technical Field Guides · Evidence before assumptions.</footer>
+</body>
+</html>
