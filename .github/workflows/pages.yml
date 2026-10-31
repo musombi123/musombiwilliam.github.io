@@ -20,6 +20,21 @@ jobs:
       - name: Checkout portfolio
         uses: actions/checkout@v4
 
+      - name: Validate first-party browser assets
+        shell: pwsh
+        run: |
+          $required = @("index.html", "forensics.html", "fieldkit.html", "fieldkit.js", "guides.html", "stylesheet.css")
+          foreach ($relativePath in $required) {
+            $fullPath = Join-Path $env:GITHUB_WORKSPACE $relativePath
+            if (!(Test-Path $fullPath)) {
+              throw "Required website file is missing: $relativePath"
+            }
+          }
+          node --check (Join-Path $env:GITHUB_WORKSPACE "fieldkit.js")
+          if ($LASTEXITCODE -ne 0) {
+            throw "Field Workbench JavaScript syntax validation failed."
+          }
+
       - name: Prepare static website directory
         shell: pwsh
         run: |
