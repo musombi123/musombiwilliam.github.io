@@ -662,3 +662,19 @@ body.site-page table{max-width:100%}
   .site-header,.site-progress,.site-back-top,.site-toast,.site-copy-email,.site-code-copy{display:none!important}
   .site-reveal,.site-hero-enter{opacity:1!important;transform:none!important}
 }
+
+.site-role-line { margin:.8rem 0 1rem; color:var(--color-text-alt); font-size:clamp(1.05rem,2.2vw,1.28rem); font-weight:650; }
+.site-role-line strong { color:var(--color-accent-light); }
+.site-typed-caret { display:inline-block; width:2px; height:1.05em; margin-left:4px; vertical-align:-.12em; background:var(--color-accent-light); animation:site-caret-blink 1s steps(2,end) infinite; }
+@keyframes site-caret-blink { 50% { opacity:0; } }
+.site-page-home > nav.site-local-nav { margin-top:-.15rem!important; }
+.site-page-home .hero { isolation:isolate; }
+.site-page-home .hero::after { position:absolute; inset:0; z-index:-1; content:""; pointer-events:none; opacity:.18; background-image:linear-gradient(rgba(148,163,184,.18) 1px,transparent 1px),linear-gradient(90deg,rgba(148,163,184,.18) 1px,transparent 1px); background-size:38px 38px; -webkit-mask-image:radial-gradient(ellipse at center,black 0%,transparent 76%); mask-image:radial-gradient(ellipse at center,black 0%,transparent 76%); }
+.site-page-home .project-card img { cursor:zoom-in; }
+.site-page-home .contact-list { margin-bottom:.6rem; }
+.site-page-home .site-copy-email { margin-left:0; }
+@media(max-width:520px) {
+  .site-role-line { font-size:1rem; }
+  .site-page-home .hero { padding-inline:1rem; }
+  .site-page-home .hero-text p { line-height:1.7; }
+}
