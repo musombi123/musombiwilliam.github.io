@@ -36,6 +36,9 @@ This site is built to:
 - **stylesheet.css** — shared portfolio styles
 - **profile.PNG**, **aiintro.PNG**, **dashboard.PNG**, **revelaAIdashboard.PNG**, **revelacode-frontend.PNG** — portfolio images
 - **forensics.html** — Digital Forensics, Reverse Engineering & Defensive Security capability centre
+- **fieldkit.html / fieldkit.js** — browser-local evidence workbench
+- **guides.html** — first-party technical guide library
+- **downloads/** — website-published Field Kit release and checksum
 - **docs/forensics/** — learning paths, toolchain references, recovery and reverse-engineering playbooks, authorized vulnerability validation, lab safety, and case-report template
 - **docs/shamba/** — complete Shamba Hub technical documentation
   - **index.md** — overview and documentation index
@@ -59,7 +62,7 @@ This site is built to:
 
 Shamba is the agriculture and farm-operations hub within Jumuiya. Its documentation covers the frontend/backend architecture, farmer profile lifecycle, farm-rights verification, crop/activity/harvest endpoints, agricultural intelligence, shared-marketplace integration, Trust & Safety, soil-photo limits, security and release/testing procedures.
 
-**Start here:** [Complete Shamba Hub documentation](docs/shamba/index.md)
+**Start here:** [Shamba Hub engineering guide](guides.html#shamba)
 
 The documentation distinguishes platform review from official land-title certification and marks features that depend on backend deployment or external providers. It is implementation documentation, not a guarantee that every integration is live in production.
 
@@ -69,13 +72,9 @@ The documentation distinguishes platform review from official land-title certifi
 
 The portfolio now includes a dedicated capability centre and a structured self-study programme covering digital evidence handling, data recovery, software reverse engineering, mobile application analysis, memory and network forensics, and authorized application-security validation.
 
-**Start here:** [Digital Forensics & Security Centre](forensics.html) · [Learning Path](docs/forensics/learning-path.md) · [Toolchain & Official Documentation](docs/forensics/toolchain.md)
+**Start here:** [Digital Forensics & Security Centre](forensics.html) · [Browser Field Workbench](fieldkit.html) · [Technical Field Guides](guides.html)
 
 The centre is a learning and portfolio resource. The static GitHub Pages site does not execute scans, recover files, inspect customer devices, or provide live monitoring. Client work requires documented authorization, controlled evidence handling, appropriate tools, and infrastructure. No recovery or security outcome is guaranteed.
-
-Source repositories:
-- [RevelaCode Frontend](https://github.com/musombi123/RevelaCode-Frontend)
-- [RevelaCode Backend](https://github.com/musombi123/RevelaCode-Backend)
 
 ---
 
@@ -85,7 +84,6 @@ Source repositories:
 Junior Full-Stack Developer | AI Enthusiast | Tech-Faith Innovator
 
 📧 [musombiwilliam769@gmail.com](mailto:musombiwilliam769@gmail.com)  
-🔗 GitHub: [https://github.com/musombi123](https://github.com/musombi123)  
 💼 LinkedIn: [https://www.linkedin.com/in/william-musombi-a2a064327](https://www.linkedin.com/in/william-musombi-a2a064327)
 
 ---
