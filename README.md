@@ -35,6 +35,8 @@ This site is built to:
 - **index.html** — portfolio homepage
 - **stylesheet.css** — shared portfolio styles
 - **profile.PNG**, **aiintro.PNG**, **dashboard.PNG**, **revelaAIdashboard.PNG**, **revelacode-frontend.PNG** — portfolio images
+- **forensics.html** — Digital Forensics, Reverse Engineering & Defensive Security capability centre
+- **docs/forensics/** — learning paths, toolchain references, recovery and reverse-engineering playbooks, authorized vulnerability validation, lab safety, and case-report template
 - **docs/shamba/** — complete Shamba Hub technical documentation
   - **index.md** — overview and documentation index
   - **architecture.md** — system architecture, data model, sections and user journeys
@@ -60,6 +62,16 @@ Shamba is the agriculture and farm-operations hub within Jumuiya. Its documentat
 **Start here:** [Complete Shamba Hub documentation](docs/shamba/index.md)
 
 The documentation distinguishes platform review from official land-title certification and marks features that depend on backend deployment or external providers. It is implementation documentation, not a guarantee that every integration is live in production.
+
+---
+
+## 🔬 Digital Forensics, Reverse Engineering & Defensive Security
+
+The portfolio now includes a dedicated capability centre and a structured self-study programme covering digital evidence handling, data recovery, software reverse engineering, mobile application analysis, memory and network forensics, and authorized application-security validation.
+
+**Start here:** [Digital Forensics & Security Centre](forensics.html) · [Learning Path](docs/forensics/learning-path.md) · [Toolchain & Official Documentation](docs/forensics/toolchain.md)
+
+The centre is a learning and portfolio resource. The static GitHub Pages site does not execute scans, recover files, inspect customer devices, or provide live monitoring. Client work requires documented authorization, controlled evidence handling, appropriate tools, and infrastructure. No recovery or security outcome is guaranteed.
 
 Source repositories:
 - [RevelaCode Frontend](https://github.com/musombi123/RevelaCode-Frontend)

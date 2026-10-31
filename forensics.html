@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Musombi William's digital forensics, data recovery, reverse engineering and defensive security learning centre, toolchain and technical playbooks.">
+  <meta name="theme-color" content="#0F172A">
+  <title>Digital Forensics & Security Centre | Musombi William</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link rel="stylesheet" href="stylesheet.css">
+</head>
+<body>
+  <header class="forensics-hero">
+    <p class="eyebrow">RevelaCode · Research · Evidence · Security</p>
+    <h1>Digital Forensics, Reverse Engineering & Defensive Security</h1>
+    <p>A practical engineering track for understanding systems, preserving digital evidence, recovering data when technically possible, and validating security weaknesses responsibly.</p>
+    <div class="hero-buttons">
+      <a class="btn-primary" href="docs/forensics/learning-path.md">Explore the Learning Path</a>
+      <a class="btn-secondary" href="index.html">Back to Portfolio</a>
+    </div>
+  </header>
+  <nav class="forensics-nav" aria-label="Forensics centre navigation">
+    <a href="#tracks">Capability Tracks</a><a href="#languages">Languages</a><a href="#toolkit">Toolchain</a><a href="#courses">Courses & Labs</a><a href="#method">Working Method</a><a href="#scope">Responsible Practice</a>
+  </nav>
+  <main class="forensics-content">
+    <section id="tracks">
+      <h2>Build specialist capability—not just a collection of tools</h2>
+      <p class="lead">The objective is to become a trusted technical investigator who can explain what happened, preserve the evidence, state what can and cannot be concluded, and give a client a reproducible report. These are separate disciplines that share a strong foundation in operating systems, networks, programming, and disciplined documentation.</p>
+      <div class="capability-grid">
+        <article class="capability-card"><h4><i class="fa-solid fa-hard-drive"></i> Digital Evidence & Data Recovery</h4><p>Media triage, forensic imaging, file-system analysis, deleted-file recovery, integrity verification, and evidence reporting.</p><div class="capability-tags"><span>NTFS</span><span>FAT/exFAT</span><span>ext4</span><span>SHA-256</span></div><a class="card-link" href="https://github.com/musombi123/musombiwilliam.github.io/blob/main/docs/forensics/data-recovery.md">Read the recovery playbook →</a></article>
+        <article class="capability-card"><h4><i class="fa-solid fa-microchip"></i> Software Reverse Engineering</h4><p>Executable formats, disassembly, decompilation, control-flow analysis, binary metadata, and authorized application analysis.</p><div class="capability-tags"><span>PE</span><span>ELF</span><span>Mach-O</span><span>APK/DEX</span></div><a class="card-link" href="https://github.com/musombi123/musombiwilliam.github.io/blob/main/docs/forensics/reverse-engineering.md">Read the reverse-engineering playbook →</a></article>
+        <article class="capability-card"><h4><i class="fa-solid fa-shield-halved"></i> Defensive Security Validation</h4><p>Secure code review, dependency and configuration analysis, safe web/API testing, risk classification, and remediation verification.</p><div class="capability-tags"><span>OWASP</span><span>CWE</span><span>CVSS 4.0</span><span>SAST/SCA</span></div><a class="card-link" href="https://github.com/musombi123/musombiwilliam.github.io/blob/main/docs/forensics/vulnerability-validation.md">Read the validation methodology →</a></article>
+        <article class="capability-card"><h4><i class="fa-solid fa-memory"></i> Incident & Memory Forensics</h4><p>Windows/Linux artefacts, event timelines, memory-image analysis, process context, persistence indicators, and incident triage.</p><div class="capability-tags"><span>Volatility 3</span><span>Sysmon</span><span>Linux logs</span></div><a class="card-link" href="https://github.com/musombi123/musombiwilliam.github.io/blob/main/docs/forensics/toolchain.md">Explore the toolchain →</a></article>
+        <article class="capability-card"><h4><i class="fa-solid fa-network-wired"></i> Network Forensics & Monitoring</h4><p>Packet capture review, protocol analysis, network metadata, alert triage, and defensible incident timelines.</p><div class="capability-tags"><span>Wireshark</span><span>Zeek</span><span>Wazuh</span></div><a class="card-link" href="https://github.com/musombi123/musombiwilliam.github.io/blob/main/docs/forensics/toolchain.md">Explore the toolchain →</a></article>
+        <article class="capability-card"><h4><i class="fa-brands fa-android"></i> Mobile Application Analysis</h4><p>Static inspection of owned or authorized APKs, manifests, permissions, DEX, native libraries, and mobile app security posture.</p><div class="capability-tags"><span>Android</span><span>JADX</span><span>MobSF</span></div><a class="card-link" href="https://github.com/musombi123/musombiwilliam.github.io/blob/main/docs/forensics/reverse-engineering.md">Read the mobile analysis track →</a></article>
+      </div>
+    </section>
+    <section id="languages">
+      <h2>The language strategy</h2>
+      <div class="card">
+        <p><strong>Python is the primary language for this track.</strong> Use it to automate evidence processing, parse artefacts, calculate hashes, build timelines, write YARA support tooling, and create repeatable reports.</p>
+        <p><strong>C/C++ and assembly are the low-level foundation.</strong> Learn pointers, memory layout, calling conventions, x86-64, and ARM64 to understand compiled software rather than relying only on decompiler output.</p>
+        <p><strong>Java/Kotlin matter for Android.</strong> Add JavaScript/TypeScript for application security, Bash/PowerShell for operating-system workflows, and Rust later when building reliable command-line analysis utilities.</p>
+        <p>There is no single best language. The strongest analysts use the language that matches the artefact, operating system, and question being investigated.</p>
+      </div>
+    </section>
+    <section id="toolkit">
+      <h2>Core toolchain</h2>
+      <div class="capability-grid">
+        <article class="capability-card"><h4>Evidence acquisition & recovery</h4><p>GNU ddrescue, Guymager, The Sleuth Kit, Autopsy, TestDisk and PhotoRec.</p></article>
+        <article class="capability-card"><h4>Reverse engineering</h4><p>Ghidra, radare2/Cutter, Capstone, LIEF, Frida, JADX, APKTool and Androguard.</p></article>
+        <article class="capability-card"><h4>Memory, endpoint & network</h4><p>Volatility 3, Windows Sysinternals, Wireshark, Zeek and Wazuh.</p></article>
+        <article class="capability-card"><h4>Defensive application security</h4><p>Semgrep, GitHub CodeQL, Trivy, OSV-Scanner and OWASP ZAP in authorized, controlled environments.</p></article>
+      </div>
+      <p><a class="btn-primary" href="docs/forensics/toolchain.md">Open the full tool and library reference</a></p>
+    </section>
+    <section id="courses">
+      <h2>Courses, labs & milestones</h2>
+      <div class="card">
+        <p>The learning path is arranged as a six-month sequence: foundations; storage and evidence acquisition; operating-system and memory forensics; binary and mobile reverse engineering; defensive application security; and a documented capstone investigation.</p>
+        <ul><li><strong>Start with foundations:</strong> Linux, networking, Python, C fundamentals, operating systems, file systems, and command-line fluency.</li><li><strong>Practice on safe material:</strong> your own test disks, synthetic files, intentionally vulnerable training applications, public packet captures, and purpose-built labs.</li><li><strong>Publish proof of work:</strong> reproducible reports, tool versions, hashes, screenshots with sensitive data redacted, test cases, and remediation notes.</li></ul>
+        <p><a class="card-link" href="https://github.com/musombi123/musombiwilliam.github.io/blob/main/docs/forensics/learning-path.md">View the course syllabus and practical milestones →</a></p>
+      </div>
+      <div class="resource-list">
+        <a href="https://portswigger.net/web-security" target="_blank" rel="noopener noreferrer">PortSwigger Web Security Academy — free web-security labs</a>
+        <a href="https://overthewire.org/wargames/bandit/" target="_blank" rel="noopener noreferrer">OverTheWire Bandit — Linux command-line foundations</a>
+        <a href="https://ghidra-sre.org/" target="_blank" rel="noopener noreferrer">Ghidra — reverse-engineering framework</a>
+        <a href="https://www.sleuthkit.org/autopsy/" target="_blank" rel="noopener noreferrer">Autopsy — digital forensics platform</a>
+        <a href="https://volatility3.readthedocs.io/en/latest/" target="_blank" rel="noopener noreferrer">Volatility 3 — memory forensics documentation</a>
+        <a href="https://wstg.owasp.org/" target="_blank" rel="noopener noreferrer">OWASP WSTG — web-security testing methodology</a>
+      </div>
+    </section>
+    <section id="method">
+      <h2>How professional work should look</h2>
+      <div class="card">
+        <ol>
+          <li><strong>Define the question and authority.</strong> Record ownership, written authorization, scope, exclusions, contact, and handling instructions.</li>
+          <li><strong>Preserve before analysis.</strong> Document the source, acquire a forensic copy where appropriate, hash it, and retain an acquisition log.</li>
+          <li><strong>Work from controlled copies.</strong> Keep originals protected, use a separate working copy, and record tool versions and settings.</li>
+          <li><strong>Validate findings.</strong> Distinguish facts, interpretations, hypotheses, false positives, and unknowns.</li>
+          <li><strong>Report clearly.</strong> Give reproducible steps, evidence references, impact, confidence, limitations, and practical remediation or recovery options.</li>
+          <li><strong>Close responsibly.</strong> Return or securely dispose of data under the agreed retention policy and record the handover.</li>
+        </ol>
+      </div>
+    </section>
+    <section id="scope">
+      <h2>Responsible practice & current status</h2>
+      <div class="forensics-callout"><strong>Authorization is mandatory.</strong> Testing is limited to systems, devices, accounts, applications, and data you own or have explicit written permission to assess. No credential theft, stealth, persistence, destructive testing, data exfiltration, or access-control bypass is part of this programme.</div>
+      <div class="card">
+        <p>This is a portfolio and learning centre. It does not run scanners or forensic tools in the browser. Real client work requires a documented engagement, appropriate forensic workstation and write-blocking capability, secure evidence storage, an isolated malware-analysis lab where relevant, and a controlled testing environment.</p>
+        <p>Data recovery depends on media condition, encryption, file-system state, controller behaviour, and whether sectors have been overwritten or discarded by TRIM. Some cases need specialist hardware facilities. Vulnerability scanners provide leads; a finding must be validated safely and reported with evidence before it is represented as confirmed.</p>
+        <p>Certification, paid engagements, and specialist claims should be added to this portfolio only when earned and demonstrable.</p>
+      </div>
+      <p><a class="btn-primary" href="index.html#contact">Contact Musombi William</a></p>
+    </section>
+  </main>
+  <footer>© 2026 Musombi William · RevelaCode · Evidence before assumptions.</footer>
+</body>
+</html>
