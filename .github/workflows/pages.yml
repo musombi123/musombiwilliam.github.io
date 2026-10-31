@@ -52,8 +52,13 @@ jobs:
         run: |
           $source = Join-Path $env:RUNNER_TEMP "RevelaAI-source"
           & (Join-Path $source "portable/prepare-windows-runtime.ps1")
+          $python = Join-Path $source "portable/runtimes/python-win-x64/python.exe"
+          if (!(Test-Path $python)) {
+            throw "Embedded Python runtime was not created."
+          }
+          & $python --version
           if ($LASTEXITCODE -ne 0) {
-            throw "Embedded Python runtime preparation failed."
+            throw "Embedded Python runtime failed its version check."
           }
 
       - name: Run Field Kit tests on embedded Python
