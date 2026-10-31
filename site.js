@@ -79,6 +79,9 @@
   }
   if(!skip.parentNode)body.insertBefore(skip,body.firstChild);
   skip.classList.add("site-skip");
+  const mainLandmark=doc.querySelector("main");
+  if(mainLandmark&&!mainLandmark.id)mainLandmark.id="main";
+  if(mainLandmark)skip.href="#"+mainLandmark.id;
   const progress=doc.createElement("div");
   progress.className="site-progress";
   progress.setAttribute("aria-hidden","true");
@@ -303,7 +306,7 @@
   if(year)year.textContent=String(new Date().getFullYear());
 
   const email="musombiwilliam769@gmail.com";
-  const contactArea=doc.querySelector("#contact .card,#contact .wrap,.contact-list");
+  const contactArea=doc.querySelector("#contact .card,#contact .wrap")||doc.querySelector("#contact");
   if(contactArea&&!doc.querySelector("[data-copy='"+email+"'],#copyMail")){
     const button=doc.createElement("button");
     button.type="button";button.className="site-copy-email";
