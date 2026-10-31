@@ -34,6 +34,14 @@ jobs:
           if ($LASTEXITCODE -ne 0) {
             throw "Field Workbench JavaScript syntax validation failed."
           }
+          node --check (Join-Path $env:GITHUB_WORKSPACE "site.js")
+          if ($LASTEXITCODE -ne 0) {
+            throw "Shared portfolio JavaScript syntax validation failed."
+          }
+          node (Join-Path $env:GITHUB_WORKSPACE "scripts/validate-static-site.mjs")
+          if ($LASTEXITCODE -ne 0) {
+            throw "Static portfolio validation failed."
+          }
 
       - name: Prepare static website directory
         shell: pwsh
