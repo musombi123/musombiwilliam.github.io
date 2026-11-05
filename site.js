@@ -42,10 +42,11 @@
   const links=[
     {label:"Home",href:"index.html#home",page:"index.html"},
     {label:"About",href:"index.html#about",page:"index.html"},
+    {label:"Skills",href:"index.html#skills",page:"index.html"},
+    {label:"Experience",href:"index.html#experience",page:"index.html"},
     {label:"Projects",href:"index.html#projects",page:"index.html"},
     {label:"Forensics",href:"forensics.html",page:"forensics.html"},
-    {label:"Field Workbench",href:"fieldkit.html",page:"fieldkit.html"},
-    {label:"Field Guides",href:"guides.html",page:"guides.html"},
+    {label:"Achievements",href:"index.html#achievements",page:"index.html"},
     {label:"Contact",href:"index.html#contact",page:"index.html"}
   ];
   const header=doc.createElement("header");
