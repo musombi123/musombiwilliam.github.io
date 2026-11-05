@@ -372,3 +372,13 @@ body.site-page-fieldkit footer { padding:1.5rem; border-top:1px solid var(--line
   *,*::before,*::after { animation:none!important; transition:none!important; scroll-behavior:auto!important; }
   .site-reveal,.reveal { opacity:1!important; transform:none!important; filter:none!important; }
 }
+
+/* The injected global header is fixed; the generic legacy nav rule must not make its inner nav sticky. */
+.site-header .site-primary-nav {
+  position: static;
+  top: auto;
+  z-index: auto;
+  padding: 0;
+  background: transparent;
+  text-align: left;
+}
