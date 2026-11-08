@@ -30,6 +30,10 @@ The supplied `musombiwilliam-portfolio.zip` was checked for archive integrity. I
 
 That ZIP is an earlier snapshot, not a complete export of the current multi-page website. The live repository has newer Forensics, Workbench, Technical Guides and Shamba/Forensics documentation. The current repository is therefore kept as the source of truth; the ZIP's useful interaction pattern was consolidated into `site.js` and applied across all four current HTML pages without replacing the newer content.
 
+## RevelaAI ecosystem architecture
+
+- [RevelaAI ecosystem architecture and operational contract](docs/revelaai/ECOSYSTEM_ARCHITECTURE.md) — verified source integration points, hub-scoped entitlements, free-tier boundaries, Global Brain/USECT/Core responsibilities, Humanizer integrity requirements, portable companion lifecycle and production acceptance gates.
+
 ## Engineering documentation
 
 - `docs/forensics/` — learning path, evidence handling, data recovery, reverse engineering, toolchain, lab safety, vulnerability validation and report template.
