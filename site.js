@@ -39,38 +39,6 @@
     if(event.key==="theme"){theme=validTheme(event.newValue)?event.newValue:"system";applyTheme()}
   });
 
-  const links=[
-    {label:"Home",href:"index.html#home",page:"index.html"},
-    {label:"About",href:"index.html#about",page:"index.html"},
-    {label:"Skills",href:"index.html#skills",page:"index.html"},
-    {label:"Experience",href:"index.html#experience",page:"index.html"},
-    {label:"Projects",href:"index.html#projects",page:"index.html"},
-    {label:"Forensics",href:"forensics.html",page:"forensics.html"},
-    {label:"Achievements",href:"index.html#achievements",page:"index.html"},
-    {label:"Contact",href:"index.html#contact",page:"index.html"}
-  ];
-  const header=doc.createElement("header");
-  header.className="site-header";
-  const linkMarkup=links.map((item)=>{
-    const active=item.page===page&&["Home","Forensics","Field Workbench","Field Guides"].includes(item.label);
-    return '<a href="'+item.href+'"'+(active?' aria-current="page"':"")+'>'+item.label+"</a>";
-  }).join("");
-  header.innerHTML=
-    '<div class="site-header-inner">'+
-      '<a class="site-brand" href="index.html#home" aria-label="Musombi William home">'+
-        '<span class="site-brand-mark">MW<span>.</span></span>'+
-        '<span class="site-brand-copy"><strong>Musombi William</strong><small>Software · AI · Security</small></span>'+
-      '</a>'+
-      '<nav class="site-primary-nav" id="site-primary-nav" aria-label="Main navigation">'+linkMarkup+'</nav>'+
-      '<div class="site-header-actions">'+
-        '<a class="site-header-cta" href="resume.pdf" download>Résumé <span aria-hidden="true">↓</span></a>'+
-        '<button class="site-icon-button" id="site-theme-toggle" type="button" aria-label="Toggle colour theme"></button>'+
-        '<button class="site-icon-button site-menu-toggle" id="site-menu-toggle" type="button" aria-expanded="false" aria-controls="site-primary-nav" aria-label="Open menu">'+
-          '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>'+
-        '</button>'+
-      '</div>'+
-    '</div>';
-
   let skip=doc.querySelector(".skip");
   if(!skip){
     skip=doc.createElement("a");
@@ -87,30 +55,10 @@
   progress.className="site-progress";
   progress.setAttribute("aria-hidden","true");
   doc.querySelector(".progress")?.remove();
-  skip.after(progress,header);
+  skip.after(progress);
 
-  const themeButton=header.querySelector("#site-theme-toggle");
-  themeButton.addEventListener("click",()=>{
-    theme=isDark()?"light":"dark";
-    storage.set("theme",theme);
-    applyTheme();
-  });
-
-  const menuButton=header.querySelector("#site-menu-toggle");
-  const primaryNav=header.querySelector("#site-primary-nav");
-  const setMenu=(open)=>{
-    primaryNav.classList.toggle("is-open",open);
-    menuButton.setAttribute("aria-expanded",String(open));
-    menuButton.setAttribute("aria-label",open?"Close menu":"Open menu");
-    menuButton.innerHTML=open
-      ?'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"></path></svg>'
-      :'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>';
-  };
-  menuButton.addEventListener("click",()=>setMenu(menuButton.getAttribute("aria-expanded")!=="true"));
-  primaryNav.addEventListener("click",(event)=>{if(event.target.closest("a"))setMenu(false)});
-  doc.addEventListener("keydown",(event)=>{if(event.key==="Escape"){setMenu(false);closeLightbox()}});
-  doc.addEventListener("click",(event)=>{if(!header.contains(event.target))setMenu(false)});
-
+  // Each page owns its visible header/navigation. Do not inject a second
+  // global header over the homepage navigation or specialist page heroes.
   doc.querySelector(".fieldkit-topnav")?.classList.add("site-legacy-topnav");
   const localNavs=[...doc.querySelectorAll("body > nav:not(.site-primary-nav), .forensics-nav")];
   localNavs.forEach((nav)=>{
@@ -147,7 +95,6 @@
       const max=Math.max(1,root.scrollHeight-window.innerHeight);
       const amount=Math.min(1,Math.max(0,window.scrollY/max));
       progress.style.transform="scaleX("+amount+")";
-      header.classList.toggle("is-scrolled",window.scrollY>12);
       backTop.classList.toggle("is-visible",window.scrollY>520);
       scrollPending=false;
     });
