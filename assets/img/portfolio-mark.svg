@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title">
+  <title id="title">Musombi William portfolio mark</title>
+  <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#5b8cff"/><stop offset=".55" stop-color="#8b5cf6"/><stop offset="1" stop-color="#22d3ee"/></linearGradient></defs>
+  <rect width="128" height="128" rx="28" fill="#0b1020"/>
+  <path d="M25 91V37h13l26 31 26-31h13v54H88V59L64 87 40 59v32z" fill="url(#g)"/>
+  <circle cx="104" cy="24" r="6" fill="#22d3ee"/>
+</svg>
