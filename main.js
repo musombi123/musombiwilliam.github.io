@@ -1,90 +1,212 @@
 (() => {
   'use strict';
-  const d = document, root = d.documentElement, $ = (s, c = d) => c.querySelector(s), $$ = (s, c = d) => [...c.querySelectorAll(s)];
-  root.classList.add('js');
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Theme toggle (persisted)
-  $('#themeBtn').addEventListener('click', () => {
+  const doc = document;
+  const root = doc.documentElement;
+  const $ = (selector, context = doc) => context.querySelector(selector);
+  const $$ = (selector, context = doc) => [...context.querySelectorAll(selector)];
+  const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches ?? false;
+  const safeStorage = {
+    get(key) { try { return localStorage.getItem(key); } catch { return null; } },
+    set(key, value) { try { localStorage.setItem(key, value); } catch {} }
+  };
+
+  root.classList.add('js');
+
+  // Theme: preserve the saved preference and keep the browser chrome in sync.
+  const themeButton = $('#themeBtn');
+  const applyTheme = theme => {
+    root.dataset.theme = theme;
+    root.style.colorScheme = theme;
+    const meta = $('meta[name="theme-color"]');
+    if (meta) meta.content = theme === 'light' ? '#f6f8fc' : '#0b1020';
+    if (themeButton) {
+      themeButton.setAttribute('aria-label', theme === 'light' ? 'Switch to dark theme' : 'Switch to light theme');
+      themeButton.setAttribute('title', theme === 'light' ? 'Switch to dark theme' : 'Switch to light theme');
+    }
+  };
+  const storedTheme = safeStorage.get('theme');
+  const initialTheme = storedTheme === 'light' || storedTheme === 'dark'
+    ? storedTheme
+    : (window.matchMedia?.('(prefers-color-scheme: light)')?.matches ? 'light' : 'dark');
+  applyTheme(initialTheme);
+  themeButton?.addEventListener('click', () => {
     const next = root.dataset.theme === 'light' ? 'dark' : 'light';
-    root.dataset.theme = next;
-    try { localStorage.setItem('theme', next); } catch (e) {}
-    $('meta[name="theme-color"]').content = next === 'light' ? '#f6f8fc' : '#0b1020';
+    applyTheme(next);
+    safeStorage.set('theme', next);
   });
 
-  // Mobile menu
-  const menuBtn = $('#menuBtn'), nav = $('#navlinks');
-  const setMenu = open => { nav.classList.toggle('open', open); menuBtn.setAttribute('aria-expanded', open); };
-  menuBtn.addEventListener('click', () => setMenu(!nav.classList.contains('open')));
-  nav.addEventListener('click', e => e.target.closest('a') && setMenu(false));
-  d.addEventListener('keydown', e => e.key === 'Escape' && setMenu(false));
+  // Mobile navigation, including Escape and link selection.
+  const menuButton = $('#menuBtn');
+  const nav = $('#navlinks');
+  const setMenu = open => {
+    if (!nav || !menuButton) return;
+    nav.classList.toggle('open', open);
+    menuButton.setAttribute('aria-expanded', String(open));
+    menuButton.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  };
+  menuButton?.addEventListener('click', () => setMenu(!nav?.classList.contains('open')));
+  nav?.addEventListener('click', event => {
+    if (event.target.closest('a')) setMenu(false);
+  });
+  doc.addEventListener('keydown', event => {
+    if (event.key === 'Escape') setMenu(false);
+  });
 
-  // Scroll: progress bar + header state
-  const bar = $('.progress'), top = $('#topbar');
-  let tick = false;
+  // Scroll progress and compact header state.
+  const progress = $('.progress');
+  const topbar = $('#topbar');
+  let scrollQueued = false;
   const onScroll = () => {
-    if (tick) return; tick = true;
+    if (scrollQueued) return;
+    scrollQueued = true;
     requestAnimationFrame(() => {
-      const h = root.scrollHeight - innerHeight;
-      bar.style.transform = `scaleX(${h > 0 ? scrollY / h : 0})`;
-      top.classList.toggle('scrolled', scrollY > 12);
-      tick = false;
+      const scrollable = root.scrollHeight - window.innerHeight;
+      if (progress) progress.style.transform = `scaleX(${scrollable > 0 ? window.scrollY / scrollable : 0})`;
+      topbar?.classList.toggle('scrolled', window.scrollY > 12);
+      scrollQueued = false;
     });
   };
-  addEventListener('scroll', onScroll, { passive: true }); onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
 
-  // Active nav link
-  const links = $$('#navlinks a'), map = new Map(links.map(a => [a.getAttribute('href').slice(1), a]));
-  const spy = new IntersectionObserver(es => es.forEach(e => {
-    if (e.isIntersecting) { links.forEach(l => l.classList.remove('active')); map.get(e.target.id)?.classList.add('active'); }
-  }), { rootMargin: '-45% 0px -50% 0px' });
-  map.forEach((_, id) => { const s = d.getElementById(id); s && spy.observe(s); });
-
-  // Reveal on scroll
-  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .12 });
-  $$('.reveal').forEach((el, i) => { el.style.setProperty('--d', `${(i % 4) * 80}ms`); io.observe(el); });
-
-  // Count-up stats
-  const count = el => {
-    const end = +el.dataset.count; if (reduce) { el.textContent = end; return; }
-    const t0 = performance.now(), dur = 1200;
-    const step = t => { const p = Math.min((t - t0) / dur, 1); el.textContent = Math.round(end * (1 - Math.pow(1 - p, 3))); p < 1 && requestAnimationFrame(step); };
-    requestAnimationFrame(step);
-  };
-  const cio = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { count(e.target); cio.unobserve(e.target); } }));
-  $$('[data-count]').forEach(el => cio.observe(el));
-
-  // Typewriter
-  const typed = $('#typed');
-  if (typed && !reduce) {
-    const words = JSON.parse(typed.dataset.words); let w = 0, c = words[0].length, del = true;
-    const loop = () => {
-      const word = words[w];
-      typed.textContent = word.slice(0, c);
-      if (!del && c === word.length) { del = true; return setTimeout(loop, 1800); }
-      if (del && c === 0) { del = false; w = (w + 1) % words.length; }
-      c += del ? -1 : 1;
-      setTimeout(loop, del ? 28 : 55);
-    };
-    setTimeout(loop, 2200);
+  // IntersectionObserver enhancement with graceful fallback.
+  const hasObserver = 'IntersectionObserver' in window;
+  const navLinks = $$('#navlinks a');
+  if (hasObserver && navLinks.length) {
+    const linkMap = new Map(navLinks.map(link => [link.getAttribute('href')?.slice(1), link]));
+    const sectionObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        navLinks.forEach(link => link.classList.remove('active'));
+        linkMap.get(entry.target.id)?.classList.add('active');
+      });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    linkMap.forEach((_, id) => {
+      const section = doc.getElementById(id);
+      if (section) sectionObserver.observe(section);
+    });
   }
 
-  // Lightbox
-  const lb = $('#lightbox'), lbImg = $('img', lb), lbCap = $('p', lb);
-  $$('.shot').forEach(b => b.addEventListener('click', () => {
-    lbImg.src = b.dataset.full; lbImg.alt = b.dataset.cap; lbCap.textContent = b.dataset.cap;
-    lb.showModal ? lb.showModal() : lb.setAttribute('open', '');
-  }));
-  $('.lb-close', lb).addEventListener('click', () => lb.close());
-  lb.addEventListener('click', e => { if (e.target === lb) lb.close(); });
+  const revealItems = $$('.reveal');
+  if (reduceMotion || !hasObserver) {
+    revealItems.forEach(element => element.classList.add('in'));
+  } else {
+    const revealObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('in');
+        revealObserver.unobserve(entry.target);
+      });
+    }, { threshold: 0.12 });
+    revealItems.forEach((element, index) => {
+      element.style.setProperty('--d', `${(index % 4) * 80}ms`);
+      revealObserver.observe(element);
+    });
+  }
 
-  // Copy email + toast
-  const toast = $('#toast');
-  const say = msg => { toast.textContent = msg; toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 2200); };
-  $('#copyMail').addEventListener('click', async () => {
-    try { await navigator.clipboard.writeText('musombiwilliam769@gmail.com'); say('Email copied to clipboard'); }
-    catch (e) { say('Copy failed — musombiwilliam769@gmail.com'); }
+  // Count-up statistics.
+  const animateCount = element => {
+    const end = Number(element.dataset.count);
+    if (!Number.isFinite(end)) return;
+    if (reduceMotion || !hasObserver) { element.textContent = String(end); return; }
+    const start = performance.now();
+    const duration = 1200;
+    const frame = now => {
+      const progressValue = Math.min((now - start) / duration, 1);
+      element.textContent = String(Math.round(end * (1 - Math.pow(1 - progressValue, 3))));
+      if (progressValue < 1) requestAnimationFrame(frame);
+    };
+    requestAnimationFrame(frame);
+  };
+  const counters = $$('[data-count]');
+  if (hasObserver) {
+    const countObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        animateCount(entry.target);
+        countObserver.unobserve(entry.target);
+      });
+    });
+    counters.forEach(counter => countObserver.observe(counter));
+  } else {
+    counters.forEach(animateCount);
+  }
+
+  // Typewriter uses the words declared in the HTML, with a static fallback.
+  const typed = $('#typed');
+  if (typed && !reduceMotion) {
+    let words;
+    try {
+      words = JSON.parse(typed.dataset.words || '[]').filter(word => typeof word === 'string' && word.length);
+    } catch { words = []; }
+    if (words.length) {
+      let wordIndex = 0;
+      let characterIndex = words[0].length;
+      let deleting = true;
+      const typeLoop = () => {
+        const word = words[wordIndex];
+        typed.textContent = word.slice(0, characterIndex);
+        if (!deleting && characterIndex === word.length) {
+          deleting = true;
+          window.setTimeout(typeLoop, 1700);
+          return;
+        }
+        if (deleting && characterIndex === 0) {
+          deleting = false;
+          wordIndex = (wordIndex + 1) % words.length;
+        }
+        characterIndex += deleting ? -1 : 1;
+        window.setTimeout(typeLoop, deleting ? 28 : 55);
+      };
+      window.setTimeout(typeLoop, 1800);
+    }
+  }
+
+  // Accessible project image lightbox.
+  const lightbox = $('#lightbox');
+  const lightboxImage = lightbox ? $('img', lightbox) : null;
+  const lightboxCaption = lightbox ? $('p', lightbox) : null;
+  $$('.shot[data-full]').forEach(button => {
+    button.addEventListener('click', () => {
+      if (!lightbox || !lightboxImage || !lightboxCaption) return;
+      lightboxImage.src = button.dataset.full;
+      lightboxImage.alt = button.dataset.cap || 'Project image preview';
+      lightboxCaption.textContent = button.dataset.cap || '';
+      if (typeof lightbox.showModal === 'function') lightbox.showModal();
+      else lightbox.setAttribute('open', '');
+    });
+  });
+  $('.lb-close', lightbox || doc)?.addEventListener('click', () => {
+    if (typeof lightbox?.close === 'function') lightbox.close();
+    else lightbox?.removeAttribute('open');
+  });
+  lightbox?.addEventListener('click', event => {
+    if (event.target === lightbox) {
+      if (typeof lightbox.close === 'function') lightbox.close();
+      else lightbox.removeAttribute('open');
+    }
   });
 
-  $('#yr').textContent = new Date().getFullYear();
+  // Copy email with a visible, accessible status message.
+  const toast = $('#toast');
+  const announce = message => {
+    if (!toast) return;
+    toast.textContent = message;
+    toast.classList.add('show');
+    window.setTimeout(() => toast.classList.remove('show'), 2200);
+  };
+  $('#copyMail')?.addEventListener('click', async () => {
+    const email = 'musombiwilliam769@gmail.com';
+    try {
+      if (!navigator.clipboard?.writeText) throw new Error('Clipboard API unavailable');
+      await navigator.clipboard.writeText(email);
+      announce('Email copied to clipboard');
+    } catch {
+      announce(`Copy unavailable — ${email}`);
+    }
+  });
+
+  const year = $('#yr');
+  if (year) year.textContent = String(new Date().getFullYear());
 })();
