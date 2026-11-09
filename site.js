@@ -235,6 +235,7 @@
     else lightbox.removeAttribute("open");
   };
   lightbox.querySelector(".lb-close,.site-lightbox-close")?.addEventListener("click",closeLightbox);
+  doc.addEventListener("keydown",(event)=>{if(event.key==="Escape")closeLightbox()});
   lightbox.addEventListener("click",(event)=>{if(event.target===lightbox)closeLightbox()});
   doc.addEventListener("click",(event)=>{
     const image=event.target.closest(".project-card img,.shot img,.fieldkit-preview img,.screenshot img,.gallery img,figure[data-lightbox] img");
