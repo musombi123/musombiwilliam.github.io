@@ -241,7 +241,7 @@ jobs:
             Sort-Object FullName |
             ForEach-Object {
               $hash = (Get-FileHash -Path $_.FullName -Algorithm SHA256).Hash.ToLowerInvariant()
-              $relative = $_.FullName.Substring($stagePortable.Length + 1).Replace('\x5c', '/')
+              $relative = $_.FullName.Substring($stagePortable.Length + 1).Replace('\', '/')
               "$hash  $relative"
             }
           [System.IO.File]::WriteAllText(
