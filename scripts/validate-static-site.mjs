@@ -2,7 +2,7 @@ import { readFileSync, existsSync } from "node:fs";
 import { resolve, dirname, normalize } from "node:path";
 
 const root = process.cwd();
-const pages = ["index.html", "forensics.html", "fieldkit.html", "guides.html"];
+const pages = ["index.html", "forensics.html", "fieldkit.html", "diagnostics.html", "guides.html"];
 const failures = [];
 const htmlByPath = new Map();
 
@@ -63,6 +63,16 @@ if (!readFileSync(resolve(root, "stylesheet.css"), "utf8").includes("@media(pref
 }
 if (!readFileSync(resolve(root, "fieldkit.html"), "utf8").includes('src="fieldkit.js"')) {
   failures.push("fieldkit.html: Field Workbench application script must remain enabled");
+}
+const diagnosticsHtml = readFileSync(resolve(root, "diagnostics.html"), "utf8");
+const diagnosticsScript = readFileSync(resolve(root, "diagnostics.js"), "utf8");
+if (!diagnosticsHtml.includes('href="diagnostics.css"')) failures.push("diagnostics.html: diagnostic styles are not linked");
+if (!diagnosticsHtml.includes('src="diagnostics.js"')) failures.push("diagnostics.html: report viewer script is not linked");
+for (const feature of ["revelaai.workspace-audit.v1", "replaceChildren", "createObjectURL", "reportFile"]) {
+  if (!diagnosticsScript.includes(feature)) failures.push("diagnostics.js: required local report-viewer feature missing: " + feature);
+}
+if (/\\binnerHTML\\s*=/.test(diagnosticsScript)) {
+  failures.push("diagnostics.js: untrusted report data must not be assigned through innerHTML");
 }
 
 const stylesheet = readFileSync(resolve(root, "stylesheet.css"), "utf8");

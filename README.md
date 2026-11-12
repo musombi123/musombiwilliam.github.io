@@ -11,9 +11,10 @@ This repository publishes the personal portfolio, RevelaCode engineering work, t
 | `index.html` | Portfolio, skills, experience, RevelaCode project overview, screenshots and contact |
 | `forensics.html` | Digital forensics, reverse engineering, defensive security and Portable Field Kit overview |
 | `fieldkit.html` | Browser-local evidence inventory, hashing, file-signature and entropy triage, verification, case notes and exports |
+| `diagnostics.html` | Offline-capable viewer for JSON reports from the USB Workspace Auditor; filters and exports findings locally |
 | `guides.html` | On-site learning path, data-recovery, reverse-engineering, defensive-security, USB Field Kit and Shamba guides |
 
-The four published HTML pages share a single responsive site layer. It adds consistent navigation, a saved dark/light/system theme, mobile navigation, scroll progress, active section tracking, scroll-reveal motion, page-entry animation, copy-to-clipboard controls, code-copy buttons, image lightbox, and back-to-top control.
+The five published HTML pages share a single responsive site layer. It adds consistent navigation, a saved dark/light/system theme, mobile navigation, scroll progress, active section tracking, scroll-reveal motion, page-entry animation, copy-to-clipboard controls, code-copy buttons, image lightbox, and back-to-top control.
 
 ## Shared front-end files
 
@@ -21,6 +22,7 @@ The four published HTML pages share a single responsive site layer. It adds cons
 - `site.js` — shared navigation, theme, motion, scroll, lightbox and clipboard behaviour.
 - `scripts/validate-static-site.mjs` — checks common page wiring, unique H1/IDs, local links, reduced-motion support and the Field Workbench script.
 - `fieldkit.js` — the Field Workbench's dedicated browser-side file-processing and case-workflow logic. It remains separate from the shared presentation layer.
+- `diagnostics.html`, `diagnostics.css`, and `diagnostics.js` — a self-contained, offline-capable JSON report viewer for the USB Workspace Auditor. It validates the report schema, displays the repository map and findings, supports severity/search filters, and exports the filtered records. It never scans host directories or uploads a report.
 
 No front-end framework or animation library is required for the static portfolio. Inter and JetBrains Mono are loaded from Google Fonts with preconnect hints.
 
@@ -58,7 +60,7 @@ The shared system includes:
 - Image previews and copy controls that do not require new dependencies.
 - CI checks for page wiring, anchors, unique IDs and preserved Field Workbench functionality.
 
-The static portfolio does not run forensic scans or process uploaded evidence on a server. The Field Workbench reads selected files in the browser; the separate USB edition provides the packaged local utilities. Only use the tooling with data and systems you own or are expressly authorized to assess.
+The static portfolio does not run forensic scans or process uploaded evidence on a server. The Field Workbench reads selected files in the browser; the Workspace Diagnostics page reads only a report JSON file explicitly selected by the operator. The separate USB edition performs host and repository inspection locally. Only use the tooling with data and systems you own or are expressly authorized to assess.
 
 ## Owner
 
