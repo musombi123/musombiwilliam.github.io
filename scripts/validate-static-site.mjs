@@ -71,7 +71,7 @@ if (!diagnosticsHtml.includes('src="diagnostics.js"')) failures.push("diagnostic
 for (const feature of ["revelaai.workspace-audit.v1", "replaceChildren", "createObjectURL", "reportFile"]) {
   if (!diagnosticsScript.includes(feature)) failures.push("diagnostics.js: required local report-viewer feature missing: " + feature);
 }
-if (/\\.innerHTML\\s*=/.test(diagnosticsScript)) {
+if (/\\binnerHTML\\s*=/.test(diagnosticsScript)) {
   failures.push("diagnostics.js: untrusted report data must not be assigned through innerHTML");
 }
 
