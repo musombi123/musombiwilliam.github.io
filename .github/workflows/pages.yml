@@ -73,10 +73,10 @@ jobs:
           New-Item -ItemType Directory -Force -Path $source | Out-Null
           git -C $source init
           git -C $source remote add origin https://github.com/musombi123/RevelaAI.git
-          git -C $source fetch --depth 1 origin 1a3f584b8c25426d564bc59376c9cd6a4cca55ce
+          git -C $source fetch --depth 1 origin c2e11b070e84cbf8fa23b7aeadf02d5915d8297d
           git -C $source checkout --detach FETCH_HEAD
           $actual = (git -C $source rev-parse HEAD).Trim()
-          if ($actual -ne "1a3f584b8c25426d564bc59376c9cd6a4cca55ce") {
+          if ($actual -ne "c2e11b070e84cbf8fa23b7aeadf02d5915d8297d") {
             throw "Unexpected Field Kit source revision: $actual"
           }
           "Pinned Field Kit revision: $actual"
@@ -275,7 +275,7 @@ jobs:
             version = "0.3.0"
             platform = "Windows x64"
             source_repository = "musombi123/RevelaAI"
-            source_commit = "1a3f584b8c25426d564bc59376c9cd6a4cca55ce"
+            source_commit = "c2e11b070e84cbf8fa23b7aeadf02d5915d8297d"
             package_file = $filename
             package_size_bytes = $size
             sha256 = $digest
