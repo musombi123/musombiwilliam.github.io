@@ -81,6 +81,90 @@ jobs:
           }
           "Pinned Field Kit revision: $actual"
 
+      - name: Set up Go for the native Windows Field Engine
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.23.x"
+
+      - name: Build the native Field Engine and bundle USECT core runtime
+        shell: pwsh
+        run: |
+          $source = Join-Path $env:RUNNER_TEMP "RevelaAI-source"
+          $bin = Join-Path $source "portable/bin/windows-amd64"
+          $runtimeSource = Join-Path $source "portable/runtime-source"
+          New-Item -ItemType Directory -Force -Path $bin, $runtimeSource | Out-Null
+
+          $env:GOOS = "windows"
+          $env:GOARCH = "amd64"
+          $env:CGO_ENABLED = "0"
+
+          $builds = @(
+            @{ Module = "portable/native"; Package = "./cmd/revela-field"; Output = "revela-field.exe" },
+            @{ Module = "core-zero"; Package = "./cmd/usect-zero"; Output = "usect-zero.exe" },
+            @{ Module = "core-one"; Package = "./cmd/genesis"; Output = "revela-genesis.exe" },
+            @{ Module = "core-two"; Package = "./cmd/revela-mind"; Output = "revela-mind.exe" }
+          )
+
+          Push-Location $source
+          try {
+            foreach ($build in $builds) {
+              $output = Join-Path $bin $build.Output
+              & go -C $build.Module build -trimpath "-ldflags=-s -w" -o $output $build.Package
+              if ($LASTEXITCODE -ne 0) {
+                throw "Native build failed: $($build.Module) $($build.Package)"
+              }
+              if (!(Test-Path $output)) {
+                throw "Native build did not produce $($build.Output)"
+              }
+            }
+          } finally {
+            Pop-Location
+          }
+
+          foreach ($directory in @("core-zero", "core-one", "core-two", "lib")) {
+            Copy-Item -Path (Join-Path $source $directory) -Destination $runtimeSource -Recurse -Force
+          }
+
+          $required = @(
+            "revela-field.exe", "usect-zero.exe", "revela-genesis.exe", "revela-mind.exe"
+          )
+          foreach ($name in $required) {
+            if (!(Test-Path (Join-Path $bin $name))) {
+              throw "Required USB executable is missing: $name"
+            }
+          }
+
+          $policyFiles = @(
+            "core-zero/go.mod",
+            "core-zero/guardian/rules.yaml",
+            "core-zero/guardian/worldwide_rules.yaml",
+            "core-one/go.mod",
+            "core-one/guardian/rules.yaml",
+            "core-two/go.mod",
+            "core-two/guardian/rules.yaml"
+          )
+          foreach ($relativePath in $policyFiles) {
+            if (!(Test-Path (Join-Path $runtimeSource $relativePath))) {
+              throw "USB core runtime source is incomplete: $relativePath"
+            }
+          }
+
+          $engine = Join-Path $bin "revela-field.exe"
+          & $engine version
+          if ($LASTEXITCODE -ne 0) { throw "Native Field Engine smoke test failed." }
+          $doctorPath = Join-Path $env:RUNNER_TEMP "revela-field-doctor.json"
+          & $engine doctor | Set-Content -Path $doctorPath -Encoding UTF8
+          if ($LASTEXITCODE -ne 0) { throw "Native Field Engine doctor command failed." }
+          $doctor = Get-Content -Raw -Path $doctorPath | ConvertFrom-Json
+          if ($doctor.version -ne "0.3.0" -or $doctor.core_binaries.Count -ne 3) {
+            throw "Native Field Engine doctor response is incomplete."
+          }
+          if (@($doctor.core_binaries | Where-Object { -not $_.present }).Count -ne 0) {
+            throw "One or more bundled USECT core binaries were not detected."
+          }
+
+          "Built all four Windows x64 executables and staged the matching USECT source/policies."
+
       - name: Prepare and verify embedded Windows runtime
         shell: pwsh
         run: |
@@ -125,6 +209,47 @@ jobs:
           New-Item -ItemType Directory -Force -Path $stagePortable | Out-Null
           Copy-Item -Path (Join-Path $portable "*") -Destination $stagePortable -Recurse -Force
 
+          $requiredBinaries = @(
+            "bin/windows-amd64/revela-field.exe",
+            "bin/windows-amd64/usect-zero.exe",
+            "bin/windows-amd64/revela-genesis.exe",
+            "bin/windows-amd64/revela-mind.exe"
+          )
+          foreach ($relativePath in $requiredBinaries) {
+            if (!(Test-Path (Join-Path $stagePortable $relativePath))) {
+              throw "USB package is missing native executable: $relativePath"
+            }
+          }
+
+          $requiredRuntimeFiles = @(
+            "runtime-source/core-zero/go.mod",
+            "runtime-source/core-zero/guardian/rules.yaml",
+            "runtime-source/core-zero/guardian/worldwide_rules.yaml",
+            "runtime-source/core-one/go.mod",
+            "runtime-source/core-one/guardian/rules.yaml",
+            "runtime-source/core-two/go.mod",
+            "runtime-source/core-two/guardian/rules.yaml"
+          )
+          foreach ($relativePath in $requiredRuntimeFiles) {
+            if (!(Test-Path (Join-Path $stagePortable $relativePath))) {
+              throw "USB package is missing required core runtime source: $relativePath"
+            }
+          }
+
+          $binaryRoot = Join-Path $stagePortable "bin"
+          $binaryHashes = Get-ChildItem -Path $binaryRoot -File -Recurse |
+            Sort-Object FullName |
+            ForEach-Object {
+              $hash = (Get-FileHash -Path $_.FullName -Algorithm SHA256).Hash.ToLowerInvariant()
+              $relative = $_.FullName.Substring($stagePortable.Length + 1).Replace("\\", "/")
+              "$hash  $relative"
+            }
+          [System.IO.File]::WriteAllText(
+            (Join-Path $binaryRoot "SHA256SUMS.txt"),
+            ($binaryHashes -join [Environment]::NewLine) + [Environment]::NewLine,
+            [System.Text.UTF8Encoding]::new($false)
+          )
+
           $tests = Join-Path $stagePortable "tests"
           if (Test-Path $tests) { Remove-Item $tests -Recurse -Force }
           Get-ChildItem -Path $stagePortable -Directory -Filter "__pycache__" -Recurse |
@@ -155,6 +280,9 @@ jobs:
             package_size_bytes = $size
             sha256 = $digest
             runtime = "Embedded Python 3.14.10"
+            native_engine = "Revela Field Engine 0.3.0 Windows x64"
+            bundled_cores = @("USECT ZERO", "Genesis Core-ONE", "Infinite Mind Core-TWO")
+            bundled_core_source = $true
             tested = $true
             generated_at_utc = (Get-Date).ToUniversalTime().ToString("o")
           }
