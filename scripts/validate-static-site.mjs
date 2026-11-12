@@ -65,6 +65,21 @@ if (!readFileSync(resolve(root, "fieldkit.html"), "utf8").includes('src="fieldki
   failures.push("fieldkit.html: Field Workbench application script must remain enabled");
 }
 
+const stylesheet = readFileSync(resolve(root, "stylesheet.css"), "utf8");
+for (const selector of [
+  ".fieldkit-page .fieldkit-hero",
+  ".fieldkit-page .fieldkit-topnav",
+  ".fieldkit-page .fieldkit-main",
+  ".fieldkit-page .fieldkit-section",
+  ".fieldkit-page .fieldkit-dropzone",
+  ".fieldkit-page .fieldkit-table-wrap",
+  ".fieldkit-page .fieldkit-event",
+  ".fieldkit-page .fieldkit-download-card",
+  "@media(max-width:560px)"
+]) {
+  if (!stylesheet.includes(selector)) failures.push("stylesheet.css: standalone Field Workbench layout rule missing: " + selector);
+}
+
 if (failures.length) {
   console.error("Static portfolio validation failed:");
   for (const failure of failures) console.error(" - " + failure);
