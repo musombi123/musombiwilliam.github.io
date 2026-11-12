@@ -746,3 +746,929 @@ body:has(.forensics-hero) > footer {
     scroll-behavior:auto!important;
   }
 }
+
+
+/* =========================================================
+   STANDALONE FIELD WORKBENCH
+   The browser Field Workbench has its own page shell and
+   component names. Keep these rules scoped so the shared
+   portfolio and the Forensics Centre retain their layouts.
+   ========================================================= */
+
+.fieldkit-page {
+  --fieldkit-panel: color-mix(in srgb,var(--surface) 94%,var(--bg));
+  --fieldkit-panel-soft: color-mix(in srgb,var(--surface-2) 82%,var(--bg));
+  --fieldkit-accent-line: color-mix(in srgb,var(--accent) 32%,var(--line));
+  min-height:100vh;
+  background:
+    radial-gradient(ellipse at 8% 4%,color-mix(in srgb,var(--accent) 7%,transparent),transparent 34rem),
+    var(--bg);
+  color:var(--text-2);
+}
+
+.fieldkit-page .fieldkit-hero {
+  position:relative;
+  isolation:isolate;
+  min-height:560px;
+  overflow:hidden;
+  padding:0 1.25rem clamp(3.5rem,8vw,6rem);
+  border-bottom:1px solid var(--line);
+  background:
+    radial-gradient(ellipse at 16% 18%,color-mix(in srgb,var(--accent) 22%,transparent),transparent 38%),
+    radial-gradient(ellipse at 88% 30%,color-mix(in srgb,var(--accent-2) 20%,transparent),transparent 34%),
+    linear-gradient(155deg,var(--bg),var(--bg-2) 72%,var(--bg));
+}
+
+.fieldkit-page .fieldkit-hero::before {
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  opacity:.38;
+  background-image:
+    linear-gradient(var(--line) 1px,transparent 1px),
+    linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:52px 52px;
+  mask-image:radial-gradient(ellipse 78% 68% at 50% 36%,#000 12%,transparent 82%);
+  -webkit-mask-image:radial-gradient(ellipse 78% 68% at 50% 36%,#000 12%,transparent 82%);
+}
+
+.fieldkit-page .fieldkit-topnav {
+  position:relative;
+  z-index:2;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:1rem;
+  width:min(1180px,100%);
+  min-height:76px;
+  margin-inline:auto;
+  padding:.85rem 0;
+  border-bottom:1px solid var(--line);
+}
+
+.fieldkit-page .fieldkit-topnav .brand-mark {
+  display:inline-flex;
+  align-items:center;
+  flex:0 0 auto;
+  color:var(--text);
+  font-size:1.35rem;
+  font-weight:850;
+  letter-spacing:-.07em;
+}
+
+.fieldkit-page .fieldkit-topnav .brand-mark span { color:var(--accent-3); }
+
+.fieldkit-page .fieldkit-topnav > div {
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  flex-wrap:wrap;
+  gap:.35rem;
+}
+
+.fieldkit-page .fieldkit-topnav > div a {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:38px;
+  padding:.45rem .8rem;
+  border:1px solid transparent;
+  border-radius:999px;
+  color:var(--text-2);
+  font-size:.78rem;
+  font-weight:650;
+  transition:background .2s,border-color .2s,color .2s;
+}
+
+.fieldkit-page .fieldkit-topnav > div a:hover {
+  border-color:var(--line);
+  background:var(--surface);
+  color:var(--text);
+}
+
+.fieldkit-page .fieldkit-hero-copy {
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  width:min(900px,100%);
+  margin:clamp(3.2rem,8vw,5.7rem) auto 0;
+  text-align:center;
+}
+
+.fieldkit-page .fieldkit-eyebrow {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:.5rem;
+  margin:0 0 1rem;
+  color:var(--accent-3)!important;
+  font:700 .7rem/1.5 var(--mono);
+  letter-spacing:.14em;
+  text-transform:uppercase;
+}
+
+.fieldkit-page .fieldkit-status {
+  display:inline-flex;
+  align-items:center;
+  gap:.55rem;
+  margin:0 0 1rem;
+  padding:.42rem .75rem;
+  border:1px solid var(--fieldkit-accent-line);
+  border-radius:999px;
+  background:color-mix(in srgb,var(--surface) 75%,transparent);
+  color:var(--text-2);
+  font:650 .64rem/1.4 var(--mono);
+  letter-spacing:.07em;
+}
+
+.fieldkit-page .fieldkit-status > span {
+  width:7px;
+  height:7px;
+  flex:0 0 7px;
+  border-radius:50%;
+  background:var(--ok);
+  box-shadow:0 0 0 4px color-mix(in srgb,var(--ok) 15%,transparent);
+}
+
+.fieldkit-page .fieldkit-hero h1 {
+  max-width:100%;
+  margin:.1rem 0 1.1rem;
+  color:var(--text);
+  font-size:clamp(2.7rem,7vw,5.2rem);
+  font-weight:850;
+  line-height:1.02;
+  letter-spacing:-.075em;
+  text-wrap:balance;
+  background:linear-gradient(115deg,var(--text) 26%,color-mix(in srgb,var(--accent-3) 82%,var(--text)));
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+.fieldkit-page .fieldkit-hero-copy > p:not(.fieldkit-eyebrow):not(.fieldkit-small-note) {
+  max-width:74ch;
+  margin:0 auto 1rem;
+  color:var(--text-2);
+  font-size:clamp(.96rem,1.6vw,1.08rem);
+  line-height:1.85;
+}
+
+.fieldkit-page .fieldkit-facts {
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:.55rem;
+  margin:1rem 0 0;
+}
+
+.fieldkit-page .fieldkit-facts span {
+  display:inline-flex;
+  align-items:center;
+  min-height:36px;
+  padding:.45rem .72rem;
+  border:1px solid var(--line);
+  border-radius:10px;
+  background:color-mix(in srgb,var(--surface) 78%,transparent);
+  color:var(--muted);
+  font-size:.72rem;
+}
+
+.fieldkit-page .fieldkit-facts strong { color:var(--text); }
+
+.fieldkit-page .fieldkit-links {
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:.7rem;
+  width:100%;
+  margin:1.75rem 0 .65rem;
+}
+
+.fieldkit-page .btn-primary,
+.fieldkit-page .btn-secondary {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:.55rem;
+  min-height:46px;
+  padding:.78rem 1.15rem;
+  border:1px solid transparent;
+  border-radius:13px;
+  font:750 .82rem/1.35 var(--font);
+  text-align:center;
+  cursor:pointer;
+  transition:transform .2s,border-color .2s,background .2s,box-shadow .2s,color .2s;
+}
+
+.fieldkit-page .btn-primary {
+  background:var(--grad);
+  color:#fff;
+  box-shadow:0 12px 32px -17px var(--accent);
+}
+
+.fieldkit-page .btn-primary:hover {
+  transform:translateY(-2px);
+  color:#fff;
+  box-shadow:0 17px 36px -17px var(--accent-2);
+}
+
+.fieldkit-page .btn-secondary {
+  border-color:var(--line);
+  background:var(--surface);
+  color:var(--text);
+}
+
+.fieldkit-page .btn-secondary:hover {
+  transform:translateY(-2px);
+  border-color:var(--accent);
+  background:var(--surface-2);
+  color:var(--text);
+}
+
+.fieldkit-page button:disabled {
+  opacity:.48;
+  cursor:not-allowed;
+  transform:none!important;
+  box-shadow:none!important;
+}
+
+.fieldkit-page .fieldkit-small-note {
+  max-width:74ch;
+  margin:.8rem auto 0;
+  color:var(--muted);
+  font-size:.75rem;
+  line-height:1.7;
+}
+
+.fieldkit-page .fieldkit-main {
+  display:grid;
+  gap:1.2rem;
+  width:min(1180px,calc(100% - 2.5rem));
+  margin:0 auto;
+  padding:clamp(1.3rem,3.5vw,2.6rem) 0 3.5rem;
+}
+
+.fieldkit-page .fieldkit-section {
+  min-width:0;
+  margin:0;
+  padding:clamp(1.2rem,3.3vw,2rem);
+  border:1px solid var(--line);
+  border-radius:22px;
+  background:
+    linear-gradient(145deg,color-mix(in srgb,var(--accent) 3%,var(--surface)),var(--surface) 58%);
+  box-shadow:var(--shadow);
+  scroll-margin-top:1.5rem;
+}
+
+.fieldkit-page .fieldkit-section-heading {
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:.3rem;
+  margin-bottom:1.35rem;
+}
+
+.fieldkit-page .fieldkit-section-heading h2,
+.fieldkit-page .fieldkit-download-panel h2 {
+  margin:0 0 .35rem;
+  color:var(--text);
+  font-size:clamp(1.45rem,3.2vw,2rem);
+  font-weight:820;
+  line-height:1.14;
+  letter-spacing:-.05em;
+  text-align:left;
+}
+
+.fieldkit-page .fieldkit-section-heading > p:not(.fieldkit-eyebrow) {
+  max-width:78ch;
+  margin:0;
+  color:var(--text-2);
+  font-size:.88rem;
+  line-height:1.75;
+}
+
+.fieldkit-page .fieldkit-row-heading {
+  flex-direction:row;
+  justify-content:space-between;
+  align-items:flex-end;
+  gap:1rem;
+}
+
+.fieldkit-page .fieldkit-count {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  flex:0 0 auto;
+  min-height:30px;
+  padding:.35rem .65rem;
+  border:1px solid var(--fieldkit-accent-line);
+  border-radius:999px;
+  background:var(--surface-2);
+  color:var(--accent-3);
+  font:700 .65rem/1.3 var(--mono);
+  letter-spacing:.06em;
+  white-space:nowrap;
+}
+
+.fieldkit-page .fieldkit-form-grid {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:1rem;
+  margin-bottom:1.2rem;
+}
+
+.fieldkit-page .fieldkit-section label {
+  display:grid;
+  gap:.45rem;
+  min-width:0;
+  color:var(--text);
+  font-size:.78rem;
+  font-weight:700;
+}
+
+.fieldkit-page .fieldkit-section input[type="text"] {
+  width:100%;
+  min-width:0;
+  min-height:44px;
+  padding:.7rem .8rem;
+  border:1px solid var(--line);
+  border-radius:11px;
+  outline:none;
+  background:var(--bg-2);
+  color:var(--text);
+  font:500 .82rem/1.4 var(--font);
+  transition:border-color .2s,box-shadow .2s,background .2s;
+}
+
+.fieldkit-page .fieldkit-section input[type="text"]::placeholder {
+  color:var(--muted);
+  opacity:.85;
+}
+
+.fieldkit-page .fieldkit-section input[type="text"]:focus {
+  border-color:var(--accent);
+  background:var(--surface);
+  box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 16%,transparent);
+}
+
+.fieldkit-page .fieldkit-dropzone {
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  min-height:245px;
+  padding:clamp(1.5rem,4vw,2.5rem);
+  border:1.5px dashed color-mix(in srgb,var(--accent) 55%,var(--line));
+  border-radius:18px;
+  background:
+    radial-gradient(ellipse at 50% 0%,color-mix(in srgb,var(--accent) 9%,transparent),transparent 70%),
+    var(--fieldkit-panel-soft);
+  text-align:center;
+  cursor:pointer;
+  transition:border-color .2s,background .2s,transform .2s,box-shadow .2s;
+}
+
+.fieldkit-page .fieldkit-dropzone:hover,
+.fieldkit-page .fieldkit-dropzone.is-dragging {
+  border-color:var(--accent-3);
+  background:color-mix(in srgb,var(--accent) 9%,var(--surface));
+  box-shadow:0 0 0 4px color-mix(in srgb,var(--accent-3) 10%,transparent);
+}
+
+.fieldkit-page .fieldkit-dropzone.is-dragging { transform:scale(1.005); }
+
+.fieldkit-page .fieldkit-dropzone .drop-icon {
+  display:grid;
+  place-items:center;
+  width:54px;
+  height:54px;
+  margin-bottom:.85rem;
+  border:1px solid var(--fieldkit-accent-line);
+  border-radius:16px;
+  background:var(--surface);
+  color:var(--accent-3);
+  font-size:1.35rem;
+  box-shadow:0 10px 25px -18px var(--accent);
+}
+
+.fieldkit-page .fieldkit-dropzone h3 {
+  margin:0 0 .4rem;
+  color:var(--text);
+  font-size:1.05rem;
+  font-weight:800;
+}
+
+.fieldkit-page .fieldkit-dropzone p {
+  max-width:62ch;
+  margin:0 0 .75rem;
+  color:var(--text-2);
+  font-size:.82rem;
+  line-height:1.7;
+}
+
+.fieldkit-page .fieldkit-dropzone .fieldkit-hint {
+  margin:.75rem 0 0;
+  color:var(--muted);
+  font-size:.7rem;
+}
+
+.fieldkit-page .fieldkit-dropzone .btn-secondary { cursor:pointer; }
+
+.fieldkit-page .fieldkit-actions {
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:.65rem;
+  margin-top:1.1rem;
+}
+
+.fieldkit-page .fieldkit-status-line {
+  margin:.85rem 0 0;
+  padding:.7rem .85rem;
+  border:1px solid var(--line);
+  border-radius:11px;
+  background:var(--bg-2);
+  color:var(--text-2);
+  font-size:.78rem;
+  line-height:1.6;
+}
+
+.fieldkit-page .fieldkit-status-line[data-kind="success"] {
+  border-color:color-mix(in srgb,var(--ok) 35%,var(--line));
+  background:color-mix(in srgb,var(--ok) 8%,var(--surface));
+  color:var(--text);
+}
+
+.fieldkit-page .fieldkit-status-line[data-kind="warning"] {
+  border-color:color-mix(in srgb,#f59e0b 42%,var(--line));
+  background:color-mix(in srgb,#f59e0b 8%,var(--surface));
+  color:var(--text);
+}
+
+.fieldkit-page .fieldkit-status-line[data-kind="error"] {
+  border-color:color-mix(in srgb,#fb7185 45%,var(--line));
+  background:color-mix(in srgb,#fb7185 8%,var(--surface));
+  color:var(--text);
+}
+
+.fieldkit-page .fieldkit-privacy {
+  display:flex;
+  align-items:flex-start;
+  gap:.9rem;
+  margin-top:1.1rem;
+  padding:1rem 1.1rem;
+  border:1px solid var(--fieldkit-accent-line);
+  border-radius:15px;
+  background:color-mix(in srgb,var(--accent) 6%,var(--surface));
+  color:var(--text-2);
+}
+
+.fieldkit-page .fieldkit-privacy > i {
+  flex:0 0 auto;
+  margin-top:.15rem;
+  color:var(--accent-3);
+  font-size:1.1rem;
+}
+
+.fieldkit-page .fieldkit-privacy strong {
+  display:block;
+  margin-bottom:.2rem;
+  color:var(--text);
+  font-size:.8rem;
+}
+
+.fieldkit-page .fieldkit-privacy p {
+  margin:0;
+  color:var(--text-2);
+  font-size:.76rem;
+  line-height:1.7;
+}
+
+.fieldkit-page .fieldkit-table-wrap {
+  width:100%;
+  max-width:100%;
+  overflow-x:auto;
+  overscroll-behavior-inline:contain;
+  border:1px solid var(--line);
+  border-radius:15px;
+  background:var(--bg-2);
+  scrollbar-width:thin;
+  scrollbar-color:var(--muted) transparent;
+}
+
+.fieldkit-page .fieldkit-table {
+  width:100%;
+  min-width:940px;
+  border-collapse:separate;
+  border-spacing:0;
+  color:var(--text-2);
+  font-size:.75rem;
+  text-align:left;
+}
+
+.fieldkit-page .fieldkit-table th {
+  position:sticky;
+  top:0;
+  z-index:1;
+  padding:.85rem .8rem;
+  border-bottom:1px solid var(--line);
+  background:var(--surface-2);
+  color:var(--text);
+  font-size:.66rem;
+  font-weight:800;
+  letter-spacing:.07em;
+  text-transform:uppercase;
+  white-space:nowrap;
+}
+
+.fieldkit-page .fieldkit-table td {
+  max-width:260px;
+  padding:.8rem;
+  border-bottom:1px solid var(--line);
+  vertical-align:middle;
+  line-height:1.55;
+  overflow-wrap:anywhere;
+}
+
+.fieldkit-page .fieldkit-table tbody tr:last-child td { border-bottom:0; }
+.fieldkit-page .fieldkit-table tbody tr:hover { background:color-mix(in srgb,var(--accent) 4%,transparent); }
+.fieldkit-page .fieldkit-table .evidence-name { min-width:170px;color:var(--text);font-weight:700; }
+.fieldkit-page .fieldkit-table .hash-cell {
+  min-width:230px;
+  color:var(--accent-3);
+  font:500 .64rem/1.55 var(--mono);
+  word-break:break-all;
+}
+
+.fieldkit-page .fieldkit-empty {
+  padding:1.5rem!important;
+  color:var(--muted)!important;
+  text-align:center;
+  font-size:.8rem;
+}
+
+.fieldkit-page .verify-input {
+  width:190px!important;
+  min-width:150px!important;
+  min-height:38px!important;
+  padding:.55rem .6rem!important;
+  font:500 .65rem/1.4 var(--mono)!important;
+}
+
+.fieldkit-page .verify-button {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:36px;
+  margin:.35rem 0;
+  padding:.48rem .7rem;
+  border:1px solid var(--fieldkit-accent-line);
+  border-radius:9px;
+  background:var(--surface);
+  color:var(--text);
+  font-size:.68rem;
+  font-weight:750;
+  cursor:pointer;
+  transition:border-color .2s,background .2s;
+}
+
+.fieldkit-page .verify-button:hover:not(:disabled) {
+  border-color:var(--accent);
+  background:var(--surface-2);
+}
+
+.fieldkit-page .verify-result {
+  display:block;
+  min-width:120px;
+  margin-top:.25rem;
+  font-size:.64rem;
+  font-weight:750;
+}
+
+.fieldkit-page .verify-result[data-kind="success"] { color:var(--ok); }
+.fieldkit-page .verify-result[data-kind="warning"] { color:#fbbf24; }
+.fieldkit-page .verify-result[data-kind="error"] { color:#fb7185; }
+
+.fieldkit-page .fieldkit-heading-actions {
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  flex-wrap:wrap;
+  gap:.55rem;
+}
+
+.fieldkit-page .fieldkit-event-list {
+  display:grid;
+  gap:.65rem;
+}
+
+.fieldkit-page .fieldkit-event {
+  min-width:0;
+  padding:1rem 1.1rem;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:var(--fieldkit-panel);
+}
+
+.fieldkit-page .fieldkit-event > div {
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:.5rem 1rem;
+}
+
+.fieldkit-page .fieldkit-event strong {
+  color:var(--text);
+  font-size:.82rem;
+  font-weight:800;
+  text-transform:capitalize;
+}
+
+.fieldkit-page .fieldkit-event time {
+  color:var(--muted);
+  font-size:.68rem;
+}
+
+.fieldkit-page .fieldkit-event p {
+  margin:.55rem 0;
+  color:var(--text-2);
+  font-size:.74rem;
+  line-height:1.65;
+  overflow-wrap:anywhere;
+}
+
+.fieldkit-page .fieldkit-event code {
+  display:block;
+  padding:.55rem .65rem;
+  border:1px solid var(--line);
+  border-radius:9px;
+  background:var(--bg-2);
+  color:var(--accent-3);
+  font:500 .62rem/1.55 var(--mono);
+  overflow-wrap:anywhere;
+}
+
+.fieldkit-page .fieldkit-download-panel {
+  background:
+    radial-gradient(ellipse at 100% 0%,color-mix(in srgb,var(--accent-2) 10%,transparent),transparent 44%),
+    linear-gradient(145deg,color-mix(in srgb,var(--accent) 5%,var(--surface)),var(--surface) 64%);
+}
+
+.fieldkit-page .fieldkit-download-panel > p:not(.fieldkit-eyebrow) {
+  max-width:82ch;
+  margin:.5rem 0 1rem;
+  color:var(--text-2);
+  font-size:.86rem;
+  line-height:1.8;
+}
+
+.fieldkit-page .fieldkit-download-card {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:1.2rem;
+  margin:1.2rem 0;
+  padding:clamp(1.15rem,3vw,1.7rem);
+  border:1px solid var(--fieldkit-accent-line);
+  border-radius:17px;
+  background:color-mix(in srgb,var(--accent) 6%,var(--bg-2));
+}
+
+.fieldkit-page .fieldkit-download-card > div { min-width:0; }
+
+.fieldkit-page .fieldkit-download-label {
+  display:inline-block;
+  margin-bottom:.45rem;
+  color:var(--accent-3);
+  font:700 .65rem/1.5 var(--mono);
+  letter-spacing:.1em;
+}
+
+.fieldkit-page .fieldkit-download-card h3 {
+  margin:0 0 .35rem;
+  color:var(--text);
+  font-size:1.15rem;
+  font-weight:800;
+}
+
+.fieldkit-page .fieldkit-download-card p {
+  margin:0;
+  color:var(--muted);
+  font-size:.75rem;
+}
+
+.fieldkit-page .fieldkit-download-card .btn-primary { flex:0 0 auto; }
+
+.fieldkit-page .fieldkit-download-links {
+  display:flex;
+  flex-wrap:wrap;
+  gap:.55rem;
+  margin:1.15rem 0;
+}
+
+.fieldkit-page .fieldkit-download-links a {
+  display:inline-flex;
+  align-items:center;
+  min-height:38px;
+  padding:.48rem .72rem;
+  border:1px solid var(--line);
+  border-radius:10px;
+  background:var(--surface);
+  color:var(--text-2);
+  font-size:.72rem;
+  font-weight:650;
+  transition:border-color .2s,background .2s,color .2s;
+}
+
+.fieldkit-page .fieldkit-download-links a:hover {
+  border-color:var(--accent);
+  background:var(--surface-2);
+  color:var(--text);
+}
+
+.fieldkit-page .fieldkit-disclaimer {
+  margin:1rem 0 0!important;
+  padding:.9rem 1rem;
+  border-left:3px solid var(--accent-2);
+  border-radius:0 11px 11px 0;
+  background:var(--surface-2);
+  color:var(--muted)!important;
+  font-size:.72rem!important;
+  line-height:1.75;
+}
+
+.fieldkit-page > footer {
+  margin:0;
+  padding:1.5rem 1rem;
+  border-top:1px solid var(--line);
+  background:var(--bg-2);
+  color:var(--muted);
+  text-align:center;
+  font-size:.78rem;
+}
+
+/* Shared site.js controls used on this page. */
+.fieldkit-page .site-skip {
+  position:fixed;
+  top:10px;
+  left:10px;
+  z-index:120;
+  transform:translateY(-160%);
+  padding:.7rem 1rem;
+  border-radius:10px;
+  background:var(--accent);
+  color:#fff;
+  font-weight:750;
+}
+.fieldkit-page .site-skip:focus { transform:none; }
+
+.fieldkit-page .site-progress {
+  position:fixed;
+  inset:0 auto auto 0;
+  z-index:110;
+  width:100%;
+  height:3px;
+  background:var(--grad);
+  transform:scaleX(0);
+  transform-origin:left center;
+  pointer-events:none;
+}
+
+.fieldkit-page .site-back-top {
+  position:fixed;
+  right:1.1rem;
+  bottom:1.1rem;
+  z-index:80;
+  display:grid;
+  place-items:center;
+  width:44px;
+  height:44px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:var(--surface);
+  color:var(--text);
+  box-shadow:var(--shadow);
+  opacity:0;
+  transform:translateY(10px);
+  pointer-events:none;
+  transition:opacity .2s,transform .2s;
+}
+.fieldkit-page .site-back-top.is-visible { opacity:1;transform:none;pointer-events:auto; }
+.fieldkit-page .site-back-top svg { width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:2; }
+
+.fieldkit-page .site-toast {
+  position:fixed;
+  left:50%;
+  bottom:1.2rem;
+  z-index:100;
+  max-width:min(90vw,420px);
+  padding:.75rem 1rem;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--surface);
+  color:var(--text);
+  box-shadow:var(--shadow);
+  font-size:.8rem;
+  opacity:0;
+  pointer-events:none;
+  transform:translate(-50%,12px);
+  transition:opacity .2s,transform .2s;
+}
+.fieldkit-page .site-toast.is-visible { opacity:1;transform:translate(-50%,0); }
+
+.fieldkit-page .site-reveal {
+  opacity:0;
+  transform:translateY(18px);
+  transition:opacity .55s ease,transform .55s cubic-bezier(.2,.7,.2,1);
+  transition-delay:var(--site-delay,0ms);
+}
+.fieldkit-page .site-reveal.site-revealed { opacity:1;transform:none; }
+
+.fieldkit-page .site-hero-enter {
+  animation:fieldkit-hero-enter .65s both;
+  animation-delay:var(--site-enter-delay,0ms);
+}
+@keyframes fieldkit-hero-enter {
+  from { opacity:0;transform:translateY(14px); }
+  to { opacity:1;transform:translateY(0); }
+}
+
+.fieldkit-page dialog.site-lightbox {
+  width:min(1080px,94vw);
+  max-width:94vw;
+  max-height:90vh;
+  padding:0;
+  overflow:visible;
+  border:0;
+  border-radius:16px;
+  background:transparent;
+  color:var(--text);
+}
+.fieldkit-page dialog.site-lightbox::backdrop { background:rgba(2,6,23,.84);backdrop-filter:blur(7px); }
+.fieldkit-page .site-lightbox figure { margin:0; }
+.fieldkit-page .site-lightbox img { width:100%;max-height:82vh;object-fit:contain;border-radius:14px; }
+.fieldkit-page .site-lightbox figcaption { margin:.65rem 0 0;color:#e2e8f0;text-align:center;font-size:.8rem; }
+.fieldkit-page .site-lightbox-close {
+  position:absolute;
+  top:-42px;
+  right:0;
+  width:34px;
+  height:34px;
+  border:1px solid rgba(255,255,255,.24);
+  border-radius:50%;
+  background:#111827;
+  color:#fff;
+  font-size:1.3rem;
+  cursor:pointer;
+}
+
+@media(max-width:760px) {
+  .fieldkit-page .fieldkit-hero { min-height:0;padding:0 1rem 3.2rem; }
+  .fieldkit-page .fieldkit-topnav { min-height:68px;align-items:flex-start;padding:.8rem 0; }
+  .fieldkit-page .fieldkit-topnav > div { gap:.2rem; }
+  .fieldkit-page .fieldkit-topnav > div a { min-height:34px;padding:.35rem .58rem;font-size:.7rem; }
+  .fieldkit-page .fieldkit-hero-copy { margin-top:3.2rem; }
+  .fieldkit-page .fieldkit-hero h1 { font-size:clamp(2.5rem,11vw,4rem); }
+  .fieldkit-page .fieldkit-main { width:calc(100% - 1.5rem);gap:.85rem; }
+  .fieldkit-page .fieldkit-section { padding:1.15rem;border-radius:17px; }
+  .fieldkit-page .fieldkit-form-grid { gap:.75rem; }
+  .fieldkit-page .fieldkit-row-heading { align-items:flex-start; }
+  .fieldkit-page .fieldkit-download-card { align-items:flex-start;flex-direction:column; }
+  .fieldkit-page .fieldkit-download-card .btn-primary { width:100%; }
+}
+
+@media(max-width:560px) {
+  .fieldkit-page .fieldkit-topnav { flex-direction:column;align-items:flex-start;gap:.45rem; }
+  .fieldkit-page .fieldkit-topnav > div { justify-content:flex-start;width:100%; }
+  .fieldkit-page .fieldkit-hero-copy { margin-top:2.45rem; }
+  .fieldkit-page .fieldkit-hero h1 { font-size:clamp(2.2rem,12vw,3.25rem); }
+  .fieldkit-page .fieldkit-links { display:grid;grid-template-columns:1fr;max-width:380px; }
+  .fieldkit-page .fieldkit-links a { width:100%; }
+  .fieldkit-page .fieldkit-facts { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));width:100%; }
+  .fieldkit-page .fieldkit-facts span { justify-content:center;text-align:center; }
+  .fieldkit-page .fieldkit-form-grid { grid-template-columns:1fr; }
+  .fieldkit-page .fieldkit-actions { display:grid;grid-template-columns:1fr; }
+  .fieldkit-page .fieldkit-actions > button { width:100%; }
+  .fieldkit-page .fieldkit-row-heading { flex-direction:column;align-items:flex-start; }
+  .fieldkit-page .fieldkit-heading-actions { justify-content:flex-start;width:100%; }
+  .fieldkit-page .fieldkit-download-links { display:grid;grid-template-columns:1fr; }
+  .fieldkit-page .fieldkit-download-links a { width:100%; }
+  .fieldkit-page .fieldkit-privacy { padding:.85rem; }
+  .fieldkit-page .site-back-top { right:.7rem;bottom:.7rem;width:40px;height:40px; }
+}
+
+@media(prefers-reduced-motion:reduce) {
+  .fieldkit-page *,
+  .fieldkit-page *::before,
+  .fieldkit-page *::after {
+    scroll-behavior:auto!important;
+    animation:none!important;
+    transition:none!important;
+  }
+  .fieldkit-page .site-reveal,
+  .fieldkit-page .site-reveal.site-revealed { opacity:1;transform:none; }
+}
