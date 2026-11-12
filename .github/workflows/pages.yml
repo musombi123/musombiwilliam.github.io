@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
   workflow_dispatch:
 
 concurrency:
@@ -23,7 +26,7 @@ jobs:
       - name: Validate first-party browser assets
         shell: pwsh
         run: |
-          $required = @("index.html", "forensics.html", "fieldkit.html", "fieldkit.js", "guides.html", "stylesheet.css")
+          $required = @("index.html", "forensics.html", "fieldkit.html", "fieldkit.js", "diagnostics.html", "diagnostics.css", "diagnostics.js", "guides.html", "stylesheet.css")
           foreach ($relativePath in $required) {
             $fullPath = Join-Path $env:GITHUB_WORKSPACE $relativePath
             if (!(Test-Path $fullPath)) {
@@ -33,6 +36,10 @@ jobs:
           node --check (Join-Path $env:GITHUB_WORKSPACE "fieldkit.js")
           if ($LASTEXITCODE -ne 0) {
             throw "Field Workbench JavaScript syntax validation failed."
+          }
+          node --check (Join-Path $env:GITHUB_WORKSPACE "diagnostics.js")
+          if ($LASTEXITCODE -ne 0) {
+            throw "Workspace Diagnostics JavaScript syntax validation failed."
           }
           node --check (Join-Path $env:GITHUB_WORKSPACE "site.js")
           if ($LASTEXITCODE -ne 0) {
@@ -66,10 +73,10 @@ jobs:
           New-Item -ItemType Directory -Force -Path $source | Out-Null
           git -C $source init
           git -C $source remote add origin https://github.com/musombi123/RevelaAI.git
-          git -C $source fetch --depth 1 origin 9c1e2f472e04b89bbdfe49480039547df640ddc1
+          git -C $source fetch --depth 1 origin 1a3f584b8c25426d564bc59376c9cd6a4cca55ce
           git -C $source checkout --detach FETCH_HEAD
           $actual = (git -C $source rev-parse HEAD).Trim()
-          if ($actual -ne "9c1e2f472e04b89bbdfe49480039547df640ddc1") {
+          if ($actual -ne "1a3f584b8c25426d564bc59376c9cd6a4cca55ce") {
             throw "Unexpected Field Kit source revision: $actual"
           }
           "Pinned Field Kit revision: $actual"
@@ -111,7 +118,7 @@ jobs:
           $site = Join-Path $env:RUNNER_TEMP "portfolio-site"
           $stage = Join-Path $env:RUNNER_TEMP "fieldkit-package"
           $portable = Join-Path $source "portable"
-          $filename = "RevelaAI-Portable-Field-Kit-v0.2.0-Windows-x64.zip"
+          $filename = "RevelaAI-Portable-Field-Kit-v0.3.0-Windows-x64.zip"
           $downloads = Join-Path $site "downloads"
           $stagePortable = Join-Path $stage "portable"
 
@@ -140,10 +147,10 @@ jobs:
 
           $manifest = [ordered]@{
             product = "RevelaAI Portable Field Kit"
-            version = "0.2.0"
+            version = "0.3.0"
             platform = "Windows x64"
             source_repository = "musombi123/RevelaAI"
-            source_commit = "9c1e2f472e04b89bbdfe49480039547df640ddc1"
+            source_commit = "1a3f584b8c25426d564bc59376c9cd6a4cca55ce"
             package_file = $filename
             package_size_bytes = $size
             sha256 = $digest
@@ -171,6 +178,7 @@ jobs:
           retention-days: 1
 
   deploy:
+    if: github.event_name != 'pull_request'
     name: Deploy portfolio to GitHub Pages
     needs: build-site
     runs-on: ubuntu-latest
