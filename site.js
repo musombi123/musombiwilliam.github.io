@@ -3,7 +3,7 @@
   const doc=document, root=doc.documentElement, body=doc.body;
   const reduce=window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
   const path=(window.location.pathname.split("/").pop()||"index.html").toLowerCase();
-  const page=["index.html","forensics.html","fieldkit.html","guides.html"].includes(path)?path:"index.html";
+  const page=["index.html","forensics.html","fieldkit.html","guides.html","diagnostics.html","procedural-game-foundry.html"].includes(path)?path:"index.html";
   root.classList.add("site-js");
   body.classList.add("site-page","site-page-"+page.replace(".html",""));
 
@@ -57,8 +57,6 @@
   doc.querySelector(".progress")?.remove();
   skip.after(progress);
 
-  // Each page owns its visible header/navigation. Do not inject a second
-  // global header over the homepage navigation or specialist page heroes.
   doc.querySelector(".fieldkit-topnav")?.classList.add("site-legacy-topnav");
   const localNavs=[...doc.querySelectorAll("body > nav:not(.site-primary-nav), .forensics-nav")];
   localNavs.forEach((nav)=>{

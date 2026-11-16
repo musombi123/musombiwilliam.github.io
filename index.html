@@ -37,7 +37,7 @@
 <header class="topbar" aria-label="Portfolio navigation">
   <nav id="navlinks" aria-label="Main navigation">
     <a href="#home">Home</a><a href="#about">About</a><a href="#skills">Skills</a>
-    <a href="#experience">Experience</a><a href="#projects">Projects</a>
+    <a href="#experience">Experience</a><a href="#projects">Projects</a><a href="procedural-game-foundry.html">Game Foundry</a>
     <a href="#forensics">Forensics</a><a href="#roadmap">Achievements</a><a href="#contact">Contact</a>
   </nav>
   <button class="icon-btn menu-btn" id="menuBtn" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="navlinks">
@@ -160,7 +160,37 @@
         <button class="shot reveal" type="button" data-full="settings.PNG" data-cap="Account profile and settings"><img src="settings.PNG" width="1200" height="605" alt="Account profile and settings" loading="lazy"><span>Profile &amp; settings</span></button>
       </div>
 
-      <header class="sec-head reveal" style="margin-top:4rem">
+      
+      <article class="feature reveal pgf-project-feature">
+        <div class="feature-copy">
+          <p class="kicker">PROCEDURAL GAME ENGINEERING</p>
+          <h3>Procedural Game Foundry — from a seed to a playable universe</h3>
+          <p>A model-free game creation studio I am building to generate deterministic 3D terrain, classify biomes, compose scenes with reusable buildings and objects, and take authored environments into a real gameplay runtime.</p>
+          <ul class="ticks">
+            <li><b>World Foundry</b> — seeded terrain, biome-aware materials, adjustable elevation, water, lighting and atmospheric fog.</li>
+            <li><b>Scene Editor</b> — place outposts, beacons, vegetation, rocks and props; edit position, rotation and scale.</li>
+            <li><b>Playable exploration</b> — first-person mouse look, WASD movement, sprinting, jumping and collision-ready Godot export.</li>
+            <li><b>Model-free pipeline</b> — procedural algorithms and asset libraries produce the environment without depending on a generative model.</li>
+          </ul>
+          <p class="sub">The browser preview is public and runs locally. Full project persistence and native game assembly are developed in the separate Foundry repository.</p>
+          <div class="cta">
+            <a class="btn primary" href="procedural-game-foundry.html#preview">Open interactive world preview ↗</a>
+            <a class="btn ghost" href="https://github.com/musombi123/Procedural-Game-Foundry">View engineering repository ↗</a>
+          </div>
+        </div>
+        <div class="pgf-feature-art" role="img" aria-label="Procedurally generated alien planet terrain preview">
+          <span class="pgf-orbit"></span><span class="pgf-world"></span><span class="pgf-world-caption">SEED → TERRAIN → SCENE → GAME</span>
+        </div>
+      </article>
+      <style>
+        .pgf-project-feature{margin-top:2rem;position:relative;overflow:hidden;background:linear-gradient(110deg,var(--surface),#162943)}
+        .pgf-feature-art{position:relative;align-self:stretch;min-height:250px;display:grid;place-items:center;overflow:hidden;border-radius:16px;background:radial-gradient(ellipse at center,#1b4770,#0a1425 72%)}
+        .pgf-world{position:relative;width:175px;height:175px;border-radius:50%;background:radial-gradient(circle at 28% 24%,#d6f4ea,#5c9e9b 28%,#32526e 63%,#10182b 80%);box-shadow:0 0 70px #69a9db55,inset -23px -24px 35px #060e1d}
+        .pgf-orbit{position:absolute;width:270px;height:90px;border:1px solid #8ebfff66;border-radius:50%;transform:rotate(-21deg)}
+        .pgf-world-caption{position:absolute;bottom:1rem;color:#b9d5ff;font: .6rem 'JetBrains Mono',monospace;letter-spacing:.12em}
+        @media(max-width:760px){.pgf-feature-art{min-height:190px}}
+      </style>
+<header class="sec-head reveal" style="margin-top:4rem">
         <p class="kicker">THE PLATFORM</p>
         <h2>One shared foundation. Purpose-built hubs.</h2>
         <p class="sub">RevelaCode follows a modular architecture: shared identity, access control and platform services support focused workspaces for different sectors. Each hub has its own workflows and permissions rather than forcing every user into one generic application.</p>
