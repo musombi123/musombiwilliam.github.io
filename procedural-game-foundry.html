@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Procedural Game Foundry | Musombi William</title>
+  <meta name="description" content="Procedural Game Foundry — a model-free game creation studio for generating terrain, composing 3D scenes and exploring playable worlds.">
+  <meta name="theme-color" content="#0b1020">
+  <meta property="og:title" content="Procedural Game Foundry | Musombi William">
+  <meta property="og:description" content="From a deterministic seed to a playable world. Explore the interactive procedural terrain preview.">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="https://musombi123.github.io/musombiwilliam.github.io/procedural-game-foundry.html">
+  <link rel="stylesheet" href="stylesheet.css">
+  <style>
+    .pgf-page{--pgf-bg:#080e19;--pgf-panel:#101c2d;--pgf-line:#2a3d58;--pgf-blue:#8ab2ff;color:var(--text);background:var(--bg)}
+    .pgf-page .pgf-nav{position:relative;z-index:3;display:flex;align-items:center;justify-content:space-between;gap:1rem;width:min(1200px,calc(100% - 2rem));margin:auto;padding:1.1rem 0}
+    .pgf-page .pgf-brand{display:flex;align-items:center;gap:.75rem;color:var(--text);text-decoration:none;font-weight:850;letter-spacing:.06em}
+    .pgf-page .pgf-brand span{display:grid;place-items:center;width:42px;height:42px;border-radius:12px;background:linear-gradient(145deg,#a8c9ff,#4e72be);color:#081326}
+    .pgf-page .pgf-nav-links{display:flex;flex-wrap:wrap;gap:.4rem}
+    .pgf-page .pgf-nav-links a{padding:.6rem .8rem;border-radius:9px;color:var(--muted);font-size:.78rem}
+    .pgf-page .pgf-hero{position:relative;overflow:hidden;padding:5rem 1rem 4rem;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:radial-gradient(ellipse at 80% 42%,#1f4771 0,transparent 38%),linear-gradient(120deg,#0d182b,#101d32 60%,#0c1422)}
+    .pgf-page .pgf-hero-inner{position:relative;z-index:1;width:min(1100px,100%);margin:auto}
+    .pgf-page .pgf-kicker{font:700 .7rem "JetBrains Mono",monospace;letter-spacing:.18em;color:#9bbdff}
+    .pgf-page .pgf-hero h1{max-width:850px;margin:1rem 0;font-size:clamp(2.8rem,7vw,6rem);line-height:.99;letter-spacing:-.065em;color:#edf4ff}
+    .pgf-page .pgf-hero p{max-width:700px;color:#b7c6dd;font-size:1rem;line-height:1.8}
+    .pgf-page .pgf-hero-actions{display:flex;gap:.8rem;flex-wrap:wrap;margin-top:1.7rem}
+    .pgf-page .pgf-btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.85rem 1rem;border:1px solid #44618b;border-radius:10px;background:#182e4d;color:#e7f0ff;font-weight:800;font-size:.78rem;text-decoration:none}
+    .pgf-page .pgf-btn.primary{background:#8fb5ff;color:#091426;border-color:#8fb5ff}
+    .pgf-page .pgf-wrap{width:min(1200px,calc(100% - 2rem));margin:0 auto}
+    .pgf-page .pgf-section{padding:3.6rem 0}
+    .pgf-page .pgf-section-head{display:flex;align-items:end;justify-content:space-between;gap:1rem;margin-bottom:1.4rem}
+    .pgf-page .pgf-section-head h2{margin:.45rem 0;font-size:clamp(1.6rem,4vw,2.5rem);letter-spacing:-.045em}
+    .pgf-page .pgf-section-head p{max-width:580px;margin:0;color:var(--muted);font-size:.84rem;line-height:1.7}
+    .pgf-page .pgf-editor-grid{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:1rem;align-items:stretch}
+    .pgf-page .pgf-viewer{position:relative;min-height:590px;overflow:hidden;border:1px solid var(--pgf-line);border-radius:18px;background:#101d31;box-shadow:0 22px 80px #0003}
+    .pgf-page #pgf-viewport{position:absolute;inset:0}
+    .pgf-page #pgf-viewport canvas{display:block;width:100%;height:100%;outline:0}
+    .pgf-page .pgf-view-label,.pgf-page .pgf-view-hint{position:absolute;z-index:2;padding:.65rem .8rem;border:1px solid #91b6e755;border-radius:8px;background:#071321c9;color:#dbeaff;font: .62rem "JetBrains Mono",monospace;letter-spacing:.08em;pointer-events:none}
+    .pgf-page .pgf-view-label{top:1rem;left:1rem}
+    .pgf-page .pgf-view-hint{bottom:1rem;left:50%;max-width:90%;transform:translateX(-50%);text-align:center;white-space:nowrap}
+    .pgf-page .pgf-inspector{padding:1.1rem;border:1px solid var(--pgf-line);border-radius:16px;background:var(--pgf-panel)}
+    .pgf-page .pgf-inspector h3{margin:.3rem 0 .9rem;font-size:1rem}
+    .pgf-page .pgf-control{display:grid;gap:.45rem;margin:.95rem 0;color:var(--text);font-size:.72rem}
+    .pgf-page .pgf-control span{display:flex;justify-content:space-between;gap:.5rem;color:var(--muted)}
+    .pgf-page .pgf-control strong{color:#a9c7ff;font: .68rem "JetBrains Mono",monospace}
+    .pgf-page .pgf-control input[type=range]{width:100%;accent-color:#82aafa}
+    .pgf-page .pgf-control input[type=number]{width:100%;padding:.65rem;border:1px solid #344b6a;border-radius:8px;background:#0b1525;color:#eef4ff}
+    .pgf-page .pgf-asset-grid{display:grid;grid-template-columns:1fr 1fr;gap:.45rem}
+    .pgf-page .pgf-asset{min-height:58px;padding:.6rem;border:1px solid #334866;border-radius:8px;background:#13233a;color:#c8d9f4;text-align:left;font-size:.68rem}
+    .pgf-page .pgf-asset.active{border-color:#8fb5ff;background:#1b3456}
+    .pgf-page .pgf-object-list{display:grid;gap:.4rem;max-height:155px;overflow:auto;margin-top:.75rem}
+    .pgf-page .pgf-object{display:flex;align-items:center;gap:.6rem;padding:.55rem;border:1px solid #293e5c;border-radius:8px;background:#0d1929;color:#dce8f9;text-align:left;font-size:.65rem}
+    .pgf-page .pgf-object.active{border-color:#8fb5ff}
+    .pgf-page .pgf-object i{width:9px;height:22px;border-radius:4px}
+    .pgf-page .pgf-object small{display:block;color:#8296b3;font-size:.58rem;margin-top:.2rem}
+    .pgf-page .pgf-inspector-actions{display:flex;gap:.45rem;flex-wrap:wrap;margin-top:1rem}
+    .pgf-page .pgf-inspector-actions button{flex:1;padding:.65rem;border:1px solid #344d70;border-radius:8px;background:#182d49;color:#dceaff;font-size:.65rem}
+    .pgf-page .pgf-inspector-actions button.danger{border-color:#67404c;background:#35212c;color:#ffc6cd}
+    .pgf-page .pgf-note{margin-top:1rem;padding:.75rem;border-radius:8px;background:#172943;color:#9eb2d0;font-size:.65rem;line-height:1.7}
+    .pgf-page .pgf-feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+    .pgf-page .pgf-feature{padding:1.25rem;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+    .pgf-page .pgf-feature b{display:block;margin-bottom:.55rem;color:var(--text);font-size:.87rem}
+    .pgf-page .pgf-feature p{margin:0;color:var(--muted);font-size:.75rem;line-height:1.7}
+    .pgf-page .pgf-footer{padding:1.5rem 1rem;border-top:1px solid var(--line);color:var(--muted);text-align:center;font-size:.72rem}
+    @media(max-width:900px){.pgf-page .pgf-editor-grid{grid-template-columns:1fr}.pgf-page .pgf-viewer{min-height:500px}.pgf-page .pgf-inspector{display:grid;grid-template-columns:1fr 1fr;gap:0 1rem}.pgf-page .pgf-inspector h3,.pgf-page .pgf-inspector .pgf-note,.pgf-page .pgf-inspector .pgf-asset-grid,.pgf-page .pgf-inspector .pgf-object-list,.pgf-page .pgf-inspector .pgf-inspector-actions{grid-column:1/-1}}
+    @media(max-width:640px){.pgf-page .pgf-nav{align-items:flex-start;flex-direction:column}.pgf-page .pgf-nav-links{width:100%}.pgf-page .pgf-hero{padding:3.4rem 1rem}.pgf-page .pgf-editor-grid{gap:.7rem}.pgf-page .pgf-viewer{min-height:390px}.pgf-page .pgf-inspector{display:block}.pgf-page .pgf-view-hint{font-size:.52rem;white-space:normal;width:90%}.pgf-page .pgf-feature-grid{grid-template-columns:1fr}.pgf-page .pgf-section-head{align-items:flex-start;flex-direction:column}}
+    @media(prefers-reduced-motion:reduce){.pgf-page *{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+  </style>
+  <script type="importmap">
+    {"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}
+  </script>
+</head>
+<body class="pgf-page">
+<a class="skip" href="#main">Skip to content</a>
+<header class="pgf-nav">
+  <a class="pgf-brand" href="index.html"><span>PGF</span> PROCEDURAL GAME FOUNDRY</a>
+  <nav class="pgf-nav-links" aria-label="Foundry navigation">
+    <a href="index.html">Portfolio</a><a href="#capabilities">Capabilities</a><a href="#preview">Interactive preview</a>
+  </nav>
+</header>
+<main id="main">
+  <section class="pgf-hero">
+    <div class="pgf-hero-inner">
+      <p class="pgf-kicker">A MODEL-FREE GAME CREATION STUDIO</p>
+      <h1>From a seed.<br>To a world.<br>To a game.</h1>
+      <p>Procedural Game Foundry is an engineering project focused on building playable 2D and 3D environments with deterministic algorithms, procedural geometry, reusable assets and a real gameplay runtime. No generative model is required to create the world.</p>
+      <div class="pgf-hero-actions"><a class="pgf-btn primary" href="#preview">Explore the world preview ↓</a><a class="pgf-btn" href="#capabilities">Explore the architecture</a></div>
+    </div>
+  </section>
+
+  <section class="pgf-section" id="preview">
+    <div class="pgf-wrap">
+      <header class="pgf-section-head">
+        <div><p class="pgf-kicker">LIVE PROCEDURAL SANDBOX</p><h2>Shape the terrain. Build the scene.</h2></div>
+        <p>This portfolio preview runs locally in your browser. Generate a seeded landscape, place modular structures, adjust their transforms, and enter first-person exploration mode.</p>
+      </header>
+      <div class="pgf-editor-grid">
+        <div class="pgf-viewer"><div id="pgf-viewport" aria-label="Interactive 3D procedural world preview"></div><span class="pgf-view-label" id="pgf-mode-label">● LIVE WORLD PREVIEW</span><span class="pgf-view-hint" id="pgf-hint">ORBIT: DRAG · ZOOM: SCROLL · SELECT OR PLACE OBJECTS</span></div>
+        <aside class="pgf-inspector">
+          <div><p class="pgf-kicker">WORLD FOUNDRY</p><h3>Terrain recipe</h3>
+            <label class="pgf-control">World seed <input id="pgf-seed" type="number" min="0" max="4294967295" value="784215"></label>
+            <label class="pgf-control"><span>Elevation <strong id="pgf-elevation-value">9.0</strong></span><input id="pgf-elevation" type="range" min="0" max="24" step=".5" value="9"></label>
+            <label class="pgf-control"><span>Roughness <strong id="pgf-roughness-value">0.055</strong></span><input id="pgf-roughness" type="range" min=".018" max=".12" step=".001" value=".055"></label>
+            <label class="pgf-control"><span>Waterline <strong id="pgf-water-value">-1.5</strong></span><input id="pgf-water" type="range" min="-8" max="8" step=".5" value="-1.5"></label>
+            <label class="pgf-control"><span>World width <strong id="pgf-width-value">96 m</strong></span><input id="pgf-width" type="range" min="48" max="192" step="8" value="96"></label>
+            <label class="pgf-control"><span>World depth <strong id="pgf-depth-value">96 m</strong></span><input id="pgf-depth" type="range" min="48" max="192" step="8" value="96"></label>
+            <label class="pgf-control"><span>Atmospheric fog <input id="pgf-fog" type="checkbox" checked></span></label>
+          </div>
+          <div><p class="pgf-kicker">SCENE EDITOR</p><h3>Place an asset</h3>
+            <div class="pgf-asset-grid">
+              <button class="pgf-asset" data-kind="outpost">⌂ &nbsp; Outpost</button>
+              <button class="pgf-asset" data-kind="beacon">⌁ &nbsp; Signal beacon</button>
+              <button class="pgf-asset" data-kind="tree">♣ &nbsp; Alien tree</button>
+              <button class="pgf-asset" data-kind="rock">⬟ &nbsp; Rock formation</button>
+              <button class="pgf-asset" data-kind="crate">▣ &nbsp; Cargo crate</button>
+            </div>
+            <div class="pgf-object-list" id="pgf-object-list"><p class="pgf-note">No objects placed. Choose an asset, then click the terrain.</p></div>
+            <div id="pgf-transform" hidden>
+              <label class="pgf-control"><span>Position X <strong id="pgf-x-value">0</strong></span><input id="pgf-x" type="range" min="-46" max="46" step=".5" value="0"></label>
+              <label class="pgf-control"><span>Position Z <strong id="pgf-z-value">0</strong></span><input id="pgf-z" type="range" min="-46" max="46" step=".5" value="0"></label>
+              <label class="pgf-control"><span>Scale <strong id="pgf-scale-value">1.00×</strong></span><input id="pgf-scale" type="range" min=".25" max="3" step=".05" value="1"></label>
+              <div class="pgf-inspector-actions"><button id="pgf-rotate">Rotate +15°</button><button id="pgf-duplicate">Duplicate</button><button class="danger" id="pgf-delete">Delete</button></div>
+            </div>
+            <div class="pgf-inspector-actions"><button id="pgf-play">▶ Enter world</button><button id="pgf-export">Export scene JSON</button><button id="pgf-reset">Reset view</button></div>
+          </div>
+          <p class="pgf-note">Preview controls: drag to orbit; click to place or select; in exploration mode click the world to capture the mouse, then use W A S D, Shift and Space. Press Escape to release the mouse.</p>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="pgf-section" id="capabilities">
+    <div class="pgf-wrap">
+      <header class="pgf-section-head"><div><p class="pgf-kicker">ENGINEERING DIRECTION</p><h2>A creation pipeline built around real game assets</h2></div></header>
+      <div class="pgf-feature-grid">
+        <article class="pgf-feature"><b>01 · Procedural World Foundry</b><p>Seeded heightfields, biome classification, water, fog, lighting and deterministic regeneration. The same world recipe is serialised for native runtime assembly.</p></article>
+        <article class="pgf-feature"><b>02 · Scene Editor</b><p>Place modular buildings, props, vegetation and natural forms. Save scene transforms and asset metadata as part of the project rather than losing edits in a screenshot.</p></article>
+        <article class="pgf-feature"><b>03 · Playable Runtime</b><p>First-person exploration, collision-ready terrain and a Godot project assembler turn an authored environment into a game project that can be continued in a full engine.</p></article>
+      </div>
+      <p style="margin-top:1.5rem;color:var(--muted);font-size:.76rem;line-height:1.8">The portfolio sandbox is a browser-local demonstration. Project persistence, full scene export, native Godot assembly, desktop packaging and the extended studio workflow are developed in the main PGF repository.</p>
+    </div>
+  </section>
+</main>
+<footer class="pgf-footer">© <span id="yr">2026</span> Musombi William · Procedural Game Foundry · Model-free by design</footer>
+<script src="site.js" defer></script>
+<script type="module" src="pgf-demo.js"></script>
+</body>
+</html>

@@ -26,7 +26,7 @@ jobs:
       - name: Validate first-party browser assets
         shell: pwsh
         run: |
-          $required = @("index.html", "forensics.html", "fieldkit.html", "fieldkit.js", "diagnostics.html", "diagnostics.css", "diagnostics.js", "guides.html", "stylesheet.css")
+          $required = @("index.html", "forensics.html", "fieldkit.html", "fieldkit.js", "diagnostics.html", "diagnostics.css", "diagnostics.js", "guides.html", "procedural-game-foundry.html", "pgf-demo.js", "stylesheet.css")
           foreach ($relativePath in $required) {
             $fullPath = Join-Path $env:GITHUB_WORKSPACE $relativePath
             if (!(Test-Path $fullPath)) {
@@ -40,6 +40,10 @@ jobs:
           node --check (Join-Path $env:GITHUB_WORKSPACE "diagnostics.js")
           if ($LASTEXITCODE -ne 0) {
             throw "Workspace Diagnostics JavaScript syntax validation failed."
+          }
+          node --check (Join-Path $env:GITHUB_WORKSPACE "pgf-demo.js")
+          if ($LASTEXITCODE -ne 0) {
+            throw "Procedural Game Foundry preview JavaScript syntax validation failed."
           }
           node --check (Join-Path $env:GITHUB_WORKSPACE "site.js")
           if ($LASTEXITCODE -ne 0) {
