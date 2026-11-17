@@ -1,6 +1,6 @@
 # Musombi William — Portfolio & Engineering Knowledge Base
 
-This repository publishes the personal portfolio, RevelaCode engineering work, the Digital Forensics & Security Centre, the browser-local Field Workbench, technical field guides and the Procedural Game Foundry preview.
+This repository publishes the personal portfolio, RevelaCode engineering work, the Digital Forensics & Security Centre, the browser-local Field Workbench, technical field guides the Procedural Game Foundry interactive preview, and the NEXORA Interactive Studios / Nexora Foundry showcase.
 
 **Live site:** https://musombi123.github.io/musombiwilliam.github.io/
 
@@ -37,3 +37,12 @@ The portfolio preview is intentionally self-contained and does not require the p
 The shared site includes mobile-first layouts, keyboard focus indicators, skip-to-content links, saved theme preferences, reduced-motion support, responsive navigation, local-only browser tools and CI checks for local destinations and key interactive features.
 
 The static portfolio does not run forensic scans or upload evidence. The PGF page's preview stays in the browser; the full studio project service is separate.
+
+
+## NEXORA Interactive Studios
+
+NEXORA Interactive Studios is an independent game-technology venture by Musombi William and is separate from RevelaCode. Its flagship product is **Nexora Foundry**, a deterministic creator-controlled pipeline combining procedural world generation, Blender asset production and Godot runtime assembly.
+
+The NEXORA portfolio page is `nexora.html`. It links to the existing browser-local procedural world preview in `procedural-game-foundry.html` so visitors can test the interactive prototype immediately. The browser preview is not represented as the complete native game-generation platform. Creator acceptance, physical Android-device testing and signed release packaging remain explicit validation gates.
+
+Engineering source remains in the separate private repository: https://github.com/musombi123/Procedural-Game-Foundry
