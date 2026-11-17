@@ -69,6 +69,19 @@
   <script type="importmap">
     {"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}
   </script>
+
+<style>
+.nx-workspace-bar{display:grid;grid-template-columns:minmax(180px,1fr) auto;gap:.8rem;padding:1rem;margin:0 0 1rem;border:1px solid #344d70;border-radius:14px;background:#0b1728}
+.nx-project-meta{display:flex;align-items:end;gap:1rem;flex-wrap:wrap}.nx-project-meta label{display:grid;gap:.35rem;color:#91a9c8;font: .62rem "JetBrains Mono",monospace;letter-spacing:.1em}
+.nx-project-meta input{min-width:min(280px,70vw);padding:.7rem .8rem;border:1px solid #344d70;border-radius:8px;background:#111f33;color:#edf4ff;font:600 .95rem "Inter",sans-serif}
+#nx-save-state{font: .62rem "JetBrains Mono",monospace;color:#9bbdff;padding-bottom:.75rem}
+.nx-workspace-actions{display:flex;gap:.45rem;flex-wrap:wrap;justify-content:flex-end}
+.nx-workspace-actions button{padding:.7rem .85rem;border:1px solid #3d5a7d;border-radius:8px;background:#172b45;color:#e5efff;font-size:.7rem;font-weight:750}
+.nx-workspace-actions button:hover{border-color:#9bbdff;background:#203a5d}
+.nx-validation{grid-column:1/-1;padding:.65rem .8rem;border-radius:8px;background:#111f33;color:#9fb4d2;font-size:.7rem;line-height:1.6}
+.nx-validation[data-state="pass"]{color:#b8f0c4;border:1px solid #39744a}.nx-validation[data-state="fail"]{color:#ffc2c2;border:1px solid #81444a}
+@media(max-width:760px){.nx-workspace-bar{grid-template-columns:1fr}.nx-workspace-actions{justify-content:stretch}.nx-workspace-actions button{flex:1}.nx-project-meta{align-items:flex-start;flex-direction:column;gap:.4rem}.nx-project-meta input{min-width:0;width:100%}}
+</style>
 </head>
 <body class="pgf-page">
 <a class="skip" href="#main">Skip to content</a>
@@ -161,15 +174,3 @@
 </body>
 </html>
 
-<style>
-.nx-workspace-bar{display:grid;grid-template-columns:minmax(180px,1fr) auto;gap:.8rem;padding:1rem;margin:0 0 1rem;border:1px solid #344d70;border-radius:14px;background:#0b1728}
-.nx-project-meta{display:flex;align-items:end;gap:1rem;flex-wrap:wrap}.nx-project-meta label{display:grid;gap:.35rem;color:#91a9c8;font: .62rem "JetBrains Mono",monospace;letter-spacing:.1em}
-.nx-project-meta input{min-width:min(280px,70vw);padding:.7rem .8rem;border:1px solid #344d70;border-radius:8px;background:#111f33;color:#edf4ff;font:600 .95rem "Inter",sans-serif}
-#nx-save-state{font: .62rem "JetBrains Mono",monospace;color:#9bbdff;padding-bottom:.75rem}
-.nx-workspace-actions{display:flex;gap:.45rem;flex-wrap:wrap;justify-content:flex-end}
-.nx-workspace-actions button{padding:.7rem .85rem;border:1px solid #3d5a7d;border-radius:8px;background:#172b45;color:#e5efff;font-size:.7rem;font-weight:750}
-.nx-workspace-actions button:hover{border-color:#9bbdff;background:#203a5d}
-.nx-validation{grid-column:1/-1;padding:.65rem .8rem;border-radius:8px;background:#111f33;color:#9fb4d2;font-size:.7rem;line-height:1.6}
-.nx-validation[data-state="pass"]{color:#b8f0c4;border:1px solid #39744a}.nx-validation[data-state="fail"]{color:#ffc2c2;border:1px solid #81444a}
-@media(max-width:760px){.nx-workspace-bar{grid-template-columns:1fr}.nx-workspace-actions{justify-content:stretch}.nx-workspace-actions button{flex:1}.nx-project-meta{align-items:flex-start;flex-direction:column;gap:.4rem}.nx-project-meta input{min-width:0;width:100%}}
-</style>
