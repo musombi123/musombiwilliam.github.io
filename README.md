@@ -1,6 +1,6 @@
 # Musombi William — Portfolio & Engineering Knowledge Base
 
-This repository publishes the personal portfolio, RevelaCode engineering work, the Digital Forensics & Security Centre, the browser-local Field Workbench, technical field guides the Procedural Game Foundry interactive preview, and the NEXORA Interactive Studios / Nexora Foundry showcase.
+This repository publishes the personal portfolio, RevelaCode engineering work, the Digital Forensics & Security Centre, the browser-local Field Workbench, technical field guides, the Procedural Game Foundry interactive preview, and the NEXORA Interactive Studios / Nexora Foundry showcase.
 
 **Live site:** https://musombi123.github.io/musombiwilliam.github.io/
 
@@ -14,6 +14,7 @@ This repository publishes the personal portfolio, RevelaCode engineering work, t
 | `diagnostics.html` | Offline-capable viewer for JSON reports from the USB Workspace Auditor |
 | `guides.html` | Technical field guides, Shamba engineering and defensive-security documentation |
 | `procedural-game-foundry.html` | Interactive model-free procedural terrain and scene-editor preview |
+| `nexora.html` | NEXORA Interactive Studios identity, Nexora Foundry overview, pipeline stages, engineering status and interactive-preview links |
 
 The six published HTML pages share the responsive site layer. It adds theme preferences, navigation helpers, scroll progress, reveal motion, clipboard controls, image lightbox and back-to-top behaviour.
 
