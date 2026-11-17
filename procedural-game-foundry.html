@@ -69,22 +69,35 @@
   <script type="importmap">
     {"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}
   </script>
+
+<style>
+.nx-workspace-bar{display:grid;grid-template-columns:minmax(180px,1fr) auto;gap:.8rem;padding:1rem;margin:0 0 1rem;border:1px solid #344d70;border-radius:14px;background:#0b1728}
+.nx-project-meta{display:flex;align-items:end;gap:1rem;flex-wrap:wrap}.nx-project-meta label{display:grid;gap:.35rem;color:#91a9c8;font: .62rem "JetBrains Mono",monospace;letter-spacing:.1em}
+.nx-project-meta input{min-width:min(280px,70vw);padding:.7rem .8rem;border:1px solid #344d70;border-radius:8px;background:#111f33;color:#edf4ff;font:600 .95rem "Inter",sans-serif}
+#nx-save-state{font: .62rem "JetBrains Mono",monospace;color:#9bbdff;padding-bottom:.75rem}
+.nx-workspace-actions{display:flex;gap:.45rem;flex-wrap:wrap;justify-content:flex-end}
+.nx-workspace-actions button{padding:.7rem .85rem;border:1px solid #3d5a7d;border-radius:8px;background:#172b45;color:#e5efff;font-size:.7rem;font-weight:750}
+.nx-workspace-actions button:hover{border-color:#9bbdff;background:#203a5d}
+.nx-validation{grid-column:1/-1;padding:.65rem .8rem;border-radius:8px;background:#111f33;color:#9fb4d2;font-size:.7rem;line-height:1.6}
+.nx-validation[data-state="pass"]{color:#b8f0c4;border:1px solid #39744a}.nx-validation[data-state="fail"]{color:#ffc2c2;border:1px solid #81444a}
+@media(max-width:760px){.nx-workspace-bar{grid-template-columns:1fr}.nx-workspace-actions{justify-content:stretch}.nx-workspace-actions button{flex:1}.nx-project-meta{align-items:flex-start;flex-direction:column;gap:.4rem}.nx-project-meta input{min-width:0;width:100%}}
+</style>
 </head>
 <body class="pgf-page">
 <a class="skip" href="#main">Skip to content</a>
 <header class="pgf-nav">
-  <a class="pgf-brand" href="index.html"><span>PGF</span> PROCEDURAL GAME FOUNDRY</a>
+  <a class="pgf-brand" href="nexora.html"><span>N</span> NEXORA FOUNDRY WORKSPACE</a>
   <nav class="pgf-nav-links" aria-label="Foundry navigation">
-    <a href="index.html">Portfolio</a><a href="#capabilities">Capabilities</a><a href="#preview">Interactive preview</a>
+    <a href="nexora.html">NEXORA Studio</a><a href="#preview">Workspace</a><a href="#capabilities">Pipeline</a>
   </nav>
 </header>
 <main id="main">
   <section class="pgf-hero">
     <div class="pgf-hero-inner">
-      <p class="pgf-kicker">A MODEL-FREE GAME CREATION STUDIO</p>
-      <h1>From a seed.<br>To a world.<br>To a game.</h1>
-      <p>Procedural Game Foundry is an engineering project focused on building playable 2D and 3D environments with deterministic algorithms, procedural geometry, reusable assets and a real gameplay runtime. No generative model is required to create the world.</p>
-      <div class="pgf-hero-actions"><a class="pgf-btn primary" href="#preview">Explore the world preview ↓</a><a class="pgf-btn" href="#capabilities">Explore the architecture</a></div>
+      <p class="pgf-kicker">NEXORA FOUNDRY · CREATOR WORKSPACE</p>
+      <h1>Build worlds.<br>Author scenes.<br><span style="color:#9bbdff">Ship games.</span></h1>
+      <p>A hands-on production workspace for deterministic world generation and scene authoring. Create a terrain recipe, place and transform scene assets, save a project file, validate its structure and export a portable project manifest for the native production pipeline.</p>
+      <div class="pgf-hero-actions"><a class="pgf-btn primary" href="#preview">Open production workspace ↓</a><a class="pgf-btn" href="#capabilities">Explore the architecture</a></div>
     </div>
   </section>
 
@@ -92,8 +105,22 @@
     <div class="pgf-wrap">
       <header class="pgf-section-head">
         <div><p class="pgf-kicker">LIVE PROCEDURAL SANDBOX</p><h2>Shape the terrain. Build the scene.</h2></div>
-        <p>This portfolio preview runs locally in your browser. Generate a seeded landscape, place modular structures, adjust their transforms, and enter first-person exploration mode.</p>
+        <p>Create and edit a scene in this browser workspace. Projects can be saved locally, reopened from a project file and exported as a portable .nexora.json manifest. Native Godot compilation and team collaboration remain separate pipeline services.</p>
       </header>
+      <div class="nx-workspace-bar" aria-label="Project workspace controls">
+        <div class="nx-project-meta">
+          <label>PROJECT NAME <input id="nx-project-name" value="Untitled World" maxlength="64" autocomplete="off"></label>
+          <span id="nx-save-state" role="status">LOCAL PROJECT · UNSAVED</span>
+        </div>
+        <div class="nx-workspace-actions">
+          <button type="button" id="nx-save">Save project</button>
+          <button type="button" id="nx-load">Open project</button>
+          <button type="button" id="nx-export">Export project</button>
+          <button type="button" id="nx-validate">Validate scene</button>
+          <input type="file" id="nx-file" accept=".nexora.json,.json,application/json" hidden>
+        </div>
+        <div id="nx-validation" class="nx-validation" aria-live="polite">Run validation before handing this scene to the native assembly pipeline.</div>
+      </div>
       <div class="pgf-editor-grid">
         <div class="pgf-viewer"><div id="pgf-viewport" aria-label="Interactive 3D procedural world preview"></div><span class="pgf-view-label" id="pgf-mode-label">● LIVE WORLD PREVIEW</span><span class="pgf-view-hint" id="pgf-hint">ORBIT: DRAG · ZOOM: SCROLL · SELECT OR PLACE OBJECTS</span></div>
         <aside class="pgf-inspector">
@@ -137,12 +164,13 @@
         <article class="pgf-feature"><b>02 · Scene Editor</b><p>Place modular buildings, props, vegetation and natural forms. Save scene transforms and asset metadata as part of the project rather than losing edits in a screenshot.</p></article>
         <article class="pgf-feature"><b>03 · Playable Runtime</b><p>First-person exploration, collision-ready terrain and a Godot project assembler turn an authored environment into a game project that can be continued in a full engine.</p></article>
       </div>
-      <p style="margin-top:1.5rem;color:var(--muted);font-size:.76rem;line-height:1.8">The portfolio sandbox is a browser-local demonstration. Project persistence, full scene export, native Godot assembly, desktop packaging and the extended studio workflow are developed in the main PGF repository.</p>
+      <p style="margin-top:1.5rem;color:var(--muted);font-size:.76rem;line-height:1.8">This workspace currently provides local project authoring, project-file import/export, deterministic terrain settings, scene-object editing and structural validation. It does not yet provide cloud collaboration, source-control integration, full DCC asset import, or one-click native builds; those require connected backend services and the Godot build pipeline.</p>
     </div>
   </section>
 </main>
-<footer class="pgf-footer">© <span id="yr">2026</span> Musombi William · Procedural Game Foundry · Model-free by design</footer>
+<footer class="pgf-footer">© <span id="yr">2026</span> Musombi William · NEXORA Interactive Studios · Nexora Foundry</footer>
 <script src="site.js" defer></script>
 <script type="module" src="pgf-demo.js"></script>
 </body>
 </html>
+
