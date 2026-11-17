@@ -43,7 +43,7 @@ if (host) {
   const raycaster = new THREE.Raycaster();
   const keys = new Set();
   const state = {
-    seed: 784215, width: 96, depth: 96, amplitude: 9, frequency: .055,
+    seed: 784215, width: 96, depth: 96, amplitude: 9, frequency: .055, projectName: "Untitled World",
     waterLevel: -1.5, fog: true, mode: "edit", placing: null, selected: null, objects: [],
     verticalVelocity: 0, lastTime: 0
   };
@@ -298,6 +298,79 @@ if (host) {
     }
   });
   window.addEventListener("keyup", (event) => keys.delete(event.key.toLowerCase()));
+
+  const projectStatus = (message) => { const node = byId("nx-save-state"); if (node) node.textContent = message; };
+  const projectData = () => ({
+    format: "nexora-foundry-project", schema_version: 1,
+    project: { name: (byId("nx-project-name")?.value || "Untitled World").trim().slice(0, 64) || "Untitled World", saved_at: new Date().toISOString() },
+    world: { seed: state.seed, width: state.width, depth: state.depth, amplitude: state.amplitude, frequency: state.frequency, water_level: state.waterLevel, fog: state.fog },
+    scene: { objects: state.objects.map(({ group, ...item }) => item) },
+    pipeline: { authoring: "browser-workspace", native_assembly: "not_run", build_status: "not_built" }
+  });
+  function applyProject(data) {
+    if (!data || data.format !== "nexora-foundry-project" || data.schema_version !== 1 || !data.world || !data.scene || !Array.isArray(data.scene.objects)) throw new Error("Unsupported or malformed Nexora project file.");
+    const w = data.world;
+    const number = (v, fallback, min, max) => Math.max(min, Math.min(max, Number.isFinite(Number(v)) ? Number(v) : fallback));
+    state.seed = number(w.seed, 784215, 0, 4294967295);
+    state.width = number(w.width, 96, 48, 192); state.depth = number(w.depth, 96, 48, 192);
+    state.amplitude = number(w.amplitude, 9, 0, 24); state.frequency = number(w.frequency, .055, .018, .12);
+    state.waterLevel = number(w.water_level, -1.5, -8, 8); state.fog = Boolean(w.fog);
+    const name = String(data.project?.name || "Imported World").slice(0,64);
+    byId("nx-project-name").value = name; state.projectName = name;
+    byId("pgf-seed").value = state.seed; byId("pgf-elevation").value = state.amplitude; byId("pgf-elevation-value").textContent = state.amplitude.toFixed(1);
+    byId("pgf-roughness").value = state.frequency; byId("pgf-roughness-value").textContent = state.frequency.toFixed(3);
+    byId("pgf-water").value = state.waterLevel; byId("pgf-water-value").textContent = state.waterLevel.toFixed(1);
+    byId("pgf-width").value = state.width; byId("pgf-width-value").textContent = state.width + " m";
+    byId("pgf-depth").value = state.depth; byId("pgf-depth-value").textContent = state.depth + " m"; byId("pgf-fog").checked = state.fog;
+    state.objects.forEach(item => { scene.remove(item.group); dispose(item.group); });
+    state.objects = []; state.selected = null;
+    rebuildTerrain();
+    for (const raw of data.scene.objects) {
+      if (!["outpost","beacon","tree","rock","crate"].includes(raw.kind)) continue;
+      const x = number(raw.x,0,-state.width/2,state.width/2), z = number(raw.z,0,-state.depth/2,state.depth/2);
+      const id = "asset-" + Math.random().toString(36).slice(2,10);
+      const item = { id, kind: raw.kind, name: String(raw.name || raw.kind).slice(0,80), x, z, y: number(raw.y,0,-20,50), rotation: number(raw.rotation,0,0,360), scale: number(raw.scale,1,.25,3) };
+      item.group = makeAsset(item.kind,item.x,item.z,id); item.group.position.y += item.y; item.group.rotation.y = THREE.MathUtils.degToRad(item.rotation); item.group.scale.setScalar(item.scale);
+      state.objects.push(item); scene.add(item.group);
+    }
+    renderObjectList(); selectObject(null); projectStatus("PROJECT OPENED · UNSAVED CHANGES");
+  }
+  function validateProject() {
+    const data = projectData(), errors = [], warnings = [];
+    if (!data.project.name.trim()) errors.push("Project name is required.");
+    if (data.scene.objects.length === 0) warnings.push("Scene has no placed assets.");
+    if (data.scene.objects.length > 500) errors.push("Scene exceeds the 500-object workspace limit.");
+    for (const [i,item] of data.scene.objects.entries()) {
+      if (!["outpost","beacon","tree","rock","crate"].includes(item.kind)) errors.push("Object " + (i+1) + " has an unsupported asset type.");
+      if (![item.x,item.z,item.scale,item.rotation].every(Number.isFinite)) errors.push("Object " + (i+1) + " has invalid transform data.");
+      if (Math.abs(item.x) > state.width/2 || Math.abs(item.z) > state.depth/2) errors.push("Object " + (i+1) + " is outside world bounds.");
+    }
+    const box = byId("nx-validation");
+    if (errors.length) { box.dataset.state="fail"; box.textContent="VALIDATION FAILED · " + errors.join(" "); return false; }
+    box.dataset.state="pass"; box.textContent="STRUCTURE VALID · " + data.scene.objects.length + " scene object(s). " + (warnings.length ? "Warnings: " + warnings.join(" ") : "No structural warnings.") + " Native engine build and gameplay tests have not been run.";
+    return true;
+  }
+  function downloadProject() {
+    const data = projectData();
+    const blob = new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
+    const url = URL.createObjectURL(blob), a = document.createElement("a");
+    a.href=url; a.download=(data.project.name.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"") || "nexora-project")+".nexora.json";
+    a.click(); setTimeout(()=>URL.revokeObjectURL(url),1000);
+  }
+  byId("nx-project-name").addEventListener("input", () => { state.projectName=byId("nx-project-name").value; projectStatus("UNSAVED CHANGES"); });
+  byId("nx-save").addEventListener("click", () => {
+    const data=projectData(); localStorage.setItem("nexora-foundry-project-v1",JSON.stringify(data)); projectStatus("SAVED LOCALLY · "+new Date().toLocaleTimeString());
+  });
+  byId("nx-load").addEventListener("click", () => byId("nx-file").click());
+  byId("nx-file").addEventListener("change", async (event) => {
+    const file=event.target.files?.[0]; if(!file) return;
+    try { applyProject(JSON.parse(await file.text())); } catch(error) { const box=byId("nx-validation"); box.dataset.state="fail"; box.textContent="OPEN FAILED · "+error.message; }
+    event.target.value="";
+  });
+  byId("nx-export").addEventListener("click", () => { if(validateProject()) downloadProject(); });
+  byId("nx-validate").addEventListener("click", validateProject);
+  byId("nx-project-name").value=state.projectName;
+  try { const saved=localStorage.getItem("nexora-foundry-project-v1"); if(saved) applyProject(JSON.parse(saved)); } catch(error) { projectStatus("LOCAL SAVE UNAVAILABLE"); }
 
   function resize() {
     const width = Math.max(1, host.clientWidth), height = Math.max(1, host.clientHeight);
