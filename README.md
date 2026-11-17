@@ -13,16 +13,16 @@ This repository publishes the personal portfolio, RevelaCode engineering work, t
 | `fieldkit.html` | Browser-local evidence inventory, hashing, signature and entropy triage, verification and exports |
 | `diagnostics.html` | Offline-capable viewer for JSON reports from the USB Workspace Auditor |
 | `guides.html` | Technical field guides, Shamba engineering and defensive-security documentation |
-| `procedural-game-foundry.html` | Interactive model-free procedural terrain and scene-editor preview |
+| `procedural-game-foundry.html` | Nexora Foundry browser production workspace with terrain authoring, scene placement, project save/open, structural validation and portable project export |
 | `nexora.html` | NEXORA Interactive Studios identity, Nexora Foundry overview, pipeline stages, engineering status and interactive-preview links |
 
 The six published HTML pages share the responsive site layer. It adds theme preferences, navigation helpers, scroll progress, reveal motion, clipboard controls, image lightbox and back-to-top behaviour.
 
 ## Procedural Game Foundry preview
 
-The Procedural Game Foundry page includes a browser-local Three.js sandbox. Visitors can vary a deterministic terrain seed, elevation, roughness, waterline and map dimensions; place outposts, beacons, trees, rocks and crates; edit object transforms; enter a first-person WASD exploration mode; and export the preview scene as JSON.
+The Nexora Foundry page includes a browser-local Three.js production workspace. Visitors can vary a deterministic terrain seed, elevation, roughness, waterline and map dimensions; place outposts, beacons, trees, rocks and crates; edit object transforms; enter a first-person WASD exploration mode; and validate, save locally, reopen and export a versioned `.nexora.json` project file.
 
-The portfolio preview is intentionally self-contained and does not require the private PGF repository or a running API. The full studio source, project persistence, backend validation and Godot assembler are maintained in the separate Procedural Game Foundry repository.
+The browser workspace is intentionally self-contained and does not require the private engineering repository or a running API. Project files are stored in the browser's local storage only when the creator saves; portable project files can be downloaded and reopened. Structural validation checks the browser scene manifest, not Godot import, gameplay correctness or release readiness. Cloud project sync, multi-user collaboration, source-control integration, production asset ingest, backend validation and native build orchestration remain future connected services in the separate private Nexora Foundry engineering repository.
 
 ## Shared front-end files
 
