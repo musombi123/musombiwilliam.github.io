@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080d18">
+  <title>NEXORA Interactive Studios | Nexora Foundry</title>
+  <meta name="description" content="NEXORA Interactive Studios — independent game technology venture by Musombi William. Explore Nexora Foundry, a deterministic game creation pipeline.">
+  <meta property="og:title" content="NEXORA Interactive Studios — Nexora Foundry">
+  <meta property="og:description" content="Imagine beyond limits. Build worlds without boundaries. Explore the Nexora Foundry game creation pipeline.">
+  <link rel="canonical" href="https://musombi123.github.io/musombiwilliam.github.io/nexora.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{color-scheme:dark;--bg:#080d18;--panel:#101a2a;--line:#26364b;--text:#edf4ff;--muted:#a1b1c8;--cyan:#69e4e7;--violet:#a78bfa;--lime:#c5f36a;font-family:"Space Grotesk",sans-serif}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 80% 5%,#163454 0,transparent 34%),var(--bg);color:var(--muted);line-height:1.7}
+    a{color:inherit;text-decoration:none}.wrap{width:min(1120px,calc(100% - 40px));margin:auto}.mono,.eyebrow,.tag{font-family:"DM Mono",monospace;letter-spacing:.12em;text-transform:uppercase}
+    .nav{height:76px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #ffffff12}.brand{display:flex;align-items:center;gap:12px;color:var(--text);font-weight:700;letter-spacing:.12em}.mark{width:38px;height:38px;display:grid;place-items:center;border:1px solid #69e4e788;border-radius:12px;color:var(--cyan);box-shadow:0 0 24px #69e4e722;font-size:1.2rem}.navlinks{display:flex;gap:22px;font-size:.86rem}.navlinks a:hover{color:var(--cyan)}
+    .hero{min-height:590px;display:grid;grid-template-columns:1.12fr .88fr;gap:50px;align-items:center;padding:82px 0}.eyebrow{font-size:.7rem;color:var(--cyan)}h1,h2,h3{color:var(--text);line-height:1.08;margin:0;letter-spacing:-.045em}h1{font-size:clamp(3.2rem,8vw,6.7rem);max-width:720px;margin:18px 0}h1 span{color:var(--cyan)}.lead{font-size:1.08rem;max-width:650px}.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}.btn{display:inline-flex;align-items:center;justify-content:center;padding:13px 18px;border:1px solid #58718d;border-radius:10px;color:var(--text);font-weight:700;font-size:.88rem}.btn.primary{background:var(--cyan);color:#06131c;border-color:var(--cyan)}.btn:hover{transform:translateY(-2px)}.orbital{min-height:340px;display:grid;place-items:center;position:relative;overflow:hidden;border:1px solid #45617d66;border-radius:28px;background:radial-gradient(circle at 50% 45%,#1e5570,#0b1727 58%,#080d18)}.planet{width:210px;height:210px;border-radius:50%;background:radial-gradient(circle at 28% 24%,#d8fff0,#68b7ad 25%,#315a83 62%,#10182c 82%);box-shadow:0 0 90px #58d4e655,inset -25px -30px 40px #030a18}.ring{position:absolute;width:320px;height:110px;border:1px solid #8ce8ed88;border-radius:50%;transform:rotate(-22deg)}.orbit-label{position:absolute;bottom:20px;font: .65rem "DM Mono",monospace;color:#c3e9f7;letter-spacing:.16em}
+    .section{padding:70px 0;border-top:1px solid #ffffff12}.section h2{font-size:clamp(2rem,4vw,3.2rem);margin:10px 0 16px}.intro{max-width:700px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:28px}.card{padding:24px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(145deg,#111e30,#0c1422)}.card .num{font: .7rem "DM Mono",monospace;color:var(--cyan)}.card h3{font-size:1.2rem;margin:12px 0}.card p{margin:0;font-size:.92rem}.pipeline{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:28px}.stage{padding:16px;border:1px solid var(--line);border-radius:12px;background:#0d1726}.stage b{display:block;color:var(--text);font-size:.92rem}.stage span{font: .65rem "DM Mono",monospace;color:var(--cyan)}
+    .status{display:inline-flex;align-items:center;gap:8px;padding:7px 11px;border:1px solid #c5f36a55;border-radius:99px;color:var(--lime);font: .68rem "DM Mono",monospace;letter-spacing:.08em}.status:before{content:"";width:7px;height:7px;border-radius:50%;background:var(--lime);box-shadow:0 0 12px var(--lime)}
+    .notice{padding:18px 20px;border-left:3px solid var(--violet);background:#a78bfa12;border-radius:0 12px 12px 0}.footer{padding:28px 0;border-top:1px solid #ffffff12;font-size:.82rem;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+    @media(max-width:800px){.hero{grid-template-columns:1fr;padding:58px 0}.orbital{min-height:280px}.grid{grid-template-columns:1fr}.pipeline{grid-template-columns:repeat(2,1fr)}.navlinks{gap:12px;font-size:.76rem}}@media(max-width:480px){.wrap{width:min(100% - 28px,1120px)}.nav{height:auto;min-height:68px;align-items:flex-start;padding:14px 0;gap:12px;flex-direction:column}.navlinks{flex-wrap:wrap}.pipeline{grid-template-columns:1fr 1fr}.btn{width:100%}.actions{display:grid}}
+  </style>
+</head>
+<body>
+  <header class="wrap nav">
+    <a class="brand" href="index.html"><span class="mark">N</span><span>NEXORA <small style="display:block;color:#8ea5bf;font: .58rem 'DM Mono',monospace;letter-spacing:.18em">INTERACTIVE STUDIOS</small></span></a>
+    <nav class="navlinks" aria-label="NEXORA navigation"><a href="#foundry">Foundry</a><a href="#pipeline">Pipeline</a><a href="#roadmap">Roadmap</a><a href="index.html">← Portfolio</a></nav>
+  </header>
+  <main>
+    <section class="wrap hero">
+      <div>
+        <p class="eyebrow">INDEPENDENT GAME TECHNOLOGY VENTURE</p>
+        <h1>Worlds begin<br>with <span>imagination.</span></h1>
+        <p class="lead">NEXORA Interactive Studios is an independent game-technology venture founded by Musombi William. We are building tools that turn creator ideas, assets and direction into explorable, playable worlds.</p>
+        <p><span class="status">ACTIVE DEVELOPMENT · NEXORA FOUNDRY</span></p>
+        <div class="actions"><a class="btn primary" href="procedural-game-foundry.html#preview">Test the interactive world preview ↗</a><a class="btn" href="https://github.com/musombi123/Procedural-Game-Foundry">Engineering repository ↗</a></div>
+      </div>
+      <div class="orbital" aria-label="Abstract procedural planet illustration"><span class="ring"></span><span class="planet"></span><span class="orbit-label">IMAGINE → BUILD → PLAY</span></div>
+    </section>
+    <section class="section" id="foundry"><div class="wrap">
+      <p class="eyebrow">FLAGSHIP PRODUCT / 01</p><h2>Nexora Foundry</h2>
+      <p class="intro">A deterministic, creator-controlled game-production pipeline. The goal is to make world building and gameplay assembly accessible without relying on paid generative APIs. The current engineering foundation combines procedural generation, Blender asset production and Godot runtime assembly.</p>
+      <div class="grid">
+        <article class="card"><span class="num">01 / WORLD</span><h3>World Foundry</h3><p>Generate seeded terrain and shape environments with adjustable elevation, water, biome materials, lighting and atmosphere.</p></article>
+        <article class="card"><span class="num">02 / ASSEMBLY</span><h3>Scene &amp; asset pipeline</h3><p>Compose environments from reusable assets, validate generated files and assemble a Godot project through explicit creator approval gates.</p></article>
+        <article class="card"><span class="num">03 / GAMEPLAY</span><h3>Playable systems</h3><p>Connect third-person movement, interactions, objectives, health, inventory, checkpoints, HUD and audio into a playable runtime foundation.</p></article>
+      </div>
+      <div class="actions"><a class="btn primary" href="procedural-game-foundry.html#preview">Launch browser preview</a><a class="btn" href="procedural-game-foundry.html">Open Foundry sandbox details</a></div>
+    </div></section>
+    <section class="section" id="pipeline"><div class="wrap">
+      <p class="eyebrow">HOW THE PIPELINE IS STRUCTURED</p><h2>From creator brief to runtime</h2>
+      <p class="intro">Each production stage is reviewed before it advances. Regenerating an upstream stage invalidates downstream approvals so stale assets are not silently carried forward.</p>
+      <div class="pipeline">
+        <div class="stage"><span>STAGE 01</span><b>Analysis</b></div><div class="stage"><span>STAGE 02</span><b>Player</b></div><div class="stage"><span>STAGE 03</span><b>Environment</b></div><div class="stage"><span>STAGE 04</span><b>Actors &amp; props</b></div><div class="stage"><span>STAGE 05</span><b>Audio</b></div><div class="stage"><span>STAGE 06</span><b>Gameplay</b></div><div class="stage"><span>STAGE 07</span><b>Assembly</b></div><div class="stage"><span>STAGE 08</span><b>Playtest &amp; release</b></div>
+      </div>
+    </div></section>
+    <section class="section" id="roadmap"><div class="wrap">
+      <p class="eyebrow">ENGINEERING STATUS</p><h2>Built honestly. Tested in stages.</h2>
+      <div class="grid">
+        <article class="card"><span class="num">FOUNDATION</span><h3>Procedural preview</h3><p>Browser-local world preview and scene editing are available to test now.</p></article>
+        <article class="card"><span class="num">RUNTIME</span><h3>Godot assembly</h3><p>Native project assembly and automated runtime checks are under active engineering validation.</p></article>
+        <article class="card"><span class="num">NEXT GATE</span><h3>Creator acceptance</h3><p>Real creator portrait review, full desktop playthrough, physical Android-device testing and signed release packaging remain acceptance gates.</p></article>
+      </div>
+      <p class="notice" style="margin-top:22px">The browser preview is an interactive prototype, not the complete native game generator. Automated build success does not equal a human playtest or a device-tested release. Character likeness, assets and final gameplay require creator review and approval.</p>
+    </div></section>
+  </main>
+  <footer class="wrap footer"><span>© <span id="year"></span> NEXORA Interactive Studios · An independent venture by Musombi William</span><a href="index.html">Back to Musombi's portfolio ↑</a></footer>
+  <script>document.getElementById("year").textContent=new Date().getFullYear();</script>
+</body>
+</html>
