@@ -52,3 +52,12 @@ Engineering source remains in the separate private repository: https://github.co
 ## Licence
 
 The repository is distributed under the MIT License. See [LICENSE](LICENSE) for the complete terms.
+
+## Repository governance
+
+- [Code of Conduct](CODE_OF_CONDUCT.md)
+- [Contributing](CONTRIBUTING.md)
+
+## Licence
+
+The original portfolio source and materials are proprietary and all rights reserved; see [LICENSE](LICENSE). The frontend project, third-party scripts, libraries, fonts and assets retain their separate licence terms.
