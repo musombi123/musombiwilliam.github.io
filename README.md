@@ -47,3 +47,8 @@ NEXORA Interactive Studios is an independent game-technology venture by Musombi 
 The NEXORA portfolio page is `nexora.html`. It links to the existing browser-local procedural world preview in `procedural-game-foundry.html` so visitors can test the interactive prototype immediately. The browser preview is not represented as the complete native game-generation platform. Creator acceptance, physical Android-device testing and signed release packaging remain explicit validation gates.
 
 Engineering source remains in the separate private repository: https://github.com/musombi123/Procedural-Game-Foundry
+
+
+## Licence
+
+The repository is distributed under the MIT License. See [LICENSE](LICENSE) for the complete terms.
