@@ -45,7 +45,11 @@ jobs:
           if ($LASTEXITCODE -ne 0) {
             throw "Procedural Game Foundry preview JavaScript syntax validation failed."
           }
-          node --check (Join-Path $env:GITHUB_WORKSPACE "portfolio-enhancements.js")\n          if ($LASTEXITCODE -ne 0) { throw "Portfolio enhancement JavaScript syntax validation failed." }\n          node --check (Join-Path $env:GITHUB_WORKSPACE "site.js")
+          node --check (Join-Path $env:GITHUB_WORKSPACE "portfolio-enhancements.js")
+          if ($LASTEXITCODE -ne 0) {
+            throw "Portfolio enhancement JavaScript syntax validation failed."
+          }
+          node --check (Join-Path $env:GITHUB_WORKSPACE "site.js")
           if ($LASTEXITCODE -ne 0) {
             throw "Shared portfolio JavaScript syntax validation failed."
           }
