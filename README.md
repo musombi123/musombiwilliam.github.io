@@ -1,63 +1,54 @@
 # Musombi William — Portfolio & Engineering Knowledge Base
 
-This repository publishes the personal portfolio, RevelaCode engineering work, the Digital Forensics & Security Centre, the browser-local Field Workbench, technical field guides, the Procedural Game Foundry interactive preview, and the NEXORA Interactive Studios / Nexora Foundry showcase.
-
 **Live site:** https://musombi123.github.io/musombiwilliam.github.io/
 
-## Site architecture
+This site is a personal portfolio and engineering showcase for full-stack development, product building, AI experimentation, game technology and digital investigation. Project status is presented in stages; prototype/demo scope is not represented as production release.
 
-| Page | Purpose |
+## Site map
+
+| Page | What visitors can do |
 |---|---|
-| `index.html` | Portfolio, skills, experience, RevelaCode overview, projects and contact |
-| `forensics.html` | Digital forensics, reverse engineering, defensive security and Portable Field Kit overview |
-| `fieldkit.html` | Browser-local evidence inventory, hashing, signature and entropy triage, verification and exports |
-| `diagnostics.html` | Offline-capable viewer for JSON reports from the USB Workspace Auditor |
+| `index.html` | Portfolio, background, skills, projects, product overview and message-ready contact links |
+| `research-centre.html` | Explore independent research domains, active tracks and submit an idea/collaboration email |
+| `team.html` | Read contributor tracks and prepare a team application email |
+| `forensics.html` | Digital forensics, reverse engineering, defensive security and Field Kit overview |
+| `fieldkit.html` | Browser-local evidence inventory, hashing, signature/entropy triage, verification and exports |
+| `diagnostics.html` | Offline viewer for structured workspace audit reports |
 | `guides.html` | Technical field guides, Shamba engineering and defensive-security documentation |
-| `procedural-game-foundry.html` | Nexora Foundry browser production workspace with terrain authoring, scene placement, project save/open, structural validation and portable project export |
-| `nexora.html` | NEXORA Interactive Studios identity, Nexora Foundry overview, pipeline stages, engineering status and interactive-preview links |
+| `nexora.html` | NEXORA Interactive Studios / Nexora Foundry overview |
+| `procedural-game-foundry.html` | Browser-local 3D world preview, scene editing, project import/export and structural validation |
 
-The six published HTML pages share the responsive site layer. It adds theme preferences, navigation helpers, scroll progress, reveal motion, clipboard controls, image lightbox and back-to-top behaviour.
+## Portfolio contact actions
 
-## Procedural Game Foundry preview
+WhatsApp and email use a suggested contact message. Teams opens a chat link. Facebook Messenger opens the Page messenger; since Messenger links do not reliably accept prefilled message text, the portfolio copies the suggested text before opening Messenger. Review the text before sending.
 
-The Nexora Foundry page includes a browser-local Three.js production workspace. Visitors can vary a deterministic terrain seed, elevation, roughness, waterline and map dimensions; place outposts, beacons, trees, rocks and crates; edit object transforms; enter a first-person WASD exploration mode; and validate, save locally, reopen and export a versioned `.nexora.json` project file.
+## Forms and current limitations
 
-The browser workspace is intentionally self-contained and does not require the private engineering repository or a running API. Project files are stored in the browser's local storage only when the creator saves; portable project files can be downloaded and reopened. Structural validation checks the browser scene manifest, not Godot import, gameplay correctness or release readiness. Cloud project sync, multi-user collaboration, source-control integration, production asset ingest, backend validation and native build orchestration remain future connected services in the separate private Nexora Foundry engineering repository.
+The Research Centre idea form and team contributor form **prepare an email only**. They do not submit to a server, store information, provision accounts or grant access. The current website is static GitHub Pages. Team registration with passwords, authentication, role-based access, researcher workspaces, private project storage and invitation controls require a real backend and security review. Do not enter secrets or sensitive data into these forms.
 
-## Shared front-end files
+## Current portfolio project directory
 
-- `stylesheet.css` — page styles and shared responsive visual system.
-- `site.js` — shared navigation, theme, motion, scroll, lightbox and clipboard behaviour.
-- `scripts/validate-static-site.mjs` — verifies page wiring, unique H1/IDs, local links, reduced-motion support, the Field Workbench and PGF preview.
-- `fieldkit.js` — browser-side evidence processing and case workflows.
-- `diagnostics.html`, `diagnostics.css`, `diagnostics.js` — offline-capable viewer for structured workspace audit reports.
-- `pgf-demo.js` — browser-only 3D terrain, asset placement, transforms, exploration controls and scene JSON export.
+- **RevelaCode** — platform frontend and backend: [Frontend](https://github.com/musombi123/RevelaCode-Frontend), [Backend](https://github.com/musombi123/RevelaCode-Backend), [Live platform](https://revelacode-frontend.onrender.com/)
+- **RevelaAI** — [AI workspace](https://revelaai.onrender.com/), [repository](https://github.com/musombi123/RevelaAI)
+- **VORAX** — experimental learning/verification architecture; [GitHub Home](https://github.com/musombi123/Revelacode123), [Hugging Face profile](https://huggingface.co/Musombi), [Kaggle](https://www.kaggle.com/musombiwilliam)
+- **NEXORA Foundry** — [Studio page](nexora.html), [browser preview](procedural-game-foundry.html#preview), [foundry repository](https://github.com/musombi123/Procedural-Game-Foundry), [Windows repo](https://github.com/musombi123/Nexora_Windows)
+- **RevelaCode Android** — [repository and releases](https://github.com/musombi123/RevelaCode-Android)
+- **Digital Forensics & Field Kit** — [Centre](forensics.html), [Workbench](fieldkit.html), [Guides](guides.html)
+
+## Shared site layer
+
+- `stylesheet.css` — original responsive design system
+- `portfolio-enhancements.css` — project cards and contact shortcut styling
+- `portfolio-enhancements.js` — homepage project links and message-ready contact actions
+- `site.js` — shared navigation, theme, motion, scroll, lightbox and clipboard behaviour
+- `main.js` — homepage controls
 
 ## Quality and accessibility
 
-The shared site includes mobile-first layouts, keyboard focus indicators, skip-to-content links, saved theme preferences, reduced-motion support, responsive navigation, local-only browser tools and CI checks for local destinations and key interactive features.
+The portfolio uses responsive layout, focus states, semantic sections, reduced-motion support and local-only browser tools. Check external links and project release status before sharing.
 
-The static portfolio does not run forensic scans or upload evidence. The PGF page's preview stays in the browser; the full studio project service is separate.
+## Project and repository governance
 
-
-## NEXORA Interactive Studios
-
-NEXORA Interactive Studios is an independent game-technology venture by Musombi William and is separate from RevelaCode. Its flagship product is **Nexora Foundry**, a deterministic creator-controlled pipeline combining procedural world generation, Blender asset production and Godot runtime assembly.
-
-The NEXORA portfolio page is `nexora.html`. It links to the existing browser-local procedural world preview in `procedural-game-foundry.html` so visitors can test the interactive prototype immediately. The browser preview is not represented as the complete native game-generation platform. Creator acceptance, physical Android-device testing and signed release packaging remain explicit validation gates.
-
-Engineering source remains in the separate private repository: https://github.com/musombi123/Procedural-Game-Foundry
-
-
-## Licence
-
-The repository is distributed under the MIT License. See [LICENSE](LICENSE) for the complete terms.
-
-## Repository governance
-
+- [License](LICENSE)
 - [Code of Conduct](CODE_OF_CONDUCT.md)
 - [Contributing](CONTRIBUTING.md)
-
-## Licence
-
-The original portfolio source and materials are proprietary and all rights reserved; see [LICENSE](LICENSE). The frontend project, third-party scripts, libraries, fonts and assets retain their separate licence terms.
