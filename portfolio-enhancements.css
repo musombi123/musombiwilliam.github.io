@@ -1,5 +1,5 @@
 /* Portfolio extras — scoped styles for dynamically added cards and contact shortcuts */
-.portfolio-project-index{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:1rem;margin:1rem 0 0}
+.portfolio-project-index{grid-column:1/-1;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:1rem;margin:1rem 0 0}
 .portfolio-extra-card{padding:1.2rem;border:1px solid var(--line);border-radius:16px;background:var(--surface);display:flex;flex-direction:column;gap:.55rem;min-width:0}
 .portfolio-extra-card h3{font-size:1.1rem;margin:.1rem 0}
 .portfolio-extra-card p{font-size:.84rem;line-height:1.7;color:var(--text-2);margin:0}
