@@ -1,0 +1,13 @@
+/* Portfolio extras — scoped styles for dynamically added cards and contact shortcuts */
+.portfolio-project-index{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:1rem;margin:1rem 0 0}
+.portfolio-extra-card{padding:1.2rem;border:1px solid var(--line);border-radius:16px;background:var(--surface);display:flex;flex-direction:column;gap:.55rem;min-width:0}
+.portfolio-extra-card h3{font-size:1.1rem;margin:.1rem 0}
+.portfolio-extra-card p{font-size:.84rem;line-height:1.7;color:var(--text-2);margin:0}
+.portfolio-extra-label{font:700 .64rem var(--mono);letter-spacing:.12em;color:var(--accent-3)}
+.portfolio-extra-links{display:flex;flex-wrap:wrap;gap:.55rem;margin-top:.4rem}
+.portfolio-extra-links a,.portfolio-contact-button{display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--line);border-radius:10px;padding:.65rem .8rem;background:var(--surface-2);color:var(--text);font-weight:700;font-size:.74rem;text-decoration:none;cursor:pointer}
+.portfolio-extra-links a:hover,.portfolio-contact-button:hover{border-color:var(--accent);transform:translateY(-1px)}
+.portfolio-message-links{display:flex;justify-content:center;flex-wrap:wrap;gap:.65rem;margin:1.1rem 0}
+.portfolio-message-note{flex-basis:100%;font-size:.72rem;color:var(--muted);text-align:center;max-width:700px;margin:.2rem auto}
+#portfolio-quick-links{display:flex;justify-content:center;gap:.6rem;flex-wrap:wrap;padding:.5rem 0;font-size:.78rem}
+@media(max-width:640px){.portfolio-contact-button{width:100%}.portfolio-extra-card{padding:1rem}}
