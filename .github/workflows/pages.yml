@@ -26,7 +26,7 @@ jobs:
       - name: Validate first-party browser assets
         shell: pwsh
         run: |
-          $required = @("index.html", "forensics.html", "fieldkit.html", "fieldkit.js", "diagnostics.html", "diagnostics.css", "diagnostics.js", "guides.html", "procedural-game-foundry.html", "pgf-demo.js", "stylesheet.css")
+          $required = @("index.html", "forensics.html", "fieldkit.html", "fieldkit.js", "diagnostics.html", "diagnostics.css", "diagnostics.js", "guides.html", "procedural-game-foundry.html", "pgf-demo.js", "stylesheet.css", "portfolio-enhancements.js", "portfolio-enhancements.css")
           foreach ($relativePath in $required) {
             $fullPath = Join-Path $env:GITHUB_WORKSPACE $relativePath
             if (!(Test-Path $fullPath)) {
@@ -45,7 +45,7 @@ jobs:
           if ($LASTEXITCODE -ne 0) {
             throw "Procedural Game Foundry preview JavaScript syntax validation failed."
           }
-          node --check (Join-Path $env:GITHUB_WORKSPACE "site.js")
+          node --check (Join-Path $env:GITHUB_WORKSPACE "portfolio-enhancements.js")\n          if ($LASTEXITCODE -ne 0) { throw "Portfolio enhancement JavaScript syntax validation failed." }\n          node --check (Join-Path $env:GITHUB_WORKSPACE "site.js")
           if ($LASTEXITCODE -ne 0) {
             throw "Shared portfolio JavaScript syntax validation failed."
           }
@@ -70,15 +70,18 @@ jobs:
           New-Item -ItemType Directory -Force -Path (Join-Path $site "downloads") | Out-Null
           "Portfolio staged at $site"
 
-      - name: Fetch pinned RevelaAI Field Kit source
+      - name: Checkout pinned private RevelaAI Field Kit source
+        uses: actions/checkout@v4
+        with:
+          repository: musombi123/RevelaAI
+          ref: c2e11b070e84cbf8fa23b7aeadf02d5915d8297d
+          token: ${{ secrets.REVELAAI_READ_TOKEN }}
+          path: RevelaAI-source
+
+      - name: Verify pinned RevelaAI Field Kit source
         shell: pwsh
         run: |
-          $source = Join-Path $env:RUNNER_TEMP "RevelaAI-source"
-          New-Item -ItemType Directory -Force -Path $source | Out-Null
-          git -C $source init
-          git -C $source remote add origin https://github.com/musombi123/RevelaAI.git
-          git -C $source fetch --depth 1 origin c2e11b070e84cbf8fa23b7aeadf02d5915d8297d
-          git -C $source checkout --detach FETCH_HEAD
+          $source = Join-Path $env:GITHUB_WORKSPACE "RevelaAI-source"
           $actual = (git -C $source rev-parse HEAD).Trim()
           if ($actual -ne "c2e11b070e84cbf8fa23b7aeadf02d5915d8297d") {
             throw "Unexpected Field Kit source revision: $actual"
@@ -93,7 +96,7 @@ jobs:
       - name: Build the native Field Engine and bundle USECT core runtime
         shell: pwsh
         run: |
-          $source = Join-Path $env:RUNNER_TEMP "RevelaAI-source"
+          $source = Join-Path $env:GITHUB_WORKSPACE "RevelaAI-source"
           $bin = Join-Path $source "portable/bin/windows-amd64"
           $runtimeSource = Join-Path $source "portable/runtime-source"
           New-Item -ItemType Directory -Force -Path $bin, $runtimeSource | Out-Null
@@ -172,7 +175,7 @@ jobs:
       - name: Prepare and verify embedded Windows runtime
         shell: pwsh
         run: |
-          $source = Join-Path $env:RUNNER_TEMP "RevelaAI-source"
+          $source = Join-Path $env:GITHUB_WORKSPACE "RevelaAI-source"
           & (Join-Path $source "portable/prepare-windows-runtime.ps1")
           $python = Join-Path $source "portable/runtimes/python-win-x64/python.exe"
           if (!(Test-Path $python)) {
@@ -186,7 +189,7 @@ jobs:
       - name: Run Field Kit tests on embedded Python
         shell: pwsh
         run: |
-          $source = Join-Path $env:RUNNER_TEMP "RevelaAI-source"
+          $source = Join-Path $env:GITHUB_WORKSPACE "RevelaAI-source"
           $python = Join-Path $source "portable/runtimes/python-win-x64/python.exe"
           $env:PYTHONPATH = Join-Path $source "portable/src"
           Push-Location $source
@@ -202,7 +205,7 @@ jobs:
       - name: Package and checksum USB Edition
         shell: pwsh
         run: |
-          $source = Join-Path $env:RUNNER_TEMP "RevelaAI-source"
+          $source = Join-Path $env:GITHUB_WORKSPACE "RevelaAI-source"
           $site = Join-Path $env:RUNNER_TEMP "portfolio-site"
           $stage = Join-Path $env:RUNNER_TEMP "fieldkit-package"
           $portable = Join-Path $source "portable"

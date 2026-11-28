@@ -51,3 +51,6 @@
   // behaviours. This marker makes the homepage integration easy to diagnose.
   doc.documentElement.classList.add("portfolio-home-runtime");
 })();
+
+/* Portfolio upgrade bundle. */
+(function(){const s=document.createElement('script');s.src='portfolio-enhancements.js';s.defer=true;document.head.appendChild(s);})();

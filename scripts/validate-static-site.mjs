@@ -2,7 +2,7 @@ import { readFileSync, existsSync } from "node:fs";
 import { resolve, dirname, normalize } from "node:path";
 
 const root = process.cwd();
-const pages = ["index.html", "forensics.html", "fieldkit.html", "diagnostics.html", "guides.html", "procedural-game-foundry.html"];
+const pages = ["index.html", "forensics.html", "fieldkit.html", "diagnostics.html", "guides.html", "procedural-game-foundry.html", "research-centre.html", "team.html"];
 const failures = [];
 const htmlByPath = new Map();
 
@@ -38,6 +38,13 @@ for (const [page, html] of htmlByPath) {
   }
 }
 
+for (const asset of ["portfolio-enhancements.js", "portfolio-enhancements.css"]) {
+  if (!existsSync(resolve(root, asset))) failures.push("portfolio: missing enhancement asset: " + asset);
+}
+const portfolioScript = readFileSync(resolve(root, "portfolio-enhancements.js"), "utf8");
+for (const feature of ["Research Centre", "WhatsApp", "Facebook Messenger", "portfolio-project-index", "team.html"]) {
+  if (!portfolioScript.includes(feature)) failures.push("portfolio-enhancements.js: expected portfolio feature missing: " + feature);
+}
 const sharedScript = readFileSync(resolve(root, "site.js"), "utf8");
 for (const feature of ["site-primary-nav", "site-theme-toggle", "site-progress", "IntersectionObserver", "site-lightbox", "Copy email", "data-count", "prefers-reduced-motion"]) {
   if (!sharedScript.includes(feature)) failures.push("site.js: expected shared behaviour missing: " + feature);
