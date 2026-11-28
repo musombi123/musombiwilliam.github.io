@@ -2,7 +2,7 @@ import { readFileSync, existsSync } from "node:fs";
 import { resolve, dirname, normalize } from "node:path";
 
 const root = process.cwd();
-const pages = ["index.html", "forensics.html", "fieldkit.html", "diagnostics.html", "guides.html", "procedural-game-foundry.html"];
+const pages = ["index.html", "forensics.html", "fieldkit.html", "diagnostics.html", "guides.html", "procedural-game-foundry.html", "research-centre.html", "team.html"];
 const failures = [];
 const htmlByPath = new Map();
 
