@@ -12,8 +12,13 @@
   const css = document.createElement("link"); css.rel="stylesheet"; css.href="portfolio-enhancements.css"; document.head.appendChild(css);
   const addLinks = () => {
     const nav = document.querySelector("#navlinks");
-    if (nav && !nav.querySelector('[data-portfolio-nav="research"]')) {
-      nav.insertAdjacentHTML("beforeend", '<a data-portfolio-nav="research" href="research-centre.html">Research Centre</a><a data-portfolio-nav="team" href="team.html">Team</a>');
+    if (nav) {
+      if (!nav.querySelector('a[href="research-centre.html"]')) {
+        nav.insertAdjacentHTML("beforeend", '<a data-portfolio-nav="research" href="research-centre.html">Research Centre</a>');
+      }
+      if (!nav.querySelector('a[href="team.html"]')) {
+        nav.insertAdjacentHTML("beforeend", '<a data-portfolio-nav="team" href="team.html">Team</a>');
+      }
     }
     const engineering = document.querySelector("#engineering-projects .road-grid");
     if (engineering && !document.getElementById("portfolio-project-index")) {
