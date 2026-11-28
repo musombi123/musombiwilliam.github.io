@@ -9,7 +9,7 @@ This site is a personal portfolio and engineering showcase for full-stack develo
 | Page | What visitors can do |
 |---|---|
 | `index.html` | Portfolio, background, skills, projects, product overview and message-ready contact links |
-| `research-centre.html` | Explore independent research domains, active tracks and submit an idea/collaboration email |
+| `research-centre.html` | Explore research domains, active engineering tracks, research method, principles and submit a proposal email |
 | `team.html` | Read contributor tracks and prepare a team application email |
 | `forensics.html` | Digital forensics, reverse engineering, defensive security and Field Kit overview |
 | `fieldkit.html` | Browser-local evidence inventory, hashing, signature/entropy triage, verification and exports |
