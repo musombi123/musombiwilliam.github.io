@@ -38,7 +38,14 @@ for (const [page, html] of htmlByPath) {
   }
 }
 
-for (const asset of ["portfolio-enhancements.js", "portfolio-enhancements.css"]) {\n  if (!existsSync(resolve(root, asset))) failures.push("portfolio: missing enhancement asset: " + asset);\n}\nconst portfolioScript = readFileSync(resolve(root, "portfolio-enhancements.js"), "utf8");\nfor (const feature of ["Research Centre", "WhatsApp", "Facebook Messenger", "portfolio-project-index", "team.html"]) {\n  if (!portfolioScript.includes(feature)) failures.push("portfolio-enhancements.js: expected portfolio feature missing: " + feature);\n}\nconst sharedScript = readFileSync(resolve(root, "site.js"), "utf8");
+for (const asset of ["portfolio-enhancements.js", "portfolio-enhancements.css"]) {
+  if (!existsSync(resolve(root, asset))) failures.push("portfolio: missing enhancement asset: " + asset);
+}
+const portfolioScript = readFileSync(resolve(root, "portfolio-enhancements.js"), "utf8");
+for (const feature of ["Research Centre", "WhatsApp", "Facebook Messenger", "portfolio-project-index", "team.html"]) {
+  if (!portfolioScript.includes(feature)) failures.push("portfolio-enhancements.js: expected portfolio feature missing: " + feature);
+}
+const sharedScript = readFileSync(resolve(root, "site.js"), "utf8");
 for (const feature of ["site-primary-nav", "site-theme-toggle", "site-progress", "IntersectionObserver", "site-lightbox", "Copy email", "data-count", "prefers-reduced-motion"]) {
   if (!sharedScript.includes(feature)) failures.push("site.js: expected shared behaviour missing: " + feature);
 }
