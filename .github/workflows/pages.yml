@@ -26,7 +26,7 @@ jobs:
       - name: Validate first-party browser assets
         shell: pwsh
         run: |
-          $required = @("index.html", "forensics.html", "fieldkit.html", "fieldkit.js", "diagnostics.html", "diagnostics.css", "diagnostics.js", "guides.html", "procedural-game-foundry.html", "pgf-demo.js", "stylesheet.css")
+          $required = @("index.html", "forensics.html", "fieldkit.html", "fieldkit.js", "diagnostics.html", "diagnostics.css", "diagnostics.js", "guides.html", "procedural-game-foundry.html", "pgf-demo.js", "stylesheet.css", "portfolio-enhancements.js", "portfolio-enhancements.css")
           foreach ($relativePath in $required) {
             $fullPath = Join-Path $env:GITHUB_WORKSPACE $relativePath
             if (!(Test-Path $fullPath)) {
@@ -45,7 +45,7 @@ jobs:
           if ($LASTEXITCODE -ne 0) {
             throw "Procedural Game Foundry preview JavaScript syntax validation failed."
           }
-          node --check (Join-Path $env:GITHUB_WORKSPACE "site.js")
+          node --check (Join-Path $env:GITHUB_WORKSPACE "portfolio-enhancements.js")\n          if ($LASTEXITCODE -ne 0) { throw "Portfolio enhancement JavaScript syntax validation failed." }\n          node --check (Join-Path $env:GITHUB_WORKSPACE "site.js")
           if ($LASTEXITCODE -ne 0) {
             throw "Shared portfolio JavaScript syntax validation failed."
           }
